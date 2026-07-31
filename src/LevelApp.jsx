@@ -469,11 +469,6 @@ function LevelApp({ levelId }) {
       </button>
 
       <AnimatePresence>
-        
-
-      
-
-      <AnimatePresence>
         {showMissionComplete && (
           <MissionCompleteOverlay onReturn={handleReturnToMenu} />
         )}
