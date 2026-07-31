@@ -56,7 +56,7 @@ export default function IntroOverlay({ onComplete, initialName = '', onLevelSele
       </div>
 
       <motion.div
-        className={`pointer-events-auto w-full mx-4 glass-cyan p-8 rounded-2xl relative overflow-hidden flex flex-col min-h-[300px] ${step === 2 ? 'max-w-4xl' : 'max-w-lg'}`}
+        className={`pointer-events-auto w-full mx-4 glass-cyan p-8 rounded-2xl relative overflow-hidden flex flex-col min-h-[300px] ${step === 2 ? 'max-w-3xl' : 'max-w-lg'}`}
         initial={{ opacity: 0, y: 50, scale: 0.9 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
@@ -85,7 +85,7 @@ export default function IntroOverlay({ onComplete, initialName = '', onLevelSele
         )}
 
         {step === 2 && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 p-4 md:p-8 w-full max-w-5xl mx-auto h-[80vh] overflow-y-auto pr-2 custom-scrollbar">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 p-4 md:p-8 w-full max-w-4xl mx-auto max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar">
             {levels.map((lvl, idx) => {
               const unlocked = isLevelUnlocked(lvl.id);
               return (
@@ -106,13 +106,13 @@ export default function IntroOverlay({ onComplete, initialName = '', onLevelSele
                 {unlocked ? (
                   <button
                     onClick={() => {
-                      onComplete(name);
+                      if (onComplete) onComplete(name);
                       onLevelSelect(lvl.id);
                     }}
                     className="w-full glass-cyan py-3 rounded-xl text-white font-bold tracking-widest text-xs uppercase flex items-center justify-center space-x-2 hover:bg-cyan hover:text-navy-900 transition-all shadow-[0_0_15px_rgba(0,240,255,0.2)]"
                   >
                     <Play size={14} />
-                    <span>INITIATE PROTOCOL</span>
+                    <span>START MISSION</span>
                   </button>
                 ) : (
                   <button

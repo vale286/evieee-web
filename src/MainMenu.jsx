@@ -102,22 +102,7 @@ function MainMenu() {
         )}
       </AnimatePresence>
 
-      {/* Manual Certificate Icon (only visible on map) */}
-      <AnimatePresence>
-        {phase === 1 && (
-          <motion.div
-            className="fixed bottom-6 right-6 z-[999] pointer-events-auto cursor-pointer"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={handleManualCertificate}
-          >
-            <img src="/icon_sertif.png" alt="Certificate" className="w-16 h-16 drop-shadow-[0_0_15px_rgba(0,240,255,0.5)]" />
-          </motion.div>
-        )}
-      </AnimatePresence>
+
     </main>
   );
 }
