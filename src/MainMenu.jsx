@@ -5,7 +5,9 @@ import { Volume2, VolumeX, Fullscreen } from 'lucide-react';
 import { playMusic, toggleMuteGlobal, isMuted } from './utils/audioManager';
 
 function MainMenu() {
-  const [phase, setPhase] = useState(0);
+  const [phase, setPhase] = useState(() => {
+    return localStorage.getItem('evieee_skip_intro') === 'true' ? 1 : 0;
+  });
   const [isMutedState, setIsMutedState] = useState(isMuted());
   const [isFullscreen, setIsFullscreen] = useState(false);
 

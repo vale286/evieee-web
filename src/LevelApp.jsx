@@ -100,18 +100,12 @@ function LevelApp({ levelId }) {
     else if (phase === 12) levelIndex = 5;
 
     if (levelIndex !== -1) {
-      setUnlockedLevels(prev => {
-        const newArr = [...prev];
-        newArr[levelIndex] = true;
-        return newArr;
-      });
+      const nextLevelId = levelIndex + 2;
+      localStorage.setItem(`evieee_unlocked_level${nextLevelId}`, 'true');
     }
 
-    setShowMissionComplete(false);
-    setPhase(1);
-    setCurrentStep(1);
-    setTrashCollected(0);
-    playMusic('overall');
+    localStorage.setItem('evieee_skip_intro', 'true');
+    window.location.href = '/';
   };
 
   const handleDownloadCertificate = (name, location) => {
@@ -944,15 +938,6 @@ function LevelApp({ levelId }) {
           </AnimatePresence>
         </>
       )}
-
-      {/* Certificate Floating Icon */}
-      <img 
-        src="/icon_sertif.png" 
-        id="btn-show-cert" 
-        alt="Certificate" 
-        className="fixed bottom-4 right-4 w-10 h-10 md:w-14 md:h-14 cursor-pointer z-[100] drop-shadow-lg hover:scale-110 transition-transform pointer-events-auto"
-        onClick={() => setShowCertificate(true)}
-      />
 
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes fadeIn {
