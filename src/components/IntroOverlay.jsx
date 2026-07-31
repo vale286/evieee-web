@@ -2,26 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Trash2, Leaf, Cpu, ChevronRight, Play } from 'lucide-react';
 
-const TypewriterText = ({ text, onComplete, speed = 40 }) => {
-  const [displayedText, setDisplayedText] = useState('');
 
-  useEffect(() => {
-    setDisplayedText('');
-    let i = 0;
-    const timer = setInterval(() => {
-      setDisplayedText(text.slice(0, i + 1));
-      i++;
-      if (i >= text.length) {
-        clearInterval(timer);
-        if (onComplete) onComplete();
-      }
-    }, speed);
-
-    return () => clearInterval(timer);
-  }, [text, speed]);
-
-  return <span>{displayedText}</span>;
-};
 
 const floatingAnimation = (delay) => ({
   y: ['-15px', '15px'],
@@ -36,24 +17,8 @@ const floatingAnimation = (delay) => ({
 });
 
 export default function IntroOverlay({ onComplete, initialName = '', onLevelSelect }) {
-  const [step, setStep] = useState(initialName ? 2 : 0); // 0: welcome, 1: ask name, 2: level selector
-  const [isTyping, setIsTyping] = useState(!initialName);
-  const [name, setName] = useState(initialName);
-
-  const textStep0 = "Welcome to EvIEEE. This is a simulation platform designed to build sustainable smart cities and inclusive futures.";
-  const textStep1 = "Before we begin our tour, may I know your name?";
-
-  const handleNextStep = () => {
-    setStep(1);
-    setIsTyping(true);
-  };
-
-  const handleNameSubmit = (e) => {
-    e.preventDefault();
-    if (name.trim()) {
-      setStep(2);
-    }
-  };
+  const [step, setStep] = useState(initialName ? 2 : 0); // 0: welcome, 2: level selector
+  const [name, setName] = useState(initialName || 'Eco-Hero');
 
   const levels = [
     { id: 1, name: "Java", desc: "Urban Waste Management" },
@@ -97,11 +62,18 @@ export default function IntroOverlay({ onComplete, initialName = '', onLevelSele
       >
         <div className="absolute -top-20 -right-20 w-40 h-40 bg-cyan/20 rounded-full blur-[50px] pointer-events-none"></div>
 
-        {step < 2 ? (
-          <div className="flex flex-col items-center mb-6 border-b border-white/10 pb-6 text-center">
-            <img src="/Logo EvIEEE.png" alt="EvIEEE Logo" className="h-24 w-auto mx-auto mb-4 drop-shadow-[0_0_15px_rgba(0,255,255,0.5)]" style={{ mixBlendMode: 'screen' }} />
-            <h2 className="text-white font-bold text-2xl tracking-wide">EvIEEE</h2>
-            <p className="text-cyan/70 text-sm uppercase tracking-widest mt-1">AI Guide</p>
+        {step === 0 ? (
+          <div className="flex flex-col items-center mb-6 text-center mt-4">
+            <h2 className="text-white font-bold text-3xl tracking-wide mb-6 text-cyan drop-shadow-[0_0_10px_rgba(0,240,255,0.8)]">Welcome to EvIEEE</h2>
+            <p className="text-white/90 text-lg leading-relaxed mb-10 max-w-sm">
+              EvIEEE features representations of various local islands across Indonesia, seamlessly integrating smart city concepts with environmental conservation.
+            </p>
+            <button
+              onClick={() => setStep(2)}
+              className="glass-cyan px-8 py-4 rounded-xl text-white font-bold tracking-widest text-sm uppercase flex items-center justify-center hover:bg-cyan hover:text-navy-900 transition-all shadow-[0_0_20px_rgba(0,240,255,0.4)]"
+            >
+              Continue to Nusantara Map 🗺️
+            </button>
           </div>
         ) : (
           <div className="flex flex-col items-center mb-8 pb-4 text-center">
@@ -111,66 +83,8 @@ export default function IntroOverlay({ onComplete, initialName = '', onLevelSele
           </div>
         )}
 
-        {step < 2 ? (
-          <>
-            <div className="flex-1 text-lg font-light text-white/90 leading-relaxed">
-              <AnimatePresence mode="wait">
-                {step === 0 && (
-                  <motion.div key="step0" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                    <TypewriterText text={textStep0} onComplete={() => setIsTyping(false)} />
-                  </motion.div>
-                )}
-                {step === 1 && (
-                  <motion.div key="step1" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                    <TypewriterText text={textStep1} onComplete={() => setIsTyping(false)} />
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-
-            <div className="mt-6 h-[60px] flex items-end justify-end">
-              <AnimatePresence>
-                {step === 0 && !isTyping && (
-                  <motion.button
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: 10 }}
-                    onClick={handleNextStep}
-                    className="flex items-center space-x-2 px-4 py-2 bg-cyan/20 hover:bg-cyan/40 text-cyan rounded-lg transition-colors border border-cyan/30"
-                  >
-                    <span>Next</span>
-                    <ChevronRight size={18} />
-                  </motion.button>
-                )}
-                {step === 1 && !isTyping && (
-                  <motion.form
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    onSubmit={handleNameSubmit}
-                    className="relative w-full flex items-center"
-                  >
-                    <input
-                      type="text"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      placeholder="Enter your name..."
-                      className="w-full bg-navy-900/50 border border-white/20 text-white placeholder-white/30 rounded-xl px-4 py-3 outline-none focus:border-cyan/50 focus:shadow-[0_0_10px_rgba(0,240,255,0.2)] transition-all"
-                      autoFocus
-                    />
-                    <button
-                      type="submit"
-                      disabled={!name.trim()}
-                      className="absolute right-2 p-2 bg-cyan/20 hover:bg-cyan/40 text-cyan rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      <Send size={18} />
-                    </button>
-                  </motion.form>
-                )}
-              </AnimatePresence>
-            </div>
-          </>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 p-4 md:p-8 h-full overflow-y-auto max-h-[60vh] pr-2 custom-scrollbar">
+        {step === 2 && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 p-4 md:p-8 w-full max-w-5xl mx-auto h-[80vh] overflow-y-auto pr-2 custom-scrollbar">
             {levels.map((lvl, idx) => (
               <motion.div
                 key={lvl.id}

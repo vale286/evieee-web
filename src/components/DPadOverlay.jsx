@@ -11,10 +11,10 @@ export default function DPadOverlay({ setMovement }) {
     setMovement(dir, false);
   };
 
-  const btnClass = "w-16 h-16 glass rounded-xl flex items-center justify-center text-cyan hover:bg-cyan/20 active:bg-cyan/40 transition-colors select-none touch-none";
+  const btnClass = "w-12 h-12 md:w-16 md:h-16 glass rounded-xl flex items-center justify-center text-cyan hover:bg-cyan/20 active:bg-cyan/40 transition-colors select-none touch-none";
 
   return (
-    <div className="fixed bottom-4 right-4 md:bottom-8 md:right-8 z-50 flex flex-col items-center pointer-events-auto">
+    <div className="fixed bottom-4 right-4 md:bottom-8 md:right-8 z-[1000] flex flex-col items-center pointer-events-auto">
       <div className="mb-2">
         <button 
           className={btnClass}

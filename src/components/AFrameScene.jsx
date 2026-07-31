@@ -154,63 +154,47 @@ export default function AFrameScene({ movementState, level = 1, currentStep = 1 
             <a-plane position="0 0 0" rotation="-90 0 0" width="100" height="100" color="#3e2723" roughness="1"></a-plane>
             
             {/* Sun & Additive Light Rays */}
-            <a-entity position="0 15 -15" visible={currentStep === 3}>
+            <a-entity position="0 15 -15" visible={currentStep >= 3}>
               <a-sphere radius="2" color="#fbbf24" material="emissive: #fbbf24; emissiveIntensity: 1"></a-sphere>
               <a-cone radius-bottom="20" radius-top="2" height="30" color="#ffeb3b" position="0 -10 0" opacity="0.1" transparent="true" material="blending: additive"></a-cone>
             </a-entity>
 
             {/* Murky River */}
             <a-plane id="murky-river" position="0 0.1 -6" rotation="-90 0 0" width="100" height="6" color="#5d4037" opacity="0.8">
-              {currentStep === 1 && (
-                <>
-                  <a-cylinder radius="0.2" height="3" color="#2b1a16" position="-2 0 1" rotation="90 30 0"></a-cylinder>
-                  <a-cylinder radius="0.2" height="2" color="#3e2723" position="2 0 -1" rotation="90 -20 0"></a-cylinder>
-                </>
-              )}
+              <a-cylinder radius="0.2" height="3" color="#2b1a16" position="-2 0 1" rotation="90 30 0" visible={currentStep === 1}></a-cylinder>
+              <a-cylinder radius="0.2" height="2" color="#3e2723" position="2 0 -1" rotation="90 -20 0" visible={currentStep === 1}></a-cylinder>
             </a-plane>
 
             {/* Tree Area 1 (Moved inland to z=-2) */}
             <a-entity position="-4 0 -2">
               <a-cylinder radius="0.3" height="0.5" color="#4e342e" position="0 0.25 0"></a-cylinder>
-              {currentStep === 1 && (
-                <a-cylinder radius="0.2" height="2" color="#3e2723" position="1.5 0.2 0" rotation="90 45 0"></a-cylinder>
-              )}
+              <a-cylinder radius="0.2" height="2" color="#3e2723" position="1.5 0.2 0" rotation="90 45 0" visible={currentStep === 1}></a-cylinder>
               
               {/* Falling Seed */}
-              {currentStep === 2 && (
-                <a-sphere radius="0.1" color="#8b5a2b" position="0 0.1 0.5" animation="property: position; from: 0 4 0.5; to: 0 0.1 0.5; dur: 1000; easing: easeOutBounce"></a-sphere>
-              )}
+              <a-sphere radius="0.1" color="#8b5a2b" position="0 0.1 0.5" visible={currentStep === 2} animation="property: position; from: 0 4 0.5; to: 0 0.1 0.5; dur: 1000; easing: easeOutBounce"></a-sphere>
 
               {/* Sapling -> Tree Wrapper */}
-              {currentStep >= 2 && (
-                <a-entity position="0 0.5 0" scale="0 0 0" animation={currentStep === 2 ? "property: scale; from: 0 0 0; to: 0.2 0.2 0.2; dur: 1000; delay: 1000" : currentStep === 3 ? "property: scale; from: 0.2 0.2 0.2; to: 2 2 2; dur: 2000; easing: easeOutElastic" : ""}>
-                  <a-cone radius-bottom="1" radius-top="0" height="2" color="#4ade80" position="0 1 0" scale="0.3 0.5 0.3"></a-cone>
-                </a-entity>
-              )}
+              <a-entity position="0 0.5 0" scale={currentStep < 2 ? "0 0 0" : currentStep === 2 ? "0.2 0.2 0.2" : "2 2 2"} visible={currentStep >= 2} animation={currentStep === 3 ? "property: scale; from: 0.2 0.2 0.2; to: 2 2 2; dur: 2000; easing: easeOutElastic" : ""}>
+                <a-cone radius-bottom="1" radius-top="0" height="2" color="#4ade80" position="0 1 0" scale="0.3 0.5 0.3"></a-cone>
+              </a-entity>
             </a-entity>
 
             {/* Tree Area 2 (Moved inland to z=-1) */}
             <a-entity position="5 0 -1">
               <a-cylinder radius="0.4" height="0.5" color="#3e2723" position="0 0.25 0"></a-cylinder>
-              {currentStep === 1 && (
-                <a-cylinder radius="0.3" height="3" color="#2b1a16" position="-2 0.3 1" rotation="90 -30 0"></a-cylinder>
-              )}
+              <a-cylinder radius="0.3" height="3" color="#2b1a16" position="-2 0.3 1" rotation="90 -30 0" visible={currentStep === 1}></a-cylinder>
 
               {/* Falling Seed */}
-              {currentStep === 2 && (
-                <a-sphere radius="0.1" color="#8b5a2b" position="0 0.1 0.5" animation="property: position; from: 0 4.5 0.5; to: 0 0.1 0.5; dur: 1100; easing: easeOutBounce; delay: 200"></a-sphere>
-              )}
+              <a-sphere radius="0.1" color="#8b5a2b" position="0 0.1 0.5" visible={currentStep === 2} animation="property: position; from: 0 4.5 0.5; to: 0 0.1 0.5; dur: 1100; easing: easeOutBounce; delay: 200"></a-sphere>
               
               {/* Sapling -> Tree Wrapper */}
-              {currentStep >= 2 && (
-                <a-entity position="0 0.5 0" scale="0 0 0" animation={currentStep === 2 ? "property: scale; from: 0 0 0; to: 0.25 0.25 0.25; dur: 1000; delay: 1200" : currentStep === 3 ? "property: scale; from: 0.25 0.25 0.25; to: 2.5 2.5 2.5; dur: 2200; easing: easeOutElastic; delay: 200" : ""}>
-                  <a-cone radius-bottom="1.2" radius-top="0" height="2.5" color="#4ade80" position="0 1.25 0" scale="0.3 0.5 0.3"></a-cone>
-                </a-entity>
-              )}
+              <a-entity position="0 0.5 0" scale={currentStep < 2 ? "0 0 0" : currentStep === 2 ? "0.25 0.25 0.25" : "2.5 2.5 2.5"} visible={currentStep >= 2} animation={currentStep === 3 ? "property: scale; from: 0.25 0.25 0.25; to: 2.5 2.5 2.5; dur: 2200; easing: easeOutElastic; delay: 200" : ""}>
+                <a-cone radius-bottom="1.2" radius-top="0" height="2.5" color="#4ade80" position="0 1.25 0" scale="0.3 0.5 0.3"></a-cone>
+              </a-entity>
             </a-entity>
 
             {/* Watering Can Animation in Step 3 */}
-            <a-entity visible={currentStep === 3} position="-3 3 -1" animation="property: rotation; from: 0 0 0; to: 0 0 45; dur: 1000; dir: alternate; loop: true">
+            <a-entity visible={currentStep >= 3} position="-3 3 -1" animation="property: rotation; from: 0 0 0; to: 0 0 45; dur: 1000; dir: alternate; loop: true">
               <a-cylinder radius="0.4" height="1" color="#94a3b8" rotation="0 0 0"></a-cylinder>
               <a-cylinder radius="0.1" height="1.5" color="#cbd5e1" position="-0.5 0.5 0" rotation="0 0 60"></a-cylinder>
               <a-sphere radius="0.1" color="#3b82f6" position="-1.2 0.8 0" animation="property: position; to: -1.2 -3 0; loop: true; dur: 800"></a-sphere>

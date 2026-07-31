@@ -334,7 +334,7 @@ function App() {
               setTimeout(() => {
                 setShowDialogue(false);
                 setShowMissionComplete(true);
-              }, 4000);
+              }, 8000);
             } else {
               triggerDialogue("Great job! Processing waste... Success!");
             }
@@ -365,7 +365,7 @@ function App() {
       setTimeout(() => {
         setShowDialogue(false);
         setShowMissionComplete(true);
-      }, 4000);
+      }, 8000);
     }
   };
 
@@ -382,7 +382,7 @@ function App() {
       setTimeout(() => {
         setShowDialogue(false);
         setShowMissionComplete(true);
-      }, 4000);
+      }, 8000);
     }
   };
 
@@ -404,7 +404,7 @@ function App() {
       setTimeout(() => {
         setShowDialogue(false);
         setShowMissionComplete(true);
-      }, 4000);
+      }, 8000);
     }
   };
 
@@ -426,7 +426,7 @@ function App() {
       setTimeout(() => {
         setShowDialogue(false);
         setShowMissionComplete(true);
-      }, 3000);
+      }, 8000);
     }
   };
 
@@ -459,9 +459,9 @@ function App() {
       {/* Global Audio Toggle Button */}
       <button 
         onClick={handleToggleMute}
-        className="fixed top-28 left-4 md:left-8 z-[999] p-3 rounded-full glass-cyan shadow-[0_0_15px_rgba(0,240,255,0.3)] hover:bg-cyan/20 active:scale-95 transition-all pointer-events-auto flex items-center justify-center border-cyan/50"
+        className="fixed top-4 right-4 z-[999] p-2 text-sm rounded-full glass-cyan shadow-[0_0_15px_rgba(0,240,255,0.3)] hover:bg-cyan/20 active:scale-95 transition-all pointer-events-auto flex items-center justify-center border-cyan/50"
       >
-        {isMuted ? <VolumeX size={24} className="text-red-400" /> : <Volume2 size={24} className="text-cyan" />}
+        {isMuted ? <VolumeX size={20} className="text-red-400" /> : <Volume2 size={20} className="text-cyan" />}
       </button>
 
       <AnimatePresence>
@@ -660,7 +660,7 @@ function App() {
 
             {/* Eco-Restoration System Dashboard */}
             <motion.div 
-              className="fixed top-24 left-4 md:left-8 z-50 glass-cyan p-3 md:p-5 rounded-2xl w-48 md:w-80 shadow-[0_0_20px_rgba(0,240,255,0.2)] pointer-events-none"
+              className="fixed top-24 left-1/2 -translate-x-1/2 md:translate-x-0 md:left-8 z-50 glass-cyan p-3 md:p-5 rounded-2xl w-[85%] md:w-80 shadow-[0_0_20px_rgba(0,240,255,0.2)] pointer-events-none"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
             >
@@ -671,19 +671,19 @@ function App() {
                 <h2 className="text-lg font-bold text-white uppercase tracking-widest shadow-cyan text-shadow-sm">Eco-Restoration<br/><span className="text-cyan text-xs">System</span></h2>
               </div>
               <ul className="space-y-3">
-                <li className="flex items-center space-x-3 text-sm">
+                <li className="flex items-center space-x-3 text-xs md:text-sm">
                   <div className={`w-5 h-5 rounded flex items-center justify-center border ${currentStep > 1 ? 'bg-cyan-500 border-cyan-400' : 'border-white/30'}`}>
                     {currentStep > 1 && <CheckCircle className="w-3 h-3 text-white" />}
                   </div>
                   <span className={currentStep > 1 ? "text-white/50 line-through" : "text-white"}>Clean River Area</span>
                 </li>
-                <li className="flex items-center space-x-3 text-sm">
+                <li className="flex items-center space-x-3 text-xs md:text-sm">
                   <div className={`w-5 h-5 rounded flex items-center justify-center border ${currentStep > 2 ? 'bg-green-500 border-green-400' : 'border-white/30'}`}>
                     {currentStep > 2 && <CheckCircle className="w-3 h-3 text-white" />}
                   </div>
                   <span className={currentStep > 2 ? "text-white/50 line-through" : "text-white"}>Plant Seeds</span>
                 </li>
-                <li className="flex items-center space-x-3 text-sm">
+                <li className="flex items-center space-x-3 text-xs md:text-sm">
                   <div className={`w-5 h-5 rounded flex items-center justify-center border ${currentStep > 3 ? 'bg-yellow-500 border-yellow-400' : 'border-white/30'}`}>
                     {currentStep > 3 && <CheckCircle className="w-3 h-3 text-white" />}
                   </div>
@@ -729,7 +729,7 @@ function App() {
 
             {/* Fire Mitigation System Dashboard */}
             <motion.div 
-              className="fixed top-24 left-4 md:left-8 z-50 glass-cyan p-3 md:p-5 rounded-2xl w-48 md:w-80 shadow-[0_0_20px_rgba(0,240,255,0.2)] pointer-events-none"
+              className="fixed top-24 left-1/2 -translate-x-1/2 md:translate-x-0 md:left-8 z-50 glass-cyan p-3 md:p-5 rounded-2xl w-[85%] md:w-80 shadow-[0_0_20px_rgba(0,240,255,0.2)] pointer-events-none"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
             >
@@ -740,13 +740,13 @@ function App() {
                 <h2 className="text-lg font-bold text-white uppercase tracking-widest shadow-cyan text-shadow-sm">Fire Mitigation<br/><span className="text-cyan text-xs">System</span></h2>
               </div>
               <ul className="space-y-3">
-                <li className="flex items-center space-x-3 text-sm">
+                <li className="flex items-center space-x-3 text-xs md:text-sm">
                   <div className={`w-5 h-5 rounded flex items-center justify-center border ${currentStep > 1 ? 'bg-cyan-500 border-cyan-400' : 'border-white/30'}`}>
                     {currentStep > 1 && <CheckCircle className="w-3 h-3 text-white" />}
                   </div>
                   <span className={currentStep > 1 ? "text-white/50 line-through" : "text-white"}>Deploy Rescue Drone</span>
                 </li>
-                <li className="flex items-center space-x-3 text-sm">
+                <li className="flex items-center space-x-3 text-xs md:text-sm">
                   <div className={`w-5 h-5 rounded flex items-center justify-center border ${currentStep > 2 ? 'bg-blue-500 border-blue-400' : 'border-white/30'}`}>
                     {currentStep > 2 && <CheckCircle className="w-3 h-3 text-white" />}
                   </div>
@@ -792,7 +792,7 @@ function App() {
 
             {/* Marine Bio-Tech System Dashboard */}
             <motion.div 
-              className="fixed top-24 left-4 md:left-8 z-50 glass-cyan p-3 md:p-5 rounded-2xl w-48 md:w-80 shadow-[0_0_20px_rgba(0,240,255,0.2)] pointer-events-none"
+              className="fixed top-24 left-1/2 -translate-x-1/2 md:translate-x-0 md:left-8 z-50 glass-cyan p-3 md:p-5 rounded-2xl w-[85%] md:w-80 shadow-[0_0_20px_rgba(0,240,255,0.2)] pointer-events-none"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
             >
@@ -803,19 +803,19 @@ function App() {
                 <h2 className="text-lg font-bold text-white uppercase tracking-widest shadow-cyan text-shadow-sm">Marine Bio-Tech<br/><span className="text-cyan text-xs">System</span></h2>
               </div>
               <ul className="space-y-3">
-                <li className="flex items-center space-x-3 text-sm">
+                <li className="flex items-center space-x-3 text-xs md:text-sm">
                   <div className={`w-5 h-5 rounded flex items-center justify-center border ${currentStep > 1 ? 'bg-cyan-500 border-cyan-400' : 'border-white/30'}`}>
                     {currentStep > 1 && <CheckCircle className="w-3 h-3 text-white" />}
                   </div>
                   <span className={currentStep > 1 ? "text-white/50 line-through" : "text-white"}>Deploy IoT Rover</span>
                 </li>
-                <li className="flex items-center space-x-3 text-sm">
+                <li className="flex items-center space-x-3 text-xs md:text-sm">
                   <div className={`w-5 h-5 rounded flex items-center justify-center border ${currentStep > 2 ? 'bg-yellow-500 border-yellow-400' : 'border-white/30'}`}>
                     {currentStep > 2 && <CheckCircle className="w-3 h-3 text-white" />}
                   </div>
                   <span className={currentStep > 2 ? "text-white/50 line-through" : "text-white"}>Clean Marine Waste</span>
                 </li>
-                <li className="flex items-center space-x-3 text-sm">
+                <li className="flex items-center space-x-3 text-xs md:text-sm">
                   <div className={`w-5 h-5 rounded flex items-center justify-center border ${currentStep > 3 ? 'bg-pink-500 border-pink-400' : 'border-white/30'}`}>
                     {currentStep > 3 && <CheckCircle className="w-3 h-3 text-white" />}
                   </div>
@@ -861,7 +861,7 @@ function App() {
 
             {/* Smart Agriculture System Dashboard */}
             <motion.div 
-              className="fixed top-24 left-4 md:left-8 z-50 glass-cyan p-3 md:p-5 rounded-2xl w-48 md:w-80 shadow-[0_0_20px_rgba(0,240,255,0.2)] pointer-events-none"
+              className="fixed top-24 left-1/2 -translate-x-1/2 md:translate-x-0 md:left-8 z-50 glass-cyan p-3 md:p-5 rounded-2xl w-[85%] md:w-80 shadow-[0_0_20px_rgba(0,240,255,0.2)] pointer-events-none"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
             >
@@ -872,19 +872,19 @@ function App() {
                 <h2 className="text-lg font-bold text-white uppercase tracking-widest shadow-cyan text-shadow-sm">Smart Agriculture<br/><span className="text-cyan text-xs">System</span></h2>
               </div>
               <ul className="space-y-3">
-                <li className="flex items-center space-x-3 text-sm">
+                <li className="flex items-center space-x-3 text-xs md:text-sm">
                   <div className={`w-5 h-5 rounded flex items-center justify-center border ${currentStep > 1 ? 'bg-cyan-500 border-cyan-400' : 'border-white/30'}`}>
                     {currentStep > 1 && <CheckCircle className="w-3 h-3 text-white" />}
                   </div>
                   <span className={currentStep > 1 ? "text-white/50 line-through" : "text-white"}>Scan Dry Soil</span>
                 </li>
-                <li className="flex items-center space-x-3 text-sm">
+                <li className="flex items-center space-x-3 text-xs md:text-sm">
                   <div className={`w-5 h-5 rounded flex items-center justify-center border ${currentStep > 2 ? 'bg-blue-500 border-blue-400' : 'border-white/30'}`}>
                     {currentStep > 2 && <CheckCircle className="w-3 h-3 text-white" />}
                   </div>
                   <span className={currentStep > 2 ? "text-white/50 line-through" : "text-white"}>Connect AI Pipes</span>
                 </li>
-                <li className="flex items-center space-x-3 text-sm">
+                <li className="flex items-center space-x-3 text-xs md:text-sm">
                   <div className={`w-5 h-5 rounded flex items-center justify-center border ${currentStep > 3 ? 'bg-green-500 border-green-400' : 'border-white/30'}`}>
                     {currentStep > 3 && <CheckCircle className="w-3 h-3 text-white" />}
                   </div>
@@ -930,7 +930,7 @@ function App() {
 
             {/* Microgrid Dashboard */}
             <motion.div 
-              className="fixed top-24 left-4 md:left-8 z-50 glass-cyan p-3 md:p-5 rounded-2xl w-48 md:w-80 shadow-[0_0_20px_rgba(0,240,255,0.2)] pointer-events-none"
+              className="fixed top-24 left-1/2 -translate-x-1/2 md:translate-x-0 md:left-8 z-50 glass-cyan p-3 md:p-5 rounded-2xl w-[85%] md:w-80 shadow-[0_0_20px_rgba(0,240,255,0.2)] pointer-events-none"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
             >
@@ -941,19 +941,19 @@ function App() {
                 <h2 className="text-lg font-bold text-white uppercase tracking-widest shadow-cyan text-shadow-sm">Renewable Microgrid<br/><span className="text-cyan text-xs">System</span></h2>
               </div>
               <ul className="space-y-3">
-                <li className="flex items-center space-x-3 text-sm">
+                <li className="flex items-center space-x-3 text-xs md:text-sm">
                   <div className={`w-5 h-5 rounded flex items-center justify-center border ${currentStep > 1 ? 'bg-cyan-500 border-cyan-400' : 'border-white/30'}`}>
                     {currentStep > 1 && <CheckCircle className="w-3 h-3 text-white" />}
                   </div>
                   <span className={currentStep > 1 ? "text-white/50 line-through" : "text-white"}>Build Smart Grid</span>
                 </li>
-                <li className="flex items-center space-x-3 text-sm">
+                <li className="flex items-center space-x-3 text-xs md:text-sm">
                   <div className={`w-5 h-5 rounded flex items-center justify-center border ${currentStep > 2 ? 'bg-yellow-500 border-yellow-400' : 'border-white/30'}`}>
                     {currentStep > 2 && <CheckCircle className="w-3 h-3 text-white" />}
                   </div>
                   <span className={currentStep > 2 ? "text-white/50 line-through" : "text-white"}>Align Solar Panels</span>
                 </li>
-                <li className="flex items-center space-x-3 text-sm">
+                <li className="flex items-center space-x-3 text-xs md:text-sm">
                   <div className={`w-5 h-5 rounded flex items-center justify-center border ${currentStep > 3 ? 'bg-green-500 border-green-400' : 'border-white/30'}`}>
                     {currentStep > 3 && <CheckCircle className="w-3 h-3 text-white" />}
                   </div>
@@ -1022,6 +1022,15 @@ function App() {
           </AnimatePresence>
         </>
       )}
+
+      {/* Certificate Floating Icon */}
+      <img 
+        src="/icon_sertif.png" 
+        id="btn-show-cert" 
+        alt="Certificate" 
+        className="fixed bottom-4 right-4 w-10 h-10 md:w-14 md:h-14 cursor-pointer z-[100] drop-shadow-lg hover:scale-110 transition-transform pointer-events-auto"
+        onClick={() => setShowCertificate(true)}
+      />
 
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes fadeIn {
