@@ -9,37 +9,7 @@ import CertificateOverlay from './components/CertificateOverlay';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, Recycle, Maximize, Minimize, CheckCircle, Leaf, Flame, Droplets, Zap, Volume2, VolumeX } from 'lucide-react';
 
-const bgmOverall = new Audio('/music/overall-music.mp3');
-const bgmLevel1 = new Audio('/music/level-1.mp3');
-const bgmLevel2 = new Audio('/music/level-2.mp3');
-const bgmLevel3 = new Audio('/music/level-3.mp3');
-const bgmLevel4 = new Audio('/music/level-4.mp3');
-const bgmLevel5 = new Audio('/music/level-5.mp3');
-const bgmLevel6 = new Audio('/music/level-6.mp3');
-const bgmCongrats = new Audio('/music/congratulations.mp3');
-const allTracks = [bgmOverall, bgmLevel1, bgmLevel2, bgmLevel3, bgmLevel4, bgmLevel5, bgmLevel6, bgmCongrats];
-allTracks.forEach(t => t.loop = true);
-
-let currentTrack = null;
-let isAudioMuted = false;
-
-const playMusic = (track) => {
-  allTracks.forEach(t => { t.pause(); t.currentTime = 0; });
-  currentTrack = track;
-  if (track && !isAudioMuted) {
-    track.play().catch(e => console.log("Audio play blocked:", e));
-  }
-};
-
-const toggleMuteGlobal = (muted) => {
-  isAudioMuted = muted;
-  if (muted) {
-    allTracks.forEach(t => t.pause());
-  } else if (currentTrack) {
-    currentTrack.play().catch(e => console.log("Audio play blocked:", e));
-  }
-};
-
+import { playMusic, toggleMuteGlobal, isMuted } from './utils/audioManager';
 function LevelApp({ levelId }) {
   useEffect(() => {
     playMusic('level' + levelId);
@@ -97,7 +67,7 @@ function LevelApp({ levelId }) {
 
   const handleEnterSystem = () => {
     setPhase(1);
-    playMusic(bgmOverall);
+    playMusic('overall');
   };
 
   const handleIntroComplete = (name) => {
@@ -112,12 +82,12 @@ function LevelApp({ levelId }) {
         return;
       }
     }
-    if (levelId === 1) { playMusic(bgmLevel1); setPhase(2); }
-    else if (levelId === 2) { playMusic(bgmLevel2); setPhase(4); }
-    else if (levelId === 3) { playMusic(bgmLevel3); setPhase(6); }
-    else if (levelId === 4) { playMusic(bgmLevel4); setPhase(8); }
-    else if (levelId === 5) { playMusic(bgmLevel5); setPhase(10); }
-    else if (levelId === 6) { playMusic(bgmLevel6); setPhase(12); }
+    if (levelId === 1) { playMusic('level1'); setPhase(2); }
+    else if (levelId === 2) { playMusic('level2'); setPhase(4); }
+    else if (levelId === 3) { playMusic('level3'); setPhase(6); }
+    else if (levelId === 4) { playMusic('level4'); setPhase(8); }
+    else if (levelId === 5) { playMusic('level5'); setPhase(10); }
+    else if (levelId === 6) { playMusic('level6'); setPhase(12); }
   };
 
   const handleReturnToMenu = () => {
@@ -141,7 +111,7 @@ function LevelApp({ levelId }) {
     setPhase(1);
     setCurrentStep(1);
     setTrashCollected(0);
-    playMusic(bgmOverall);
+    playMusic('overall');
   };
 
   const handleDownloadCertificate = (name, location) => {
@@ -452,7 +422,7 @@ function LevelApp({ levelId }) {
       setTimeout(() => {
         setShowDialogue(false);
         setShowCertificate(true);
-        playMusic(bgmCongrats);
+        playMusic('congrats');
       }, 8000);
     }
   };
