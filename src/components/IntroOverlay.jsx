@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, Trash2, Leaf, Cpu, ChevronRight, Play } from 'lucide-react';
+import { Send, Trash2, Leaf, Cpu, ChevronRight, Play, Lock } from 'lucide-react';
+import { isLevelUnlocked } from '../utils/gameState';
 
 
 
@@ -85,10 +86,12 @@ export default function IntroOverlay({ onComplete, initialName = '', onLevelSele
 
         {step === 2 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 p-4 md:p-8 w-full max-w-5xl mx-auto h-[80vh] overflow-y-auto pr-2 custom-scrollbar">
-            {levels.map((lvl, idx) => (
+            {levels.map((lvl, idx) => {
+              const unlocked = isLevelUnlocked(lvl.id);
+              return (
               <motion.div
                 key={lvl.id}
-                className="glass p-6 rounded-2xl flex flex-col justify-between border-white/10 hover:border-cyan/50 hover:bg-white/5 transition-all group"
+                className={`glass p-6 rounded-2xl flex flex-col justify-between border-white/10 ${unlocked ? 'hover:border-cyan/50 hover:bg-white/5' : 'opacity-70 grayscale'} transition-all group`}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.1 }}
@@ -100,18 +103,28 @@ export default function IntroOverlay({ onComplete, initialName = '', onLevelSele
                   <h3 className="text-xl font-bold text-white mb-1 group-hover:text-cyan transition-colors">{lvl.name}</h3>
                   <p className="text-white/60 text-sm mb-6">{lvl.desc}</p>
                 </div>
-                <button
-                  onClick={() => {
-                    onComplete(name);
-                    onLevelSelect(lvl.id);
-                  }}
-                  className="w-full glass-cyan py-3 rounded-xl text-white font-bold tracking-widest text-xs uppercase flex items-center justify-center space-x-2 hover:bg-cyan hover:text-navy-900 transition-all shadow-[0_0_15px_rgba(0,240,255,0.2)]"
-                >
-                  <Play size={14} />
-                  <span>INITIATE PROTOCOL</span>
-                </button>
+                {unlocked ? (
+                  <button
+                    onClick={() => {
+                      onComplete(name);
+                      onLevelSelect(lvl.id);
+                    }}
+                    className="w-full glass-cyan py-3 rounded-xl text-white font-bold tracking-widest text-xs uppercase flex items-center justify-center space-x-2 hover:bg-cyan hover:text-navy-900 transition-all shadow-[0_0_15px_rgba(0,240,255,0.2)]"
+                  >
+                    <Play size={14} />
+                    <span>INITIATE PROTOCOL</span>
+                  </button>
+                ) : (
+                  <button
+                    disabled
+                    className="w-full glass py-3 rounded-xl text-white/50 font-bold tracking-widest text-xs uppercase flex items-center justify-center space-x-2 cursor-not-allowed"
+                  >
+                    <Lock size={14} />
+                    <span>LOCKED</span>
+                  </button>
+                )}
               </motion.div>
-            ))}
+            )})}
           </div>
         )}
       </motion.div>

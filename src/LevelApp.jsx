@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import IntroOverlay from './components/IntroOverlay';
+
 import AFrameScene from './components/AFrameScene';
 import DPadOverlay from './components/DPadOverlay';
-import LevelTransition from './components/LevelTransition';
-import OutroOverlay from './components/OutroOverlay';
+
+
 import MissionCompleteOverlay from './components/MissionCompleteOverlay';
 import CertificateOverlay from './components/CertificateOverlay';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -40,10 +40,14 @@ const toggleMuteGlobal = (muted) => {
   }
 };
 
-function App() {
-  const [phase, setPhase] = useState(0); // 0: Gate, 1: Intro/Menu, 2: Level 1, 3: Transition, 4: Level 2
+function LevelApp({ levelId }) {
+  useEffect(() => {
+    playMusic('level' + levelId);
+  }, [levelId]);
+
+  const [phase, setPhase] = useState(levelId * 2);
   const [userName, setUserName] = useState('');
-  const [isMuted, setIsMuted] = useState(false);
+  const [isMutedState, setIsMutedState] = useState(isMuted());
   const [showMissionComplete, setShowMissionComplete] = useState(false);
   const [unlockedLevels, setUnlockedLevels] = useState([false, false, false, false, false, false]);
   const [showCertificate, setShowCertificate] = useState(false);
@@ -86,8 +90,8 @@ function App() {
   };
 
   const handleToggleMute = () => {
-    const newMuted = !isMuted;
-    setIsMuted(newMuted);
+    const newMuted = !isMutedState;
+    setIsMutedState(newMuted);
     toggleMuteGlobal(newMuted);
   };
 
@@ -461,40 +465,13 @@ function App() {
         onClick={handleToggleMute}
         className="fixed top-4 right-4 z-[999] p-2 text-sm rounded-full glass-cyan shadow-[0_0_15px_rgba(0,240,255,0.3)] hover:bg-cyan/20 active:scale-95 transition-all pointer-events-auto flex items-center justify-center border-cyan/50"
       >
-        {isMuted ? <VolumeX size={20} className="text-red-400" /> : <Volume2 size={20} className="text-cyan" />}
+        {isMutedState ? <VolumeX size={20} className="text-red-400" /> : <Volume2 size={20} className="text-cyan" />}
       </button>
 
       <AnimatePresence>
-        {phase === 0 && (
-          <motion.div 
-            className="fixed inset-0 z-[999] bg-navy-900/90 backdrop-blur-xl flex flex-col items-center justify-center pointer-events-auto"
-            exit={{ opacity: 0 }}
-          >
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-cyan/20 rounded-full blur-[100px] pointer-events-none"></div>
-            <img src="/Logo EvIEEE.png" alt="EvIEEE Logo" className="h-32 w-auto mx-auto mb-8 drop-shadow-[0_0_20px_rgba(0,255,255,0.5)] relative z-10" style={{ mixBlendMode: 'screen' }} />
-            <motion.button 
-              id="btn-enter-system"
-              onClick={handleEnterSystem}
-              className="glass-cyan px-10 py-5 rounded-full text-white font-bold tracking-widest text-lg uppercase shadow-[0_0_30px_rgba(0,240,255,0.4)] hover:shadow-[0_0_50px_rgba(0,240,255,0.6)] hover:bg-cyan hover:text-navy-900 transition-all relative z-10 border-cyan/50"
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              ▶️ START ADVENTURE
-            </motion.button>
-            <div className="absolute bottom-4 w-full text-center text-xs text-cyan-400/60 tracking-widest uppercase">
-              Copyright created by Vallen for IEEE Metaverse Grand Challenge for Simulation Based Learning 2026
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+        
 
-      <AnimatePresence>
-        {phase === 1 && (
-          <IntroOverlay key="intro" onComplete={handleIntroComplete} onLevelSelect={handleLevelSelect} initialName={userName} />
-        )}
-      </AnimatePresence>
+      
 
       <AnimatePresence>
         {showMissionComplete && (
@@ -508,22 +485,7 @@ function App() {
         )}
       </AnimatePresence>
 
-      {/* Transitions */}
-      {phase === 3 && (
-        <LevelTransition key="trans1" fromLevel={1} toLevel={2} onComplete={() => setPhase(4)} />
-      )}
-      {phase === 5 && (
-        <LevelTransition key="trans2" fromLevel={2} toLevel={3} onComplete={() => setPhase(6)} />
-      )}
-      {phase === 7 && (
-        <LevelTransition key="trans3" fromLevel={3} toLevel={4} onComplete={() => setPhase(8)} />
-      )}
-      {phase === 9 && (
-        <LevelTransition key="trans4" fromLevel={4} toLevel={5} onComplete={() => setPhase(10)} />
-      )}
-      {phase === 11 && (
-        <LevelTransition key="trans5" fromLevel={5} toLevel={6} onComplete={() => setPhase(12)} />
-      )}
+      
 
       {/* A-Frame scene is wrapped in z-0 to stay behind UI */}
       {(phase === 2 || phase === 4 || phase === 6 || phase === 8 || phase === 10 || phase === 12) && (
@@ -985,12 +947,7 @@ function App() {
         )}
       </AnimatePresence>
 
-      {/* Phase 13 (Outro) */}
-      <AnimatePresence>
-        {phase === 13 && (
-          <OutroOverlay key="outro" userName={userName} />
-        )}
-      </AnimatePresence>
+      
 
       {/* Shared UI Overlays */}
       {(phase === 2 || phase === 4 || phase === 6 || phase === 8 || phase === 10 || phase === 12) && (
@@ -1044,4 +1001,4 @@ function App() {
   );
 }
 
-export default App;
+export default LevelApp;
