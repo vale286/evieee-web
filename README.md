@@ -1,5 +1,5 @@
 # EvIEEE: Smart City and Eco-Restoration Simulation
-![EvIEEE Banner](./public/Logo%20EvIEEE.png)
+![EvIEEE Banner](./public/Logo_EvIEEE-removebg.png)
 
 > **An Immersive WebXR Educational Platform built for the IEEE Metaverse Grand Challenge for Simulation Based Learning 2026.**
 
