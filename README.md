@@ -64,6 +64,6 @@ Due to browser CORS policies regarding 3D models and audio files, this project m
 ---
 
 ## 📜 Copyright & Acknowledgments
-**Copyright created by Vallen for IEEE Metaverse Grand Challenge for Simulation Based Learning 2026.**
+**Copyright: Created by Vallen for IEEE Metaverse Grand Challenge for Simulation Based Learning 2026.**
 
 Built with passion for a sustainable future and a smarter Nusantara. 🌿
