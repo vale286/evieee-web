@@ -357,7 +357,7 @@ function LevelApp({ levelId }) {
   const handleCelebesAction = () => {
     if (currentStep === 1) {
       setCurrentStep(2);
-      setDialogue("IoT Rover deployed! Initiating marine waste cleanup protocol.");
+      setDialogue("IoT Rover deployed! Starting marine waste clean-up.");
       setShowDialogue(true);
       setTimeout(() => setShowDialogue(false), 6000);
     } else if (currentStep === 2) {
@@ -628,7 +628,7 @@ function LevelApp({ levelId }) {
                   {currentStep === 1 ? "🧹" : currentStep === 2 ? "🌱" : "☀️"}
                 </span>
                 <span>
-                  {currentStep === 1 ? "Initiate Clean-Up" : currentStep === 2 ? "Plant Seeds" : "Give Water & Sunlight"}
+                  {currentStep === 1 ? "Start Clean-Up" : currentStep === 2 ? "Plant Seeds" : "Give Water & Sunlight"}
                 </span>
               </motion.button>
             )}

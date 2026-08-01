@@ -56,7 +56,7 @@ export default function IntroOverlay({ onComplete, initialName = '', onLevelSele
       </div>
 
       <motion.div
-        className={`pointer-events-auto w-full mx-4 glass-cyan p-8 rounded-2xl relative overflow-hidden flex flex-col min-h-[300px] ${step === 2 ? 'max-w-3xl' : 'max-w-lg'}`}
+        className={`pointer-events-auto w-full mx-4 glass-cyan p-6 rounded-2xl relative overflow-hidden flex flex-col min-h-[300px] ${step === 2 ? 'max-w-2xl' : 'max-w-lg'}`}
         initial={{ opacity: 0, y: 50, scale: 0.9 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
@@ -78,14 +78,14 @@ export default function IntroOverlay({ onComplete, initialName = '', onLevelSele
           </div>
         ) : (
           <div className="flex flex-col items-center mb-8 pb-4 text-center">
-            <img src="/Logo EvIEEE.png" alt="EvIEEE Logo" className="h-24 w-auto mx-auto mb-4 drop-shadow-[0_0_15px_rgba(0,255,255,0.5)]" style={{ mixBlendMode: 'screen' }} />
+            <img src="/Logo EvIEEE.png" alt="EvIEEE Logo" className="h-16 w-auto mx-auto mb-4 drop-shadow-[0_0_15px_rgba(0,255,255,0.5)]" style={{ mixBlendMode: 'screen' }} />
             <h2 className="text-white font-bold text-2xl tracking-widest uppercase">Nusantara Map</h2>
             <p className="text-cyan/70 text-sm tracking-widest mt-1">Select a Level to Begin</p>
           </div>
         )}
 
         {step === 2 && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 p-4 md:p-8 w-full max-w-4xl mx-auto max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 p-4 md:p-6 w-full max-w-4xl mx-auto max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar">
             {levels.map((lvl, idx) => {
               const unlocked = isLevelUnlocked(lvl.id);
               return (

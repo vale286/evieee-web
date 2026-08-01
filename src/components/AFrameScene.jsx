@@ -174,7 +174,7 @@ export default function AFrameScene({ movementState, level = 1, currentStep = 1 
               <a-sphere radius="0.1" color="#8b5a2b" position="0 0.1 0.5" visible={currentStep === 2} animation="property: position; from: 0 4 0.5; to: 0 0.1 0.5; dur: 1000; easing: easeOutBounce"></a-sphere>
 
               {/* Sapling -> Tree Wrapper */}
-              <a-entity position="0 0.5 0" scale={currentStep < 2 ? "0 0 0" : currentStep === 2 ? "0.2 0.2 0.2" : "2 2 2"} visible={currentStep >= 2} animation={currentStep === 3 ? "property: scale; from: 0.2 0.2 0.2; to: 2 2 2; dur: 2000; easing: easeOutElastic" : ""}>
+              <a-entity position="0 0.5 0" scale={currentStep < 2 ? "0 0 0" : currentStep === 2 ? "0.2 0.2 0.2" : "2 2 2"} visible={currentStep >= 2} animation={currentStep === 3 ? "property: scale; from: 0.2 0.2 0.2; to: 2 2 2; dur: 2000; easing: easeOutElastic" : undefined}>
                 <a-cone radius-bottom="1" radius-top="0" height="2" color="#4ade80" position="0 1 0" scale="0.3 0.5 0.3"></a-cone>
               </a-entity>
             </a-entity>
@@ -188,7 +188,7 @@ export default function AFrameScene({ movementState, level = 1, currentStep = 1 
               <a-sphere radius="0.1" color="#8b5a2b" position="0 0.1 0.5" visible={currentStep === 2} animation="property: position; from: 0 4.5 0.5; to: 0 0.1 0.5; dur: 1100; easing: easeOutBounce; delay: 200"></a-sphere>
               
               {/* Sapling -> Tree Wrapper */}
-              <a-entity position="0 0.5 0" scale={currentStep < 2 ? "0 0 0" : currentStep === 2 ? "0.25 0.25 0.25" : "2.5 2.5 2.5"} visible={currentStep >= 2} animation={currentStep === 3 ? "property: scale; from: 0.25 0.25 0.25; to: 2.5 2.5 2.5; dur: 2200; easing: easeOutElastic; delay: 200" : ""}>
+              <a-entity position="0 0.5 0" scale={currentStep < 2 ? "0 0 0" : currentStep === 2 ? "0.25 0.25 0.25" : "2.5 2.5 2.5"} visible={currentStep >= 2} animation={currentStep === 3 ? "property: scale; from: 0.25 0.25 0.25; to: 2.5 2.5 2.5; dur: 2200; easing: easeOutElastic; delay: 200" : undefined}>
                 <a-cone radius-bottom="1.2" radius-top="0" height="2.5" color="#4ade80" position="0 1.25 0" scale="0.3 0.5 0.3"></a-cone>
               </a-entity>
             </a-entity>
@@ -245,7 +245,7 @@ export default function AFrameScene({ movementState, level = 1, currentStep = 1 
             </a-entity>
 
             {/* Crying Orangutan (Moved back to z=-7) */}
-            <a-entity id="orangutan" position="-1 0 -7" animation={currentStep >= 3 ? "property: position; to: -1 0.5 -7; dir: alternate; loop: true; dur: 300" : ""}>
+            <a-entity id="orangutan" position="-1 0 -7" animation={currentStep >= 3 ? "property: position; to: -1 0.5 -7; dir: alternate; loop: true; dur: 300" : undefined}>
               <a-text value="Trapped Orangutan" color="#fbbf24" align="center" position="0 3 0" scale="2 2 2"></a-text>
               {/* Body */}
               <a-cylinder radius="0.7" height="1.5" color="#c96b1e" position="0 0.75 0"></a-cylinder>
@@ -304,9 +304,9 @@ export default function AFrameScene({ movementState, level = 1, currentStep = 1 
               <a-sphere radius="3" position="0 0 0" scale="1 0.3 1" color={currentStep < 4 ? "#475569" : "#8b5a2b"}></a-sphere>
               
               {/* Dead Corals (Become colorful when planted) */}
-              <a-cylinder radius="0.2" height="2" position="-1 0.5 0" color={currentStep < 4 ? "#64748b" : "#ff1493"} rotation="15 -20 0" animation={currentStep === 4 ? "property: scale; from: 1 1 1; to: 1.2 1.5 1.2; dur: 2000; easing: easeOutElastic" : ""}></a-cylinder>
-              <a-cylinder radius="0.15" height="1.5" position="1 0.3 1" color={currentStep < 4 ? "#64748b" : "#00fa9a"} rotation="-10 40 0" animation={currentStep === 4 ? "property: scale; from: 1 1 1; to: 1.5 2 1.5; dur: 2200; easing: easeOutElastic" : ""}></a-cylinder>
-              <a-cylinder radius="0.25" height="1" position="0.5 0.5 -1" color={currentStep < 4 ? "#94a3b8" : "#ff4500"} rotation="20 10 0" animation={currentStep === 4 ? "property: scale; from: 1 1 1; to: 2 1.5 2; dur: 1800; easing: easeOutElastic" : ""}></a-cylinder>
+              <a-cylinder radius="0.2" height="2" position="-1 0.5 0" color={currentStep < 4 ? "#64748b" : "#ff1493"} rotation="15 -20 0" animation={currentStep === 4 ? "property: scale; from: 1 1 1; to: 1.2 1.5 1.2; dur: 2000; easing: easeOutElastic" : undefined}></a-cylinder>
+              <a-cylinder radius="0.15" height="1.5" position="1 0.3 1" color={currentStep < 4 ? "#64748b" : "#00fa9a"} rotation="-10 40 0" animation={currentStep === 4 ? "property: scale; from: 1 1 1; to: 1.5 2 1.5; dur: 2200; easing: easeOutElastic" : undefined}></a-cylinder>
+              <a-cylinder radius="0.25" height="1" position="0.5 0.5 -1" color={currentStep < 4 ? "#94a3b8" : "#ff4500"} rotation="20 10 0" animation={currentStep === 4 ? "property: scale; from: 1 1 1; to: 2 1.5 2; dur: 1800; easing: easeOutElastic" : undefined}></a-cylinder>
             </a-entity>
 
             {/* Marine Waste */}
@@ -357,19 +357,19 @@ export default function AFrameScene({ movementState, level = 1, currentStep = 1 
         {level === 5 && (
           <>
             {/* Level 5: Nusa Environment */}
-            <a-plane position="0 0 0" rotation="-90 0 0" width="100" height="100" color={currentStep < 3 ? "#d2b48c" : "#228b22"} roughness="1" animation={currentStep === 3 ? "property: components.material.material.color; type: color; to: #228b22; dur: 2000; easing: easeInOutQuad" : ""}></a-plane>
+            <a-plane position="0 0 0" rotation="-90 0 0" width="100" height="100" color={currentStep < 3 ? "#d2b48c" : "#228b22"} roughness="1" animation={currentStep === 3 ? "property: components.material.material.color; type: color; to: #228b22; dur: 2000; easing: easeInOutQuad" : undefined}></a-plane>
 
             {/* Farm Area */}
             <a-entity position="0 0 -8">
               {/* Dry Plants */}
               <a-entity position="-3 0 0">
-                 <a-cone radius-bottom="0.5" radius-top="0" height={currentStep < 4 ? "0.5" : "2"} color={currentStep < 4 ? "#8b5a2b" : "#32cd32"} position="0 0.25 0" animation={currentStep === 4 ? "property: scale; from: 1 1 1; to: 1.5 3 1.5; dur: 2000; easing: easeOutElastic" : ""}></a-cone>
+                 <a-cone radius-bottom="0.5" radius-top="0" height={currentStep < 4 ? "0.5" : "2"} color={currentStep < 4 ? "#8b5a2b" : "#32cd32"} position="0 0.25 0" animation={currentStep === 4 ? "property: scale; from: 1 1 1; to: 1.5 3 1.5; dur: 2000; easing: easeOutElastic" : undefined}></a-cone>
               </a-entity>
               <a-entity position="0 0 0">
-                 <a-cone radius-bottom="0.5" radius-top="0" height={currentStep < 4 ? "0.5" : "2.2"} color={currentStep < 4 ? "#8b5a2b" : "#32cd32"} position="0 0.25 0" animation={currentStep === 4 ? "property: scale; from: 1 1 1; to: 1.5 3 1.5; dur: 2200; easing: easeOutElastic" : ""}></a-cone>
+                 <a-cone radius-bottom="0.5" radius-top="0" height={currentStep < 4 ? "0.5" : "2.2"} color={currentStep < 4 ? "#8b5a2b" : "#32cd32"} position="0 0.25 0" animation={currentStep === 4 ? "property: scale; from: 1 1 1; to: 1.5 3 1.5; dur: 2200; easing: easeOutElastic" : undefined}></a-cone>
               </a-entity>
               <a-entity position="3 0 0">
-                 <a-cone radius-bottom="0.5" radius-top="0" height={currentStep < 4 ? "0.5" : "1.8"} color={currentStep < 4 ? "#8b5a2b" : "#32cd32"} position="0 0.25 0" animation={currentStep === 4 ? "property: scale; from: 1 1 1; to: 1.5 3 1.5; dur: 1800; easing: easeOutElastic" : ""}></a-cone>
+                 <a-cone radius-bottom="0.5" radius-top="0" height={currentStep < 4 ? "0.5" : "1.8"} color={currentStep < 4 ? "#8b5a2b" : "#32cd32"} position="0 0.25 0" animation={currentStep === 4 ? "property: scale; from: 1 1 1; to: 1.5 3 1.5; dur: 1800; easing: easeOutElastic" : undefined}></a-cone>
               </a-entity>
               
               {/* Soil Scanner Hologram */}
@@ -419,10 +419,10 @@ export default function AFrameScene({ movementState, level = 1, currentStep = 1 
         {level === 6 && (
           <>
             {/* Level 6: Papua Environment */}
-            <a-plane position="0 0 0" rotation="-90 0 0" width="100" height="100" color={currentStep < 3 ? "#1e293b" : "#4ade80"} roughness="1" animation={currentStep === 3 ? "property: components.material.material.color; type: color; to: #4ade80; dur: 2000; easing: easeInOutQuad" : ""}></a-plane>
+            <a-plane position="0 0 0" rotation="-90 0 0" width="100" height="100" color={currentStep < 3 ? "#1e293b" : "#4ade80"} roughness="1" animation={currentStep === 3 ? "property: components.material.material.color; type: color; to: #4ade80; dur: 2000; easing: easeInOutQuad" : undefined}></a-plane>
 
             {/* Sun */}
-            <a-sphere radius="3" position="-15 -5 -30" color="#fbbf24" material="emissive: #fbbf24; emissiveIntensity: 1" animation={currentStep >= 2 ? "property: position; to: -10 15 -30; dur: 3000; easing: easeOutQuad" : ""}></a-sphere>
+            <a-sphere radius="3" position="-15 -5 -30" color="#fbbf24" material="emissive: #fbbf24; emissiveIntensity: 1" animation={currentStep >= 2 ? "property: position; to: -10 15 -30; dur: 3000; easing: easeOutQuad" : undefined}></a-sphere>
             
             {/* Sun Rays */}
             {currentStep >= 3 && (
@@ -468,12 +468,12 @@ export default function AFrameScene({ movementState, level = 1, currentStep = 1 
                   {/* Solar Panels Array */}
                   <a-entity position="-2 0 0">
                     <a-cylinder radius="0.1" height="1" color="#64748b" position="0 0.5 0"></a-cylinder>
-                    <a-plane width="1.5" height="1" color="#1e3a8a" position="0 1 0" rotation={currentStep >= 3 ? "-60 0 0" : "-90 0 0"} animation={currentStep === 3 ? "property: rotation; to: -60 -30 0; dur: 2000" : ""}></a-plane>
+                    <a-plane width="1.5" height="1" color="#1e3a8a" position="0 1 0" rotation={currentStep >= 3 ? "-60 0 0" : "-90 0 0"} animation={currentStep === 3 ? "property: rotation; to: -60 -30 0; dur: 2000" : undefined}></a-plane>
                   </a-entity>
 
                   <a-entity position="2 0 0">
                     <a-cylinder radius="0.1" height="1" color="#64748b" position="0 0.5 0"></a-cylinder>
-                    <a-plane width="1.5" height="1" color="#1e3a8a" position="0 1 0" rotation={currentStep >= 3 ? "-60 0 0" : "-90 0 0"} animation={currentStep === 3 ? "property: rotation; to: -60 30 0; dur: 2000" : ""}></a-plane>
+                    <a-plane width="1.5" height="1" color="#1e3a8a" position="0 1 0" rotation={currentStep >= 3 ? "-60 0 0" : "-90 0 0"} animation={currentStep === 3 ? "property: rotation; to: -60 30 0; dur: 2000" : undefined}></a-plane>
                   </a-entity>
 
                   {/* Smart Grid Energy Lines to Houses */}
