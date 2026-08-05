@@ -76,7 +76,7 @@ export default function AFrameScene({ movementState, level = 1, currentStep = 1 
   }, [level, currentStep]);
 
   const getSkyColor = () => {
-    if (level === 1) return "#0B132B";
+    if (level === 1) return "#1e3a8a"; // Brighter blue so it doesn't look empty
     if (level === 2) return "#1a1a1a";
     if (level === 3) return "#2b2823";
     if (level === 4) return currentStep < 4 ? "#001e36" : "#00aaff";
@@ -88,15 +88,15 @@ export default function AFrameScene({ movementState, level = 1, currentStep = 1 
   const getFog = () => {
     if (level === 3) return "type: exponential; color: #3a352f; density: 0.15";
     if (level === 4) return currentStep < 4 ? "type: exponential; color: #001e36; density: 0.05" : "type: exponential; color: #00aaff; density: 0.02";
-    if (level === 5) return currentStep < 3 ? "type: exponential; color: #8B4513; density: 0.05" : "";
-    if (level === 6) return currentStep < 3 ? "type: exponential; color: #0f172a; density: 0.05" : "";
-    return "";
+    if (level === 5) return currentStep < 3 ? "type: exponential; color: #8B4513; density: 0.05" : undefined;
+    if (level === 6) return currentStep < 3 ? "type: exponential; color: #0f172a; density: 0.05" : undefined;
+    return undefined;
   };
 
   return (
     <div className="absolute inset-0 z-0">
-      <a-scene embedded background={`color: ${getSkyColor()}`} renderer="antialias: true" vr-mode-ui="enabled: false" fog={getFog()}>
-        <a-assets>
+      <a-scene embedded renderer="antialias: true" vr-mode-ui="enabled: false" fog={getFog()}>
+        <a-assets timeout="10000">
           <img id="batik-texture" src="https://www.transparenttextures.com/patterns/black-thread-light.png" alt="Batik Placeholder" />
         </a-assets>
 
@@ -119,15 +119,15 @@ export default function AFrameScene({ movementState, level = 1, currentStep = 1 
             </a-entity>
 
             {/* Trash Items */}
-            <a-entity id="trash1" className="trash-item" data-type="organic" data-name="Leaf" position="-3 0 -4" scale="0.2 0.2 0.2">
+            <a-entity id="trash1" className="trash-item" data-type="organic" data-name="Leaf" position="-3 1 -4" scale="0.8 0.8 0.8">
               <a-plane width="0.8" height="0.5" color="#5a6b31" rotation="-90 0 0" roughness="1"></a-plane>
             </a-entity>
 
-            <a-entity id="trash2" className="trash-item" data-type="recycle" data-name="Paper Box" position="0 0 -5" scale="0.2 0.2 0.2">
+            <a-entity id="trash2" className="trash-item" data-type="recycle" data-name="Paper Box" position="0 1 -5" scale="0.8 0.8 0.8">
               <a-entity geometry="primitive: tetrahedron; radius: 0.3" material="color: #cbd5e1; roughness: 0.9" rotation="45 45 0"></a-entity>
             </a-entity>
             
-            <a-entity id="trash3" className="trash-item" data-type="recycle" data-name="Plastic Bottle" position="3 0 -4" scale="0.2 0.2 0.2">
+            <a-entity id="trash3" className="trash-item" data-type="recycle" data-name="Plastic Bottle" position="3 1 -4" scale="0.8 0.8 0.8">
                <a-cylinder radius="0.1" height="0.5" material="color: #3b82f6; opacity: 0.7; transparent: true" rotation="90 45 0"></a-cylinder>
             </a-entity>
 
