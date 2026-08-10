@@ -953,7 +953,7 @@ function LevelApp({ levelId }) {
                             utterance.rate = 0.9;
                             window.speechSynthesis.speak(utterance);
                           }}
-                        >📢</button>
+                        ><span className="text-lg md:text-xl">📢</span></button>
                       </div>
                       <p id="evieee-dialog-text" className="text-sm leading-relaxed">{dialogue}</p>
                     </div>

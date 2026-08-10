@@ -92,12 +92,10 @@
   <div class="fixed inset-0 z-50 pointer-events-none bg-transparent h-screen w-screen text-white font-sans">
     
     <!-- Audio Toggle -->
-    <button id="btn-audio-toggle" class="fixed top-4 right-4 z-50 p-2 md:p-3 text-xs md:text-base rounded-full bg-slate-800/80 border border-cyan-400 text-white pointer-events-auto shadow-[0_0_10px_rgba(34,211,238,0.3)] transition-all">🔊</button>
+    <button id="btn-audio-toggle" class="fixed top-4 right-4 z-[999] w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-[#0a192f]/80 backdrop-blur-md border border-cyan-400 text-cyan-400 hover:bg-cyan-900 transition-colors pointer-events-auto text-lg md:text-xl">🔊</button>
 
     <!-- Fullscreen Toggle -->
-    <button id="btn-fullscreen" class="fixed bottom-4 left-4 z-[999] p-3 bg-slate-800/80 border border-cyan-400 rounded hover:bg-cyan-900 transition-colors pointer-events-auto">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
-    </button>
+    <button id="btn-fullscreen" class="fixed bottom-4 left-4 z-[999] w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-slate-800/80 border border-cyan-400 rounded text-cyan-400 hover:bg-cyan-900 transition-colors pointer-events-auto">⛶</button>
 
     <!-- Top-Right: EvIEEE Dialog (Moved slightly down to avoid audio button) -->
     <div class="fixed top-4 left-1/2 transform -translate-x-1/2 z-40 px-3 py-1 md:px-6 md:py-2 text-[10px] md:text-sm whitespace-nowrap pointer-events-auto">
@@ -108,7 +106,7 @@
         <div>
           <div class="flex items-center mb-1">
             <h3 class="text-cyan-400 font-bold">EvIEEE</h3>
-            <button id="btn-read-aloud" class="ml-2 text-cyan-400 hover:text-white transition-colors" title="Read Text Aloud">📢</button>
+            <button id="btn-read-aloud" class="ml-2 text-cyan-400 hover:text-white transition-colors" title="Read Text Aloud"><span class="text-lg md:text-xl">📢</span></button>
           </div>
           <p id="evieee-dialog-text" class="text-sm text-gray-200 leading-relaxed">Oh no! This river area in Andalas is blocked by fallen logs. We need to clear them up!</p>
         </div>
@@ -146,13 +144,13 @@
     </div>
 
     <!-- Bottom-Right: Virtual D-Pad -->
-    <div id="d-pad" class="fixed bottom-4 right-4 z-[999] grid grid-cols-3 gap-1 md:gap-2 pointer-events-auto select-none">
+    <div id="d-pad" class="fixed bottom-4 right-4 z-[999] grid grid-cols-3 gap-2 pointer-events-auto">
         <div></div>
-        <button id="btn-up" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-slate-800/80 border border-cyan-400 rounded text-cyan-400 hover:bg-cyan-900 transition-colors text-2xl md:text-3xl">▲</button>
+        <button id="btn-up" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-slate-800/80 backdrop-blur-md border border-cyan-400 rounded text-cyan-400 hover:bg-cyan-900 transition-colors text-xl md:text-2xl">▲</button>
         <div></div>
-        <button id="btn-left" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-slate-800/80 border border-cyan-400 rounded text-cyan-400 hover:bg-cyan-900 transition-colors text-2xl md:text-3xl">◀</button>
-        <button id="btn-down" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-slate-800/80 border border-cyan-400 rounded text-cyan-400 hover:bg-cyan-900 transition-colors text-2xl md:text-3xl">▼</button>
-        <button id="btn-right" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-slate-800/80 border border-cyan-400 rounded text-cyan-400 hover:bg-cyan-900 transition-colors text-2xl md:text-3xl">▶</button>
+        <button id="btn-left" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-slate-800/80 backdrop-blur-md border border-cyan-400 rounded text-cyan-400 hover:bg-cyan-900 transition-colors text-xl md:text-2xl">◀</button>
+        <button id="btn-down" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-slate-800/80 backdrop-blur-md border border-cyan-400 rounded text-cyan-400 hover:bg-cyan-900 transition-colors text-xl md:text-2xl">▼</button>
+        <button id="btn-right" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-slate-800/80 backdrop-blur-md border border-cyan-400 rounded text-cyan-400 hover:bg-cyan-900 transition-colors text-xl md:text-2xl">▶</button>
     </div>
 
     <!-- Mission Complete Modal (Hidden) -->
