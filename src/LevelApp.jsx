@@ -437,7 +437,7 @@ function LevelApp({ levelId }) {
         {/* Global Audio Toggle Button */}
         <button 
           onClick={handleToggleMute}
-          className="fixed top-4 right-4 z-[999] p-2 text-sm rounded-full glass-cyan shadow-[0_0_15px_rgba(0,240,255,0.3)] hover:bg-cyan/20 active:scale-95 transition-all pointer-events-auto flex items-center justify-center border-cyan/50"
+          className="fixed top-4 right-4 z-50 p-2 md:p-3 text-xs md:text-base rounded-full glass-cyan shadow-[0_0_15px_rgba(0,240,255,0.3)] hover:bg-cyan/20 active:scale-95 transition-all pointer-events-auto flex items-center justify-center border-cyan/50"
         >
           {isMutedState ? <VolumeX size={20} className="text-red-400" /> : <Volume2 size={20} className="text-cyan" />}
         </button>
@@ -459,7 +459,7 @@ function LevelApp({ levelId }) {
         {phase === 2 && (
           <>
             <motion.div 
-              className="absolute top-6 left-1/2 -translate-x-1/2 z-50 glass-cyan px-6 py-2 rounded-full pointer-events-none"
+              className="fixed top-4 left-1/2 transform -translate-x-1/2 z-40 px-3 py-1 md:px-6 md:py-2 text-[10px] md:text-sm whitespace-nowrap glass-cyan rounded-full pointer-events-none"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
             >
@@ -467,7 +467,7 @@ function LevelApp({ levelId }) {
             </motion.div>
 
             <motion.div 
-              className="absolute top-6 left-6 z-50 glass px-6 py-3 rounded-xl flex flex-col space-y-2 pointer-events-none"
+              className="fixed top-4 left-4 z-50 p-2 md:p-4 text-xs md:text-base w-32 md:w-auto bg-[#0a192f]/80 backdrop-blur-md border border-cyan-400 rounded-lg flex flex-col space-y-1 md:space-y-2 pointer-events-none"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
             >
@@ -484,7 +484,7 @@ function LevelApp({ levelId }) {
               <motion.button 
                 id="btn-scan"
                 onClick={handleScan}
-                className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 pointer-events-auto glass-cyan px-4 py-2 md:px-8 md:py-4 rounded-full shadow-[0_0_20px_rgba(0,240,255,0.4)] hover:bg-cyan/20 active:scale-95 transition-all font-bold tracking-widest text-xs md:text-sm uppercase text-cyan flex items-center space-x-2 w-[90%] md:w-auto justify-center whitespace-nowrap"
+                className="fixed bottom-24 md:bottom-8 left-1/2 transform -translate-x-1/2 z-50 pointer-events-auto glass-cyan px-4 py-2 md:px-8 md:py-4 rounded-full shadow-[0_0_20px_rgba(0,240,255,0.4)] hover:bg-cyan/20 active:scale-95 transition-all font-bold tracking-widest text-xs md:text-sm uppercase text-cyan flex items-center space-x-2 w-[90%] md:w-auto justify-center whitespace-nowrap"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 20 }}
@@ -499,7 +499,7 @@ function LevelApp({ levelId }) {
               <motion.button 
                 id="btn-put-in-trash"
                 onClick={() => setIsModalOpen(true)}
-                className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 pointer-events-auto glass px-4 py-2 md:px-8 md:py-4 rounded-full shadow-[0_0_20px_rgba(74,222,128,0.4)] hover:bg-green-400/20 active:scale-95 transition-all font-bold tracking-widest text-xs md:text-sm uppercase text-green-400 flex items-center space-x-2 border-green-400/30 w-[90%] md:w-auto justify-center whitespace-nowrap"
+                className="fixed bottom-24 md:bottom-8 left-1/2 transform -translate-x-1/2 z-50 pointer-events-auto glass px-4 py-2 md:px-8 md:py-4 rounded-full shadow-[0_0_20px_rgba(74,222,128,0.4)] hover:bg-green-400/20 active:scale-95 transition-all font-bold tracking-widest text-xs md:text-sm uppercase text-green-400 flex items-center space-x-2 border-green-400/30 w-[90%] md:w-auto justify-center whitespace-nowrap"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 20 }}
@@ -573,7 +573,7 @@ function LevelApp({ levelId }) {
         {phase === 4 && (
           <>
             <motion.div 
-              className="absolute top-6 left-1/2 -translate-x-1/2 z-50 glass-cyan px-6 py-2 rounded-full pointer-events-none"
+              className="fixed top-4 left-1/2 transform -translate-x-1/2 z-40 px-3 py-1 md:px-6 md:py-2 text-[10px] md:text-sm whitespace-nowrap glass-cyan rounded-full pointer-events-none"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
             >
@@ -620,7 +620,7 @@ function LevelApp({ levelId }) {
             {currentStep < 4 && (
               <motion.button 
                 onClick={handleRestorationAction}
-                className={`fixed bottom-8 left-1/2 -translate-x-1/2 z-50 pointer-events-auto glass px-4 py-2 md:px-8 md:py-4 rounded-full shadow-[0_0_20px_rgba(0,240,255,0.4)] hover:bg-cyan/20 active:scale-95 transition-all font-bold tracking-widest text-xs md:text-sm uppercase flex items-center space-x-2 w-[90%] md:w-auto justify-center whitespace-nowrap ${currentStep === 1 ? 'text-cyan border-cyan/30' : currentStep === 2 ? 'text-green-400 border-green-400/30 shadow-[0_0_20px_rgba(74,222,128,0.4)]' : 'text-yellow-400 border-yellow-400/30 shadow-[0_0_20px_rgba(251,191,36,0.4)]'}`}
+                className={`fixed bottom-24 md:bottom-8 left-1/2 transform -translate-x-1/2 z-50 pointer-events-auto glass px-4 py-2 md:px-8 md:py-4 rounded-full shadow-[0_0_20px_rgba(0,240,255,0.4)] hover:bg-cyan/20 active:scale-95 transition-all font-bold tracking-widest text-xs md:text-sm uppercase flex items-center space-x-2 w-[90%] md:w-auto justify-center whitespace-nowrap ${currentStep === 1 ? 'text-cyan border-cyan/30' : currentStep === 2 ? 'text-green-400 border-green-400/30 shadow-[0_0_20px_rgba(74,222,128,0.4)]' : 'text-yellow-400 border-yellow-400/30 shadow-[0_0_20px_rgba(251,191,36,0.4)]'}`}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 20 }}
@@ -642,7 +642,7 @@ function LevelApp({ levelId }) {
         {phase === 6 && (
           <>
             <motion.div 
-              className="absolute top-6 left-1/2 -translate-x-1/2 z-50 glass-cyan px-6 py-2 rounded-full pointer-events-none"
+              className="fixed top-4 left-1/2 transform -translate-x-1/2 z-40 px-3 py-1 md:px-6 md:py-2 text-[10px] md:text-sm whitespace-nowrap glass-cyan rounded-full pointer-events-none"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
             >
@@ -683,7 +683,7 @@ function LevelApp({ levelId }) {
             {currentStep < 3 && (
               <motion.button 
                 onClick={handleBorneoAction}
-                className={`fixed bottom-8 left-1/2 -translate-x-1/2 z-50 pointer-events-auto glass px-4 py-2 md:px-8 md:py-4 rounded-full shadow-[0_0_20px_rgba(0,240,255,0.4)] hover:bg-cyan/20 active:scale-95 transition-all font-bold tracking-widest text-xs md:text-sm uppercase flex items-center space-x-2 w-[90%] md:w-auto justify-center whitespace-nowrap ${currentStep === 1 ? 'text-cyan border-cyan/30' : 'text-blue-400 border-blue-400/30 shadow-[0_0_20px_rgba(96,165,250,0.4)]'}`}
+                className={`fixed bottom-24 md:bottom-8 left-1/2 transform -translate-x-1/2 z-50 pointer-events-auto glass px-4 py-2 md:px-8 md:py-4 rounded-full shadow-[0_0_20px_rgba(0,240,255,0.4)] hover:bg-cyan/20 active:scale-95 transition-all font-bold tracking-widest text-xs md:text-sm uppercase flex items-center space-x-2 w-[90%] md:w-auto justify-center whitespace-nowrap ${currentStep === 1 ? 'text-cyan border-cyan/30' : 'text-blue-400 border-blue-400/30 shadow-[0_0_20px_rgba(96,165,250,0.4)]'}`}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 20 }}
@@ -705,7 +705,7 @@ function LevelApp({ levelId }) {
         {phase === 8 && (
           <>
             <motion.div 
-              className="absolute top-6 left-1/2 -translate-x-1/2 z-50 glass-cyan px-6 py-2 rounded-full pointer-events-none"
+              className="fixed top-4 left-1/2 transform -translate-x-1/2 z-40 px-3 py-1 md:px-6 md:py-2 text-[10px] md:text-sm whitespace-nowrap glass-cyan rounded-full pointer-events-none"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
             >
@@ -752,7 +752,7 @@ function LevelApp({ levelId }) {
             {currentStep < 4 && (
               <motion.button 
                 onClick={handleCelebesAction}
-                className={`fixed bottom-8 left-1/2 -translate-x-1/2 z-50 pointer-events-auto glass px-4 py-2 md:px-8 md:py-4 rounded-full shadow-[0_0_20px_rgba(0,240,255,0.4)] hover:bg-cyan/20 active:scale-95 transition-all font-bold tracking-widest text-xs md:text-sm uppercase flex items-center space-x-2 w-[90%] md:w-auto justify-center whitespace-nowrap ${currentStep === 1 ? 'text-cyan border-cyan/30' : currentStep === 2 ? 'text-yellow-400 border-yellow-400/30 shadow-[0_0_20px_rgba(250,204,21,0.4)]' : 'text-pink-400 border-pink-400/30 shadow-[0_0_20px_rgba(244,114,182,0.4)]'}`}
+                className={`fixed bottom-24 md:bottom-8 left-1/2 transform -translate-x-1/2 z-50 pointer-events-auto glass px-4 py-2 md:px-8 md:py-4 rounded-full shadow-[0_0_20px_rgba(0,240,255,0.4)] hover:bg-cyan/20 active:scale-95 transition-all font-bold tracking-widest text-xs md:text-sm uppercase flex items-center space-x-2 w-[90%] md:w-auto justify-center whitespace-nowrap ${currentStep === 1 ? 'text-cyan border-cyan/30' : currentStep === 2 ? 'text-yellow-400 border-yellow-400/30 shadow-[0_0_20px_rgba(250,204,21,0.4)]' : 'text-pink-400 border-pink-400/30 shadow-[0_0_20px_rgba(244,114,182,0.4)]'}`}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 20 }}
@@ -774,7 +774,7 @@ function LevelApp({ levelId }) {
         {phase === 10 && (
           <>
             <motion.div 
-              className="absolute top-6 left-1/2 -translate-x-1/2 z-50 glass-cyan px-6 py-2 rounded-full pointer-events-none"
+              className="fixed top-4 left-1/2 transform -translate-x-1/2 z-40 px-3 py-1 md:px-6 md:py-2 text-[10px] md:text-sm whitespace-nowrap glass-cyan rounded-full pointer-events-none"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
             >
@@ -821,7 +821,7 @@ function LevelApp({ levelId }) {
             {currentStep < 4 && (
               <motion.button 
                 onClick={handleNusaAction}
-                className={`fixed bottom-8 left-1/2 -translate-x-1/2 z-50 pointer-events-auto glass px-4 py-2 md:px-8 md:py-4 rounded-full shadow-[0_0_20px_rgba(0,240,255,0.4)] hover:bg-cyan/20 active:scale-95 transition-all font-bold tracking-widest text-xs md:text-sm uppercase flex items-center space-x-2 w-[90%] md:w-auto justify-center whitespace-nowrap ${currentStep === 1 ? 'text-cyan border-cyan/30' : currentStep === 2 ? 'text-blue-400 border-blue-400/30 shadow-[0_0_20px_rgba(96,165,250,0.4)]' : 'text-green-400 border-green-400/30 shadow-[0_0_20px_rgba(74,222,128,0.4)]'}`}
+                className={`fixed bottom-24 md:bottom-8 left-1/2 transform -translate-x-1/2 z-50 pointer-events-auto glass px-4 py-2 md:px-8 md:py-4 rounded-full shadow-[0_0_20px_rgba(0,240,255,0.4)] hover:bg-cyan/20 active:scale-95 transition-all font-bold tracking-widest text-xs md:text-sm uppercase flex items-center space-x-2 w-[90%] md:w-auto justify-center whitespace-nowrap ${currentStep === 1 ? 'text-cyan border-cyan/30' : currentStep === 2 ? 'text-blue-400 border-blue-400/30 shadow-[0_0_20px_rgba(96,165,250,0.4)]' : 'text-green-400 border-green-400/30 shadow-[0_0_20px_rgba(74,222,128,0.4)]'}`}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 20 }}
@@ -843,7 +843,7 @@ function LevelApp({ levelId }) {
         {phase === 12 && (
           <>
             <motion.div 
-              className="absolute top-6 left-1/2 -translate-x-1/2 z-50 glass-cyan px-6 py-2 rounded-full pointer-events-none"
+              className="fixed top-4 left-1/2 transform -translate-x-1/2 z-40 px-3 py-1 md:px-6 md:py-2 text-[10px] md:text-sm whitespace-nowrap glass-cyan rounded-full pointer-events-none"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
             >
@@ -890,7 +890,7 @@ function LevelApp({ levelId }) {
             {currentStep < 4 && (
               <motion.button 
                 onClick={handlePapuaAction}
-                className={`fixed bottom-8 left-1/2 -translate-x-1/2 z-50 pointer-events-auto glass px-4 py-2 md:px-8 md:py-4 rounded-full shadow-[0_0_20px_rgba(0,240,255,0.4)] hover:bg-cyan/20 active:scale-95 transition-all font-bold tracking-widest text-xs md:text-sm uppercase flex items-center space-x-2 w-[90%] md:w-auto justify-center whitespace-nowrap ${currentStep === 1 ? 'text-cyan border-cyan/30' : currentStep === 2 ? 'text-yellow-400 border-yellow-400/30 shadow-[0_0_20px_rgba(250,204,21,0.4)]' : 'text-green-400 border-green-400/30 shadow-[0_0_20px_rgba(74,222,128,0.4)]'}`}
+                className={`fixed bottom-24 md:bottom-8 left-1/2 transform -translate-x-1/2 z-50 pointer-events-auto glass px-4 py-2 md:px-8 md:py-4 rounded-full shadow-[0_0_20px_rgba(0,240,255,0.4)] hover:bg-cyan/20 active:scale-95 transition-all font-bold tracking-widest text-xs md:text-sm uppercase flex items-center space-x-2 w-[90%] md:w-auto justify-center whitespace-nowrap ${currentStep === 1 ? 'text-cyan border-cyan/30' : currentStep === 2 ? 'text-yellow-400 border-yellow-400/30 shadow-[0_0_20px_rgba(250,204,21,0.4)]' : 'text-green-400 border-green-400/30 shadow-[0_0_20px_rgba(74,222,128,0.4)]'}`}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 20 }}
@@ -913,8 +913,7 @@ function LevelApp({ levelId }) {
       {(phase === 2 || phase === 4 || phase === 6 || phase === 8 || phase === 10 || phase === 12) && (
         <>
           <motion.button 
-            style={{ position: 'fixed', bottom: '32px', left: '32px', right: 'auto', zIndex: 9999 }}
-            className="pointer-events-auto p-3 bg-white/10 backdrop-blur-md rounded-lg border border-white/20 hover:bg-cyan/20 transition-colors text-cyan"
+            className="fixed bottom-4 left-4 z-[999] pointer-events-auto p-2 md:p-3 text-xs md:text-base bg-slate-800/80 backdrop-blur-md border border-cyan-400 rounded-lg hover:bg-cyan-900 transition-colors text-cyan"
             onClick={toggleFullscreen}
           >
             {isFullscreen ? <Minimize size={28} /> : <Maximize size={28} />}

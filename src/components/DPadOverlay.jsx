@@ -11,12 +11,13 @@ export default function DPadOverlay({ setMovement }) {
     setMovement(dir, false);
   };
 
-  const btnClass = "w-12 h-12 md:w-16 md:h-16 glass rounded-xl flex items-center justify-center text-cyan hover:bg-cyan/20 active:bg-cyan/40 transition-colors select-none touch-none";
+  const btnClass = "p-2 md:p-3 text-xs md:text-base bg-slate-800/80 border border-cyan-400 rounded hover:bg-cyan-900 transition-colors flex items-center justify-center select-none touch-none text-white";
 
   return (
-    <div className="fixed bottom-4 right-4 md:bottom-8 md:right-8 z-[1000] flex flex-col items-center pointer-events-auto">
-      <div className="mb-2">
+    <div id="d-pad" className="fixed bottom-4 right-4 z-[999] grid grid-cols-3 gap-1 md:gap-2 pointer-events-auto">
+        <div></div>
         <button 
+          id="btn-up" 
           className={btnClass}
           onPointerDown={handleStart('forward')}
           onPointerUp={handleEnd('forward')}
@@ -24,12 +25,10 @@ export default function DPadOverlay({ setMovement }) {
           onTouchStart={handleStart('forward')}
           onTouchEnd={handleEnd('forward')}
           onContextMenu={(e) => e.preventDefault()}
-        >
-          <ArrowUp size={32} />
-        </button>
-      </div>
-      <div className="flex space-x-2">
+        >⬆️</button>
+        <div></div>
         <button 
+          id="btn-left" 
           className={btnClass}
           onPointerDown={handleStart('left')}
           onPointerUp={handleEnd('left')}
@@ -37,10 +36,9 @@ export default function DPadOverlay({ setMovement }) {
           onTouchStart={handleStart('left')}
           onTouchEnd={handleEnd('left')}
           onContextMenu={(e) => e.preventDefault()}
-        >
-          <ArrowLeft size={32} />
-        </button>
+        >⬅️</button>
         <button 
+          id="btn-down" 
           className={btnClass}
           onPointerDown={handleStart('backward')}
           onPointerUp={handleEnd('backward')}
@@ -48,10 +46,9 @@ export default function DPadOverlay({ setMovement }) {
           onTouchStart={handleStart('backward')}
           onTouchEnd={handleEnd('backward')}
           onContextMenu={(e) => e.preventDefault()}
-        >
-          <ArrowDown size={32} />
-        </button>
+        >⬇️</button>
         <button 
+          id="btn-right" 
           className={btnClass}
           onPointerDown={handleStart('right')}
           onPointerUp={handleEnd('right')}
@@ -59,10 +56,7 @@ export default function DPadOverlay({ setMovement }) {
           onTouchStart={handleStart('right')}
           onTouchEnd={handleEnd('right')}
           onContextMenu={(e) => e.preventDefault()}
-        >
-          <ArrowRight size={32} />
-        </button>
-      </div>
+        >➡️</button>
     </div>
   );
 }

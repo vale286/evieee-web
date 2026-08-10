@@ -70,10 +70,10 @@
   <div class="fixed inset-0 z-50 pointer-events-none bg-transparent h-screen w-screen text-white font-sans">
     
     <!-- Audio Toggle -->
-    <button id="btn-audio-toggle" class="fixed top-4 right-4 z-[999] p-3 rounded-full bg-slate-800/80 border border-cyan-400 text-white pointer-events-auto shadow-[0_0_10px_rgba(34,211,238,0.3)] transition-all">🔊</button>
+    <button id="btn-audio-toggle" class="fixed top-4 right-4 z-50 p-2 md:p-3 text-xs md:text-base rounded-full bg-slate-800/80 border border-cyan-400 text-white pointer-events-auto shadow-[0_0_10px_rgba(34,211,238,0.3)] transition-all">🔊</button>
 
     <!-- Top-Right: EvIEEE Dialog (Moved slightly down to avoid audio button) -->
-    <div class="absolute top-20 right-6 z-50 pointer-events-auto">
+    <div class="fixed top-4 left-1/2 transform -translate-x-1/2 z-40 px-3 py-1 md:px-6 md:py-2 text-[10px] md:text-sm whitespace-nowrap pointer-events-auto">
       <div class="glass-cyan p-4 rounded-xl max-w-sm flex items-start space-x-3">
         <div class="w-12 h-12 rounded-full bg-cyan-900 border-2 border-cyan-400 flex items-center justify-center flex-shrink-0 shadow-[0_0_10px_rgba(0,240,255,0.5)]">
           <span class="text-xl font-bold text-cyan-400">Ev</span>
@@ -86,7 +86,7 @@
     </div>
 
     <!-- Top-Left: Mission Panel -->
-    <div class="absolute top-6 left-6 z-50 pointer-events-auto">
+    <div class="fixed top-4 left-4 z-50 p-2 md:p-4 text-xs md:text-base w-32 md:w-auto bg-[#0a192f]/80 backdrop-blur-md border border-cyan-400 rounded-lg pointer-events-auto">
       <div class="glass-cyan p-4 rounded-xl min-w-[250px]">
         <h3 class="text-cyan-400 font-bold mb-3 uppercase tracking-wider text-sm flex items-center">
           <span class="mr-2">📋</span> Mission Objectives
@@ -109,20 +109,20 @@
     </div>
 
     <!-- Bottom-Center: Action Button -->
-    <div class="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 pointer-events-auto">
+    <div class="fixed bottom-24 md:bottom-8 left-1/2 transform -translate-x-1/2 z-50 pointer-events-auto">
       <button id="btn-action" class="glass-cyan px-8 py-4 rounded-full shadow-[0_0_20px_rgba(0,240,255,0.4)] hover:bg-cyan-900/40 active:scale-95 transition-all font-bold tracking-widest text-sm uppercase text-cyan-400 flex items-center justify-center whitespace-nowrap">
         Start Clean-Up
       </button>
     </div>
 
     <!-- Bottom-Right: Virtual D-Pad -->
-    <div id="d-pad" class="fixed bottom-4 right-4 z-[999] grid grid-cols-3 gap-2 pointer-events-auto select-none">
+    <div id="d-pad" class="fixed bottom-4 right-4 z-[999] grid grid-cols-3 gap-1 md:gap-2 pointer-events-auto select-none">
         <div></div>
-        <button id="btn-up" class="p-3 bg-slate-800/80 border border-cyan-400 rounded hover:bg-cyan-900 transition-colors">⬆️</button>
+        <button id="btn-up" class="p-2 md:p-3 text-xs md:text-base bg-slate-800/80 border border-cyan-400 rounded hover:bg-cyan-900 transition-colors">⬆️</button>
         <div></div>
-        <button id="btn-left" class="p-3 bg-slate-800/80 border border-cyan-400 rounded hover:bg-cyan-900 transition-colors">⬅️</button>
-        <button id="btn-down" class="p-3 bg-slate-800/80 border border-cyan-400 rounded hover:bg-cyan-900 transition-colors">⬇️</button>
-        <button id="btn-right" class="p-3 bg-slate-800/80 border border-cyan-400 rounded hover:bg-cyan-900 transition-colors">➡️</button>
+        <button id="btn-left" class="p-2 md:p-3 text-xs md:text-base bg-slate-800/80 border border-cyan-400 rounded hover:bg-cyan-900 transition-colors">⬅️</button>
+        <button id="btn-down" class="p-2 md:p-3 text-xs md:text-base bg-slate-800/80 border border-cyan-400 rounded hover:bg-cyan-900 transition-colors">⬇️</button>
+        <button id="btn-right" class="p-2 md:p-3 text-xs md:text-base bg-slate-800/80 border border-cyan-400 rounded hover:bg-cyan-900 transition-colors">➡️</button>
     </div>
 
     <!-- Mission Complete Modal (Hidden) -->
