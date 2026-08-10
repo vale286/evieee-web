@@ -422,7 +422,7 @@ function LevelApp({ levelId }) {
   };
 
   return (
-    <main className="relative w-screen h-screen overflow-hidden bg-navy-900 text-white font-sans pointer-events-none">
+    <main className="relative w-screen h-screen overflow-hidden bg-transparent text-white font-sans pointer-events-none">
       
       {/* Global Audio Toggle Button */}
       <button 
