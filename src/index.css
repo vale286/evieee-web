@@ -55,3 +55,26 @@ body, html {
   display: none !important;
   visibility: hidden !important;
 }
+
+/* Portrait Orientation Blocker */
+@media screen and (max-aspect-ratio: 1/1) and (max-width: 768px) {
+  body::before {
+    content: "?? Please rotate your device to landscape mode for the best simulation experience.";
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #0a192f; /* Deep navy */
+    color: #22d3ee; /* Cyan */
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.25rem;
+    font-family: sans-serif;
+    font-weight: bold;
+  }
+  #app, #ui-container, a-scene {
+    display: none !important; /* Hide the game while in portrait */
+  }
+}

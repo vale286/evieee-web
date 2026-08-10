@@ -21,6 +21,28 @@
       border: 1px solid rgba(0, 240, 255, 0.4);
       box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
     }
+    /* Portrait Orientation Blocker */
+    @media screen and (max-aspect-ratio: 1/1) and (max-width: 768px) {
+      body::before {
+        content: "📱 Please rotate your device to landscape mode for the best simulation experience.";
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background-color: #0a192f; /* Deep navy */
+        color: #22d3ee; /* Cyan */
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 2rem;
+        font-size: 1.25rem;
+        font-family: sans-serif;
+        font-weight: bold;
+      }
+      #app, #ui-container, a-scene, .fixed {
+        display: none !important; /* Hide the game while in portrait */
+      }
+    }
   </style>
 </head>
 <body>
@@ -72,6 +94,11 @@
     <!-- Audio Toggle -->
     <button id="btn-audio-toggle" class="fixed top-4 right-4 z-50 p-2 md:p-3 text-xs md:text-base rounded-full bg-slate-800/80 border border-cyan-400 text-white pointer-events-auto shadow-[0_0_10px_rgba(34,211,238,0.3)] transition-all">🔊</button>
 
+    <!-- Fullscreen Toggle -->
+    <button id="btn-fullscreen" class="fixed bottom-4 left-4 z-[999] p-3 bg-slate-800/80 border border-cyan-400 rounded hover:bg-cyan-900 transition-colors pointer-events-auto">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+    </button>
+
     <!-- Top-Right: EvIEEE Dialog (Moved slightly down to avoid audio button) -->
     <div class="fixed top-4 left-1/2 transform -translate-x-1/2 z-40 px-3 py-1 md:px-6 md:py-2 text-[10px] md:text-sm whitespace-nowrap pointer-events-auto">
       <div class="glass-cyan p-4 rounded-xl max-w-sm flex items-start space-x-3">
@@ -118,11 +145,11 @@
     <!-- Bottom-Right: Virtual D-Pad -->
     <div id="d-pad" class="fixed bottom-4 right-4 z-[999] grid grid-cols-3 gap-1 md:gap-2 pointer-events-auto select-none">
         <div></div>
-        <button id="btn-up" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-slate-800/80 border border-cyan-400 rounded text-cyan-400 hover:bg-cyan-900 transition-colors text-xl md:text-2xl">⬆️</button>
+        <button id="btn-up" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-slate-800/80 border border-cyan-400 rounded text-cyan-400 hover:bg-cyan-900 transition-colors text-2xl md:text-3xl">▲</button>
         <div></div>
-        <button id="btn-left" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-slate-800/80 border border-cyan-400 rounded text-cyan-400 hover:bg-cyan-900 transition-colors text-xl md:text-2xl">⬅️</button>
-        <button id="btn-down" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-slate-800/80 border border-cyan-400 rounded text-cyan-400 hover:bg-cyan-900 transition-colors text-xl md:text-2xl">⬇️</button>
-        <button id="btn-right" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-slate-800/80 border border-cyan-400 rounded text-cyan-400 hover:bg-cyan-900 transition-colors text-xl md:text-2xl">➡️</button>
+        <button id="btn-left" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-slate-800/80 border border-cyan-400 rounded text-cyan-400 hover:bg-cyan-900 transition-colors text-2xl md:text-3xl">◀</button>
+        <button id="btn-down" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-slate-800/80 border border-cyan-400 rounded text-cyan-400 hover:bg-cyan-900 transition-colors text-2xl md:text-3xl">▼</button>
+        <button id="btn-right" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-slate-800/80 border border-cyan-400 rounded text-cyan-400 hover:bg-cyan-900 transition-colors text-2xl md:text-3xl">▶</button>
     </div>
 
     <!-- Mission Complete Modal (Hidden) -->
@@ -227,6 +254,18 @@
       btnAudio.addEventListener('click', () => {
         isMuted = !isMuted;
         btnAudio.innerText = isMuted ? '🔇' : '🔊';
+      });
+
+      // --- FULLSCREEN TOGGLE ---
+      const btnFullscreen = document.getElementById('btn-fullscreen');
+      btnFullscreen.addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(err => {
+            console.log(`Error attempting to enable fullscreen: ${err.message}`);
+          });
+        } else {
+          document.exitFullscreen();
+        }
       });
 
       // --- D-PAD LOGIC ---

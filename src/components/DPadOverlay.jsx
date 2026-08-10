@@ -11,7 +11,7 @@ export default function DPadOverlay({ setMovement }) {
     setMovement(dir, false);
   };
 
-  const btnClass = "w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-slate-800/80 border border-cyan-400 rounded text-cyan-400 hover:bg-cyan-900 transition-colors text-xl md:text-2xl select-none touch-none";
+  const btnClass = "w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-slate-800/80 border border-cyan-400 rounded text-cyan-400 hover:bg-cyan-900 transition-colors text-2xl md:text-3xl select-none touch-none";
 
   return (
     <div id="d-pad" className="fixed bottom-4 right-4 z-[999] grid grid-cols-3 gap-1 md:gap-2 pointer-events-auto">
