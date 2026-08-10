@@ -95,10 +95,8 @@ export default function AFrameScene({ movementState, level = 1, currentStep = 1 
 
   return (
     <div className="absolute inset-0 z-0">
-      <a-scene embedded renderer="antialias: true" vr-mode-ui="enabled: false" fog={getFog()}>
-        <a-assets timeout="10000">
-          <img id="batik-texture" src="https://www.transparenttextures.com/patterns/black-thread-light.png" alt="Batik Placeholder" />
-        </a-assets>
+      <a-scene embedded renderer="antialias: true" vr-mode-ui="enabled: false" fog={getFog()} loading-screen="enabled: false">
+
 
         <a-sky color={getSkyColor()}></a-sky>
 
@@ -107,8 +105,8 @@ export default function AFrameScene({ movementState, level = 1, currentStep = 1 
 
         {level === 1 && (
           <>
-            {/* City Floor with Batik-like pattern */}
-            <a-plane position="0 0 0" rotation="-90 0 0" width="100" height="100" color="#112240" material="src: #batik-texture; repeat: 50 50"></a-plane>
+            {/* City Floor */}
+            <a-plane position="0 0 0" rotation="-90 0 0" width="100" height="100" color="#112240"></a-plane>
 
             {/* Monas Monument Background */}
             <a-entity position="0 0 -30">
