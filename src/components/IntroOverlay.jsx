@@ -91,38 +91,41 @@ export default function IntroOverlay({ onComplete, initialName = '', onLevelSele
               return (
               <motion.div
                 key={lvl.id}
-                className={`glass p-6 rounded-2xl flex flex-col justify-between border-white/10 ${unlocked ? 'hover:border-cyan/50 hover:bg-white/5' : 'opacity-70 grayscale'} transition-all group`}
+                className={`glass pt-6 pb-4 px-4 rounded-2xl flex flex-col justify-between h-full border-white/10 ${unlocked ? 'hover:border-cyan/50 hover:bg-white/5' : 'opacity-70 grayscale'} transition-all group`}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.1 }}
               >
-                <div>
+                <div className="px-2">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-cyan text-xs font-bold tracking-widest uppercase">Level {lvl.id}</span>
                   </div>
                   <h3 className="text-xl font-bold text-white mb-1 group-hover:text-cyan transition-colors">{lvl.name}</h3>
                   <p className="text-white/60 text-sm mb-6">{lvl.desc}</p>
                 </div>
-                {unlocked ? (
-                  <button
-                    onClick={() => {
-                      if (onComplete) onComplete(name);
-                      onLevelSelect(lvl.id);
-                    }}
-                    className="w-full glass-cyan py-3 rounded-xl text-white font-bold tracking-widest text-xs uppercase flex items-center justify-center space-x-2 hover:bg-cyan hover:text-navy-900 transition-all shadow-[0_0_15px_rgba(0,240,255,0.2)]"
-                  >
-                    <Play size={14} />
-                    <span>START MISSION</span>
-                  </button>
-                ) : (
-                  <button
-                    disabled
-                    className="w-full glass py-3 rounded-xl text-white/50 font-bold tracking-widest text-xs uppercase flex items-center justify-center space-x-2 cursor-not-allowed"
-                  >
-                    <Lock size={14} />
-                    <span>LOCKED</span>
-                  </button>
-                )}
+                
+                <div className="mt-auto">
+                  {unlocked ? (
+                    <button
+                      onClick={() => {
+                        if (onComplete) onComplete(name);
+                        onLevelSelect(lvl.id);
+                      }}
+                      className="w-full glass-cyan py-3 rounded-xl text-white font-bold tracking-widest text-xs uppercase flex items-center justify-center space-x-2 hover:bg-cyan hover:text-navy-900 transition-all shadow-[0_0_15px_rgba(0,240,255,0.2)]"
+                    >
+                      <Play size={14} />
+                      <span>START MISSION</span>
+                    </button>
+                  ) : (
+                    <button
+                      disabled
+                      className="w-full glass py-3 rounded-xl text-white/50 font-bold tracking-widest text-xs uppercase flex items-center justify-center space-x-2 cursor-not-allowed"
+                    >
+                      <Lock size={14} />
+                      <span>LOCKED</span>
+                    </button>
+                  )}
+                </div>
               </motion.div>
             )})}
           </div>

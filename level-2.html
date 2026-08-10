@@ -69,11 +69,14 @@
   <!-- Layer 2: The UI Overlay -->
   <div class="fixed inset-0 z-50 pointer-events-none bg-transparent h-screen w-screen text-white font-sans">
     
-    <!-- Top-Right: EvIEEE Dialog -->
-    <div class="absolute top-6 right-6 z-50 pointer-events-auto">
+    <!-- Audio Toggle -->
+    <button id="btn-audio-toggle" class="fixed top-4 right-4 z-[999] p-3 rounded-full bg-slate-800/80 border border-cyan-400 text-white pointer-events-auto shadow-[0_0_10px_rgba(34,211,238,0.3)] transition-all">🔊</button>
+
+    <!-- Top-Right: EvIEEE Dialog (Moved slightly down to avoid audio button) -->
+    <div class="absolute top-20 right-6 z-50 pointer-events-auto">
       <div class="glass-cyan p-4 rounded-xl max-w-sm flex items-start space-x-3">
         <div class="w-12 h-12 rounded-full bg-cyan-900 border-2 border-cyan-400 flex items-center justify-center flex-shrink-0 shadow-[0_0_10px_rgba(0,240,255,0.5)]">
-          <span class="text-xl">🤖</span>
+          <span class="text-xl font-bold text-cyan-400">Ev</span>
         </div>
         <div>
           <h3 class="text-cyan-400 font-bold mb-1">EvIEEE</h3>
@@ -110,6 +113,16 @@
       <button id="btn-action" class="glass-cyan px-8 py-4 rounded-full shadow-[0_0_20px_rgba(0,240,255,0.4)] hover:bg-cyan-900/40 active:scale-95 transition-all font-bold tracking-widest text-sm uppercase text-cyan-400 flex items-center justify-center whitespace-nowrap">
         Start Clean-Up
       </button>
+    </div>
+
+    <!-- Bottom-Right: Virtual D-Pad -->
+    <div id="d-pad" class="fixed bottom-4 right-4 z-[999] grid grid-cols-3 gap-2 pointer-events-auto select-none">
+        <div></div>
+        <button id="btn-up" class="p-3 bg-slate-800/80 border border-cyan-400 rounded hover:bg-cyan-900 transition-colors">⬆️</button>
+        <div></div>
+        <button id="btn-left" class="p-3 bg-slate-800/80 border border-cyan-400 rounded hover:bg-cyan-900 transition-colors">⬅️</button>
+        <button id="btn-down" class="p-3 bg-slate-800/80 border border-cyan-400 rounded hover:bg-cyan-900 transition-colors">⬇️</button>
+        <button id="btn-right" class="p-3 bg-slate-800/80 border border-cyan-400 rounded hover:bg-cyan-900 transition-colors">➡️</button>
     </div>
 
     <!-- Mission Complete Modal (Hidden) -->
@@ -207,6 +220,70 @@
           }, 8000);
         }
       });
+
+      // --- AUDIO TOGGLE ---
+      let isMuted = false;
+      const btnAudio = document.getElementById('btn-audio-toggle');
+      btnAudio.addEventListener('click', () => {
+        isMuted = !isMuted;
+        btnAudio.innerText = isMuted ? '🔇' : '🔊';
+      });
+
+      // --- D-PAD LOGIC ---
+      const moveState = { forward: false, backward: false, left: false, right: false };
+      const moveSpeed = 0.15;
+      
+      const setMove = (dir, val) => () => { moveState[dir] = val; };
+      
+      const setupButton = (id, dir) => {
+        const btn = document.getElementById(id);
+        btn.addEventListener('pointerdown', setMove(dir, true));
+        btn.addEventListener('pointerup', setMove(dir, false));
+        btn.addEventListener('pointerleave', setMove(dir, false));
+      };
+      
+      setupButton('btn-up', 'forward');
+      setupButton('btn-down', 'backward');
+      setupButton('btn-left', 'left');
+      setupButton('btn-right', 'right');
+
+      // Movement Loop
+      const updateMovement = () => {
+        const camEl = document.querySelector('a-camera');
+        if (camEl && typeof AFRAME !== 'undefined' && AFRAME.THREE) {
+          const rotation = camEl.getAttribute('rotation');
+          if (rotation) {
+            const angle = AFRAME.THREE.MathUtils.degToRad(rotation.y);
+            const velocity = new AFRAME.THREE.Vector3();
+            
+            if (moveState.forward) {
+              velocity.x -= Math.sin(angle) * moveSpeed;
+              velocity.z -= Math.cos(angle) * moveSpeed;
+            }
+            if (moveState.backward) {
+              velocity.x += Math.sin(angle) * moveSpeed;
+              velocity.z += Math.cos(angle) * moveSpeed;
+            }
+            if (moveState.left) {
+              velocity.x -= Math.cos(angle) * moveSpeed;
+              velocity.z += Math.sin(angle) * moveSpeed;
+            }
+            if (moveState.right) {
+              velocity.x += Math.cos(angle) * moveSpeed;
+              velocity.z -= Math.sin(angle) * moveSpeed;
+            }
+            
+            if (velocity.lengthSq() > 0) {
+              const parent = camEl.parentElement;
+              const pos = parent.getAttribute('position');
+              parent.setAttribute('position', { x: pos.x + velocity.x, y: pos.y, z: pos.z + velocity.z });
+            }
+          }
+        }
+        requestAnimationFrame(updateMovement);
+      };
+      requestAnimationFrame(updateMovement);
+      
     });
   </script>
 </body>
