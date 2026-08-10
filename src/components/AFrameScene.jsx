@@ -76,7 +76,7 @@ export default function AFrameScene({ movementState, level = 1, currentStep = 1 
 
   const getSkyColor = () => {
     if (level === 1) return "#1e3a8a"; // Brighter blue so it doesn't look empty
-    if (level === 2) return "#1a1a1a";
+    if (level === 2) return "#0a192f";
     if (level === 3) return "#2b2823";
     if (level === 4) return currentStep < 4 ? "#001e36" : "#00aaff";
     if (level === 5) return currentStep < 3 ? "#8B4513" : "#87CEEB";

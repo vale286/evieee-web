@@ -423,8 +423,8 @@ function LevelApp({ levelId }) {
 
   return (
     <>
-      {/* A-Frame 3D Scene — rendered inside absolute -z-10 wrapper */}
-      <div className="absolute inset-0 w-screen h-screen -z-10 bg-transparent">
+      {/* A-Frame 3D Scene — rendered inside absolute z-0 wrapper */}
+      <div className="absolute inset-0 w-screen h-screen z-0 bg-transparent">
         {(phase === 2 || phase === 4 || phase === 6 || phase === 8 || phase === 10 || phase === 12) && (
           <AFrameScene movementState={movement} level={phase === 4 ? 2 : phase === 6 ? 3 : phase === 8 ? 4 : phase === 10 ? 5 : phase === 12 ? 6 : 1} currentStep={currentStep} />
         )}
