@@ -13,7 +13,22 @@
 }
 
 body {
-  @apply bg-navy-900 text-white overflow-hidden m-0 p-0 h-screen w-screen;
+  @apply text-white overflow-hidden m-0 p-0 h-screen w-screen;
+  background: transparent !important;
+}
+
+/* Ensure A-Frame canvas is never hidden behind React DOM */
+.a-canvas {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  z-index: 0 !important;
+}
+
+#app {
+  position: relative;
+  z-index: 1;
+  background: transparent !important;
 }
 
 @keyframes unrollMap {
