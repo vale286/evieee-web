@@ -151,13 +151,25 @@ function LevelApp({ levelId }) {
     doc.setFontSize(12);
     doc.text("EvIEEE Smart City System", 250, 190, { align: "center" });
     
+    // Sustainability Impact Report
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(12);
+    doc.setTextColor(34, 211, 238); // Cyan color
+    doc.text("SIMULATED SUSTAINABILITY IMPACT:", 148, 172, { align: "center" });
+
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
+    doc.setTextColor(255, 255, 255); // White color
+    doc.text("• 150kg Carbon Reduced   • 5,000 Trees Planted   • 200kg Marine Waste Cleared", 148, 178, { align: "center" });
+    
     const sealImg = new Image();
-    sealImg.src = './public/icon_sertif.png';
+    sealImg.src = '/icon_sertif.png';
     sealImg.onload = function() {
-        doc.addImage(sealImg, 'PNG', 240, 160, 30, 30); 
+        doc.addImage(sealImg, 'PNG', 240, 160, 35, 35); 
         doc.save(name.replace(/\s+/g, '_') + "_Eco_Hero_Certificate.pdf");
     };
     sealImg.onerror = function() {
+        console.error("Failed to load medal icon. Saving PDF without it.");
         doc.save(name.replace(/\s+/g, '_') + "_Eco_Hero_Certificate.pdf");
     };
   };
@@ -927,9 +939,23 @@ function LevelApp({ levelId }) {
                     <div className="w-8 h-8 rounded-full bg-cyan/20 flex-shrink-0 flex items-center justify-center border border-cyan/50">
                       <Sparkles className="text-cyan w-4 h-4" />
                     </div>
-                    <div>
-                      <h3 className="text-sm font-bold text-cyan uppercase tracking-widest mb-1">EvIEEE</h3>
-                      <p className="text-sm leading-relaxed">{dialogue}</p>
+                    <div className="pointer-events-auto">
+                      <div className="flex items-center mb-1">
+                        <h3 className="text-sm font-bold text-cyan uppercase tracking-widest">EvIEEE</h3>
+                        <button 
+                          id="btn-read-aloud" 
+                          className="ml-2 text-cyan hover:text-white transition-colors" 
+                          title="Read Text Aloud"
+                          onClick={() => {
+                            window.speechSynthesis.cancel();
+                            const utterance = new SpeechSynthesisUtterance(dialogue);
+                            utterance.lang = 'en-US';
+                            utterance.rate = 0.9;
+                            window.speechSynthesis.speak(utterance);
+                          }}
+                        >📢</button>
+                      </div>
+                      <p id="evieee-dialog-text" className="text-sm leading-relaxed">{dialogue}</p>
                     </div>
                   </div>
                 </div>
