@@ -94,8 +94,7 @@ export default function AFrameScene({ movementState, level = 1, currentStep = 1 
   };
 
   return (
-    <div className="absolute inset-0 z-0">
-      <a-scene embedded renderer="antialias: true" vr-mode-ui="enabled: false" fog={getFog()} loading-screen="enabled: false">
+    <a-scene renderer="antialias: true" vr-mode-ui="enabled: false" fog={getFog()} loading-screen="enabled: false">
 
 
         <a-sky color={getSkyColor()}></a-sky>
@@ -492,6 +491,5 @@ export default function AFrameScene({ movementState, level = 1, currentStep = 1 
         )}
 
       </a-scene>
-    </div>
   );
 }

@@ -422,36 +422,34 @@ function LevelApp({ levelId }) {
   };
 
   return (
-    <main className="relative w-screen h-screen overflow-hidden bg-transparent text-white font-sans pointer-events-none">
-      
-      {/* Global Audio Toggle Button */}
-      <button 
-        onClick={handleToggleMute}
-        className="fixed top-4 right-4 z-[999] p-2 text-sm rounded-full glass-cyan shadow-[0_0_15px_rgba(0,240,255,0.3)] hover:bg-cyan/20 active:scale-95 transition-all pointer-events-auto flex items-center justify-center border-cyan/50"
-      >
-        {isMutedState ? <VolumeX size={20} className="text-red-400" /> : <Volume2 size={20} className="text-cyan" />}
-      </button>
-
-      <AnimatePresence>
-        {showMissionComplete && (
-          <MissionCompleteOverlay onReturn={handleReturnToMenu} />
-        )}
-      </AnimatePresence>
-
-      <AnimatePresence>
-        {showCertificate && (
-          <CertificateOverlay onDownload={handleDownloadCertificate} defaultName={userName} />
-        )}
-      </AnimatePresence>
-
-      
-
-      {/* A-Frame scene is wrapped in z-0 to stay behind UI */}
+    <>
+      {/* A-Frame 3D Scene — rendered OUTSIDE the UI layer so its fullscreen canvas is independent */}
       {(phase === 2 || phase === 4 || phase === 6 || phase === 8 || phase === 10 || phase === 12) && (
-        <div className="absolute inset-0 z-0 pointer-events-auto">
-          <AFrameScene movementState={movement} level={phase === 4 ? 2 : phase === 6 ? 3 : phase === 8 ? 4 : phase === 10 ? 5 : phase === 12 ? 6 : 1} currentStep={currentStep} />
-        </div>
+        <AFrameScene movementState={movement} level={phase === 4 ? 2 : phase === 6 ? 3 : phase === 8 ? 4 : phase === 10 ? 5 : phase === 12 ? 6 : 1} currentStep={currentStep} />
       )}
+
+      {/* UI Layer — transparent fixed overlay ON TOP of the 3D scene */}
+      <main className="fixed inset-0 z-10 overflow-hidden text-white font-sans pointer-events-none" style={{ background: 'transparent' }}>
+      
+        {/* Global Audio Toggle Button */}
+        <button 
+          onClick={handleToggleMute}
+          className="fixed top-4 right-4 z-[999] p-2 text-sm rounded-full glass-cyan shadow-[0_0_15px_rgba(0,240,255,0.3)] hover:bg-cyan/20 active:scale-95 transition-all pointer-events-auto flex items-center justify-center border-cyan/50"
+        >
+          {isMutedState ? <VolumeX size={20} className="text-red-400" /> : <Volume2 size={20} className="text-cyan" />}
+        </button>
+
+        <AnimatePresence>
+          {showMissionComplete && (
+            <MissionCompleteOverlay onReturn={handleReturnToMenu} />
+          )}
+        </AnimatePresence>
+
+        <AnimatePresence>
+          {showCertificate && (
+            <CertificateOverlay onDownload={handleDownloadCertificate} defaultName={userName} />
+          )}
+        </AnimatePresence>
 
       {/* Phase 2 (Level 1) UI Overlays */}
       <AnimatePresence>
@@ -947,7 +945,8 @@ function LevelApp({ levelId }) {
           text-shadow: 0 1px 2px rgba(0,0,0,0.5);
         }
       `}} />
-    </main>
+      </main>
+    </>
   );
 }
 

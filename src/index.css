@@ -14,22 +14,29 @@
 
 body {
   @apply text-white overflow-hidden m-0 p-0 h-screen w-screen;
-  background: transparent !important;
+  background: #0a192f;
 }
 
-/* Ensure A-Frame canvas is never hidden behind React DOM */
-.a-canvas {
-  position: fixed !important;
-  top: 0;
-  left: 0;
-  z-index: 0 !important;
+html {
+  background: #0a192f;
 }
 
+/* React root must be transparent so A-Frame canvas shows through */
 #app {
-  position: relative;
+  position: fixed;
+  inset: 0;
   z-index: 1;
   background: transparent !important;
+  pointer-events: none;
 }
+
+/* Re-enable pointer events on interactive elements inside #app */
+#app button,
+#app a,
+#app [class*="pointer-events-auto"] {
+  pointer-events: auto;
+}
+
 
 @keyframes unrollMap {
   0% {
