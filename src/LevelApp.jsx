@@ -230,10 +230,10 @@ function LevelApp({ levelId }) {
           highlight.setAttribute('class', 'trash-highlight');
           highlight.setAttribute('wireframe', 'true');
           highlight.setAttribute('color', '#00f0ff');
-          highlight.setAttribute('width', '2');
-          highlight.setAttribute('height', '2');
-          highlight.setAttribute('depth', '2');
-          highlight.setAttribute('position', '0 1 0');
+          highlight.setAttribute('width', '0.5');
+          highlight.setAttribute('height', '0.5');
+          highlight.setAttribute('depth', '0.5');
+          highlight.setAttribute('position', '0 0.25 0');
           highlight.setAttribute('animation', 'property: rotation; to: 0 360 0; loop: true; dur: 3000; easing: linear');
           found.appendChild(highlight);
         }
