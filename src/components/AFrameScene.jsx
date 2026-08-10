@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-import 'aframe';
 
 if (typeof AFRAME !== 'undefined') {
   if (!AFRAME.components['dpad-controls']) {

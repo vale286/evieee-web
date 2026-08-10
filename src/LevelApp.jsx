@@ -423,13 +423,15 @@ function LevelApp({ levelId }) {
 
   return (
     <>
-      {/* A-Frame 3D Scene — rendered OUTSIDE the UI layer so its fullscreen canvas is independent */}
-      {(phase === 2 || phase === 4 || phase === 6 || phase === 8 || phase === 10 || phase === 12) && (
-        <AFrameScene movementState={movement} level={phase === 4 ? 2 : phase === 6 ? 3 : phase === 8 ? 4 : phase === 10 ? 5 : phase === 12 ? 6 : 1} currentStep={currentStep} />
-      )}
+      {/* A-Frame 3D Scene — rendered inside absolute -z-10 wrapper */}
+      <div className="absolute inset-0 w-screen h-screen -z-10 bg-transparent">
+        {(phase === 2 || phase === 4 || phase === 6 || phase === 8 || phase === 10 || phase === 12) && (
+          <AFrameScene movementState={movement} level={phase === 4 ? 2 : phase === 6 ? 3 : phase === 8 ? 4 : phase === 10 ? 5 : phase === 12 ? 6 : 1} currentStep={currentStep} />
+        )}
+      </div>
 
       {/* UI Layer — transparent fixed overlay ON TOP of the 3D scene */}
-      <main className="fixed inset-0 z-10 overflow-hidden text-white font-sans pointer-events-none" style={{ background: 'transparent' }}>
+      <main className="fixed inset-0 z-50 overflow-hidden pointer-events-none bg-transparent">
       
         {/* Global Audio Toggle Button */}
         <button 
