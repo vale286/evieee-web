@@ -73,12 +73,23 @@ export default function CertificateOverlay({ onDownload, defaultName }) {
         <motion.button 
           id="btn-download-cert"
           onClick={handleDownload}
-          className="glass px-8 py-4 rounded-full text-white font-bold tracking-widest text-lg hover:bg-white/10 active:scale-95 transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)] flex items-center space-x-3 border-white/20"
+          className="glass px-8 py-4 rounded-full text-white font-bold tracking-widest text-lg hover:bg-white/10 active:scale-95 transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)] flex items-center space-x-3 border-white/20 w-full justify-center"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.5 }}
         >
           <span>📄 Download Certificate (PDF)</span>
+        </motion.button>
+        
+        <motion.button 
+          id="btn-restart-map"
+          onClick={() => window.location.href = 'index.html'}
+          className="mt-3 w-full py-2 bg-transparent border border-cyan-400 text-cyan-400 hover:bg-cyan-400/10 rounded transition-all"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.8 }}
+        >
+          🗺️ Return to Nusantara Map
         </motion.button>
       </motion.div>
     </motion.div>

@@ -148,17 +148,18 @@ function LevelApp({ levelId }) {
     doc.setFontSize(12);
     doc.text("Date of Completion: " + today, 20, 190);
     
-    doc.setFillColor(212, 175, 55);
-    doc.circle(270, 180, 15, 'F');
-    doc.setTextColor(255, 255, 255);
-    doc.setFontSize(8);
-    doc.text("OFFICIAL", 270, 178, { align: "center" });
-    doc.text("ECO-HERO", 270, 182, { align: "center" });
-    
     doc.setFontSize(12);
     doc.text("EvIEEE Smart City System", 250, 190, { align: "center" });
     
-    doc.save('EvIEEE_Eco_Hero_Certificate.pdf');
+    const sealImg = new Image();
+    sealImg.src = './public/icon_sertif.png';
+    sealImg.onload = function() {
+        doc.addImage(sealImg, 'PNG', 240, 160, 30, 30); 
+        doc.save(name.replace(/\s+/g, '_') + "_Eco_Hero_Certificate.pdf");
+    };
+    sealImg.onerror = function() {
+        doc.save(name.replace(/\s+/g, '_') + "_Eco_Hero_Certificate.pdf");
+    };
   };
 
   // Intro Dialogue Setup

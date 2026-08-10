@@ -98,7 +98,7 @@ export default function AFrameScene({ movementState, level = 1, currentStep = 1 
 
         <a-sky color={getSkyColor()}></a-sky>
 
-        <a-camera ref={cameraRef} position="0 1.6 0" look-controls="pointerLockEnabled: false" dpad-controls="">
+        <a-camera ref={cameraRef} position="0 1.6 5" look-controls="pointerLockEnabled: false" dpad-controls="">
         </a-camera>
 
         {level === 1 && (
