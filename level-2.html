@@ -1,15 +1,213 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>EvIEEE - Level 2</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Level 2: Andalas Island Cleanup</title>
+  <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/levels/main-level2.jsx"></script>
-  </body>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background-color: #0a192f;
+    }
+    .glass-cyan {
+      background: rgba(10, 25, 47, 0.6);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(0, 240, 255, 0.4);
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Layer 1: The 3D Scene -->
+  <a-scene loading-screen="enabled: false">
+    <!-- Environment -->
+    <a-sky color="#0a192f"></a-sky>
+    
+    <!-- Ground -->
+    <a-plane position="0 0 0" rotation="-90 0 0" width="100" height="100" color="#3e2723" roughness="1"></a-plane>
+    
+    <!-- River -->
+    <a-plane id="murky-river" position="0 0.1 -6" rotation="-90 0 0" width="100" height="6" color="#00ffff" opacity="0.8"></a-plane>
+    
+    <!-- Fallen Logs -->
+    <a-entity id="logs">
+      <a-cylinder position="-2 0.5 -4" rotation="90 45 0" radius="0.3" height="2.5" color="#5c4033"></a-cylinder>
+      <a-cylinder position="2 0.5 -5" rotation="90 -30 0" radius="0.3" height="2" color="#5c4033"></a-cylinder>
+    </a-entity>
+    
+    <!-- Trees (Hidden initially) -->
+    <a-entity id="trees" visible="false">
+      <!-- Tree 1 -->
+      <a-cone position="-3 1 -4" radius-bottom="1" height="2" color="#2ecc71" scale="0.1 0.1 0.1"></a-cone>
+      <a-cylinder position="-3 0.25 -4" radius="0.2" height="0.5" color="#5c4033"></a-cylinder>
+      
+      <!-- Tree 2 -->
+      <a-cone position="3 1 -5" radius-bottom="1" height="2" color="#2ecc71" scale="0.1 0.1 0.1"></a-cone>
+      <a-cylinder position="3 0.25 -5" radius="0.2" height="0.5" color="#5c4033"></a-cylinder>
+    </a-entity>
+    
+    <!-- Water FX (Hidden initially) -->
+    <a-entity id="water-fx" visible="false">
+      <a-sphere radius="0.1" color="#3b82f6" position="-3 2 -4"></a-sphere>
+      <a-sphere radius="0.08" color="#3b82f6" position="-2.8 1.8 -4.2"></a-sphere>
+      <a-sphere radius="0.1" color="#3b82f6" position="3 2 -5"></a-sphere>
+      <a-sphere radius="0.08" color="#3b82f6" position="2.8 1.8 -4.8"></a-sphere>
+    </a-entity>
+
+    <a-entity position="0 1.6 5">
+      <a-camera look-controls="pointerLockEnabled: false" wasd-controls></a-camera>
+    </a-entity>
+  </a-scene>
+
+  <!-- Layer 2: The UI Overlay -->
+  <div class="fixed inset-0 z-50 pointer-events-none bg-transparent h-screen w-screen text-white font-sans">
+    
+    <!-- Top-Right: EvIEEE Dialog -->
+    <div class="absolute top-6 right-6 z-50 pointer-events-auto">
+      <div class="glass-cyan p-4 rounded-xl max-w-sm flex items-start space-x-3">
+        <div class="w-12 h-12 rounded-full bg-cyan-900 border-2 border-cyan-400 flex items-center justify-center flex-shrink-0 shadow-[0_0_10px_rgba(0,240,255,0.5)]">
+          <span class="text-xl">🤖</span>
+        </div>
+        <div>
+          <h3 class="text-cyan-400 font-bold mb-1">EvIEEE</h3>
+          <p id="evieee-text" class="text-sm text-gray-200 leading-relaxed">Oh no! This river area in Andalas is blocked by fallen logs. We need to clear them up!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top-Left: Mission Panel -->
+    <div class="absolute top-6 left-6 z-50 pointer-events-auto">
+      <div class="glass-cyan p-4 rounded-xl min-w-[250px]">
+        <h3 class="text-cyan-400 font-bold mb-3 uppercase tracking-wider text-sm flex items-center">
+          <span class="mr-2">📋</span> Mission Objectives
+        </h3>
+        <ul class="space-y-2 text-sm text-gray-200">
+          <li class="flex items-center space-x-2">
+            <span id="check-1" class="w-5 h-5 border border-cyan-500 rounded flex items-center justify-center text-transparent transition-colors">✓</span>
+            <span id="text-1">Clear Fallen Logs</span>
+          </li>
+          <li class="flex items-center space-x-2 opacity-50 transition-opacity" id="task-2">
+            <span id="check-2" class="w-5 h-5 border border-cyan-500 rounded flex items-center justify-center text-transparent transition-colors">✓</span>
+            <span id="text-2">Plant Saplings</span>
+          </li>
+          <li class="flex items-center space-x-2 opacity-50 transition-opacity" id="task-3">
+            <span id="check-3" class="w-5 h-5 border border-cyan-500 rounded flex items-center justify-center text-transparent transition-colors">✓</span>
+            <span id="text-3">Provide Water & Sunlight</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom-Center: Action Button -->
+    <div class="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 pointer-events-auto">
+      <button id="btn-action" class="glass-cyan px-8 py-4 rounded-full shadow-[0_0_20px_rgba(0,240,255,0.4)] hover:bg-cyan-900/40 active:scale-95 transition-all font-bold tracking-widest text-sm uppercase text-cyan-400 flex items-center justify-center whitespace-nowrap">
+        Start Clean-Up
+      </button>
+    </div>
+
+    <!-- Mission Complete Modal (Hidden) -->
+    <div id="mission-complete" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 pointer-events-auto backdrop-blur-sm hidden opacity-0 transition-opacity duration-1000">
+      <div class="glass-cyan p-10 rounded-2xl flex flex-col items-center max-w-md w-full mx-4 text-center">
+        <h2 class="text-3xl font-bold text-green-400 mb-4 drop-shadow-[0_0_10px_rgba(74,222,128,0.5)]">Mission Complete!</h2>
+        <p class="text-lg text-gray-200 mb-8">You successfully restored the forest and river ecosystem in Andalas.</p>
+        <button onclick="window.location.href = 'index.html'" class="w-full py-3 bg-transparent border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-navy-900 font-bold rounded-lg transition-colors flex justify-center items-center gap-2">
+          <span>🗺️</span> Return to Nusantara Map
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      let currentStep = 1;
+      
+      const btnAction = document.getElementById('btn-action');
+      const evieeeText = document.getElementById('evieee-text');
+      const logs = document.getElementById('logs');
+      const trees = document.getElementById('trees');
+      const waterFx = document.getElementById('water-fx');
+      const missionComplete = document.getElementById('mission-complete');
+      
+      const check1 = document.getElementById('check-1');
+      const check2 = document.getElementById('check-2');
+      const check3 = document.getElementById('check-3');
+      const task2 = document.getElementById('task-2');
+      const task3 = document.getElementById('task-3');
+      
+      const text1 = document.getElementById('text-1');
+      const text2 = document.getElementById('text-2');
+      const text3 = document.getElementById('text-3');
+
+      btnAction.addEventListener('click', () => {
+        if (currentStep === 1) {
+          // Step 1: Start Clean-up
+          logs.setAttribute('visible', 'false');
+          
+          check1.classList.remove('text-transparent');
+          check1.classList.add('text-green-400', 'border-green-400');
+          text1.classList.add('text-green-400', 'line-through');
+          
+          task2.classList.remove('opacity-50');
+          
+          evieeeText.innerText = "Great job! The logs are cleared. Now we need to plant some new saplings to restore the area.";
+          btnAction.innerText = "Plant Seeds";
+          
+          currentStep = 2;
+        } 
+        else if (currentStep === 2) {
+          // Step 2: Plant Seeds
+          trees.setAttribute('visible', 'true');
+          
+          // Animate trees from scale 0 to 0.4 (saplings)
+          trees.setAttribute('animation', 'property: scale; from: 0.1 0.1 0.1; to: 0.4 0.4 0.4; dur: 1000; easing: easeOutElastic');
+          
+          check2.classList.remove('text-transparent');
+          check2.classList.add('text-green-400', 'border-green-400');
+          text2.classList.add('text-green-400', 'line-through');
+          
+          task3.classList.remove('opacity-50');
+          
+          evieeeText.innerText = "The saplings are in the ground! They just need water and sunlight to grow strong.";
+          btnAction.innerText = "Give Water & Sunlight";
+          
+          currentStep = 3;
+        }
+        else if (currentStep === 3) {
+          // Step 3: Give Water & Sunlight
+          waterFx.setAttribute('visible', 'true');
+          waterFx.setAttribute('animation', 'property: position; to: 0 -1 0; dur: 2000; loop: true');
+          
+          // Animate trees growing to full size
+          trees.setAttribute('animation', 'property: scale; from: 0.4 0.4 0.4; to: 1.5 1.5 1.5; dur: 4000; easing: easeOutElastic');
+          
+          check3.classList.remove('text-transparent');
+          check3.classList.add('text-green-400', 'border-green-400');
+          text3.classList.add('text-green-400', 'line-through');
+          
+          evieeeText.innerText = "Wow! Look at them grow! The ecosystem is balanced again.";
+          btnAction.style.display = 'none'; // Hide action button
+          
+          currentStep = 4;
+          
+          // Show modal after 8 seconds
+          setTimeout(() => {
+            waterFx.setAttribute('visible', 'false'); // Hide water after growing
+            missionComplete.classList.remove('hidden');
+            // Trigger reflow
+            void missionComplete.offsetWidth;
+            missionComplete.classList.remove('opacity-0');
+          }, 8000);
+        }
+      });
+    });
+  </script>
+</body>
 </html>
