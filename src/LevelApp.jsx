@@ -176,7 +176,11 @@ function LevelApp({ levelId }) {
     const sealImg = new Image();
     sealImg.src = '/icon_sertif.png';
     sealImg.onload = function() {
-        doc.addImage(sealImg, 'PNG', 240, 160, 35, 35); 
+        // Moved Y up (from 160 to 145) and slightly reduced size (to 28x28 or 30x30)
+        // Adjust the X coordinate (e.g., 245) if it needs to be perfectly centered above the text
+        doc.addImage(sealImg, 'PNG', 245, 145, 30, 30); 
+        
+        // ONLY save the document AFTER the image is added
         doc.save(name.replace(/\s+/g, '_') + "_Eco_Hero_Certificate.pdf");
     };
     sealImg.onerror = function() {
