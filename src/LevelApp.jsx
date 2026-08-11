@@ -119,17 +119,26 @@ function LevelApp({ levelId }) {
     window.location.href = '/';
   };
 
-  const handleDownloadCertificate = (name, location) => {
+  const handleDownloadCertificate = async (name, location) => {
     if (!window.jspdf) return;
-    const doc = new window.jspdf.jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
 
-    const bgImg = new Image();
+    const loadImage = (src) => new Promise((resolve, reject) => {
+        const img = new Image();
+        img.crossOrigin = 'Anonymous'; // Prevent canvas tainting issues
+        img.onload = () => resolve(img);
+        img.onerror = () => reject(new Error(`Failed to load image: ${src}`));
+        img.src = src;
+    });
 
-    bgImg.onerror = function() {
-        console.error("Failed to load template_certificate.png");
-    };
+    try {
+        // Load both images concurrently for faster generation
+        const [bgImg, sealImg] = await Promise.all([
+            loadImage('/template_certificate.png'),
+            loadImage('/icon_sertif.png')
+        ]);
 
-    bgImg.onload = function() {
+        const doc = new window.jspdf.jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+
         // 1. Draw Blank Background Template
         doc.addImage(bgImg, 'PNG', 0, 0, 297, 210);
         
@@ -181,22 +190,15 @@ function LevelApp({ levelId }) {
         doc.text("EvIEEE Smart City System", 277, 190, { align: "right" });
 
         // 9. Add Enlarged Medal
-        const sealImg = new Image();
-        
-        sealImg.onload = function() {
-            // Positioned neatly above the footer text on the right
-            doc.addImage(sealImg, 'PNG', 230, 140, 45, 45); 
-            doc.save(userName.replace(/\s+/g, '_') + "_Eco_Hero_Certificate.pdf");
-        };
-        
-        sealImg.onerror = function() {
-            doc.save(userName.replace(/\s+/g, '_') + "_Eco_Hero_Certificate.pdf");
-        }; 
+        doc.addImage(sealImg, 'PNG', 230, 140, 45, 45); 
 
-        sealImg.src = '/icon_sertif.png'; 
-    }; 
-    
-    bgImg.src = '/template_certificate.png'; // Your blank frame template
+        // 10. Save PDF
+        doc.save(userName.replace(/\s+/g, '_') + "_Eco_Hero_Certificate.pdf");
+
+    } catch (error) {
+        console.error("PDF Generation Error:", error);
+        alert("Failed to generate certificate. Please check your connection and try again.");
+    }
   };
 
   // Intro Dialogue Setup
