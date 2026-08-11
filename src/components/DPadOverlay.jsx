@@ -36,7 +36,7 @@ export default function DPadOverlay({ setMovement }) {
           onTouchStart={handleStart('left')}
           onTouchEnd={handleEnd('left')}
           onContextMenu={(e) => e.preventDefault()}
-        >◀</button>
+        >◄</button>
         <button 
           id="btn-down" 
           className={btnClass}
@@ -56,7 +56,7 @@ export default function DPadOverlay({ setMovement }) {
           onTouchStart={handleStart('right')}
           onTouchEnd={handleEnd('right')}
           onContextMenu={(e) => e.preventDefault()}
-        >▶</button>
+        >►</button>
     </div>
   );
 }
