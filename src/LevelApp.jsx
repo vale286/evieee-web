@@ -124,7 +124,6 @@ function LevelApp({ levelId }) {
 
     const loadImage = (src) => new Promise((resolve, reject) => {
         const img = new Image();
-        img.crossOrigin = 'Anonymous'; // Prevent canvas tainting issues
         img.onload = () => resolve(img);
         img.onerror = () => reject(new Error(`Failed to load image: ${src}`));
         img.src = src;
