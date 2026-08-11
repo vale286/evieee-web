@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import AFrameScene from './components/AFrameScene';
 import DPadOverlay from './components/DPadOverlay';
@@ -32,6 +32,17 @@ function LevelApp({ levelId }) {
 
   const [dialogue, setDialogue] = useState('');
   const [showDialogue, setShowDialogue] = useState(false);
+  const dialogTimerRef = useRef(null);
+
+  // Centralized helper: schedule dialog auto-hide with a clearable timer
+  const scheduleHideDialogue = (ms, callback) => {
+    if (dialogTimerRef.current) clearTimeout(dialogTimerRef.current);
+    dialogTimerRef.current = setTimeout(() => {
+      setShowDialogue(false);
+      dialogTimerRef.current = null;
+      if (callback) callback();
+    }, ms);
+  };
   
   // Movement State
   const [movement, setMovement] = useState({
@@ -180,37 +191,37 @@ function LevelApp({ levelId }) {
       setTimeout(() => {
         setDialogue(`Welcome to Java! The city is in danger. GUIDE: Explore the area and use the "Scan Area" button to find and sort trash!`);
         setShowDialogue(true);
-        setTimeout(() => setShowDialogue(false), 5000);
+        scheduleHideDialogue(5000);
       }, 1000);
     } else if (phase === 4) {
       setTimeout(() => {
         setDialogue(`Oh no! The forest is destroyed. We must restore it step-by-step to stop the flood!`);
         setShowDialogue(true);
-        setTimeout(() => setShowDialogue(false), 12000);
+        scheduleHideDialogue(12000);
       }, 1000);
     } else if (phase === 6) {
       setTimeout(() => {
         setDialogue(`Welcome to Borneo! Peatland fires are causing toxic smog and animals are trapped! We must act fast!`);
         setShowDialogue(true);
-        setTimeout(() => setShowDialogue(false), 12000);
+        scheduleHideDialogue(12000);
       }, 1000);
     } else if (phase === 8) {
       setTimeout(() => {
         setDialogue(`Welcome to Celebes! The coral reefs are sick. Deploy the IoT (Internet of Things) Rover—a Smart Remote-Controlled Submarine—to clean the waste and plant Bio-Corals!`);
         setShowDialogue(true);
-        setTimeout(() => setShowDialogue(false), 12000);
+        scheduleHideDialogue(12000);
       }, 1000);
     } else if (phase === 10) {
       setTimeout(() => {
         setDialogue(`Welcome to Nusa! The land is dry and crops are failing. Use the Soil Scanner and deploy the AI Irrigation System!`);
         setShowDialogue(true);
-        setTimeout(() => setShowDialogue(false), 12000);
+        scheduleHideDialogue(12000);
       }, 1000);
     } else if (phase === 12) {
       setTimeout(() => {
         setDialogue(`Welcome to Papua! The village is in darkness. Build a Renewable Energy Microgrid to bring clean power!`);
         setShowDialogue(true);
-        setTimeout(() => setShowDialogue(false), 12000);
+        scheduleHideDialogue(12000);
       }, 1000);
     }
   }, [phase, userName]);
@@ -219,7 +230,7 @@ function LevelApp({ levelId }) {
   const triggerDialogue = (msg) => {
     setDialogue(msg);
     setShowDialogue(true);
-    setTimeout(() => setShowDialogue(false), 5000);
+    scheduleHideDialogue(5000);
   };
 
   const handleScan = () => {
@@ -312,10 +323,7 @@ function LevelApp({ levelId }) {
             if (newVal === 3) {
               setDialogue("REAL WORLD IMPACT: Sorting and recycling reduces landfill waste and turns old paper into new plants!");
               setShowDialogue(true);
-              setTimeout(() => {
-                setShowDialogue(false);
-                setShowMissionComplete(true);
-              }, 8000);
+              scheduleHideDialogue(8000, () => setShowMissionComplete(true));
             } else {
               triggerDialogue("Great job! Processing waste... Success!");
             }
@@ -333,20 +341,17 @@ function LevelApp({ levelId }) {
       setCurrentStep(2);
       setDialogue("River cleaned! Now, let's plant new seeds.");
       setShowDialogue(true);
-      setTimeout(() => setShowDialogue(false), 8000);
+      scheduleHideDialogue(8000);
     } else if (currentStep === 2) {
       setCurrentStep(3);
       setDialogue("Seeds planted! They need water and sunlight to grow strong.");
       setShowDialogue(true);
-      setTimeout(() => setShowDialogue(false), 8000);
+      scheduleHideDialogue(8000);
     } else if (currentStep === 3) {
       setCurrentStep(4);
       setDialogue("REAL WORLD IMPACT: Planting trees prevents deadly floods and absorbs bad pollution from the air!");
       setShowDialogue(true);
-      setTimeout(() => {
-        setShowDialogue(false);
-        setShowMissionComplete(true);
-      }, 8000);
+      scheduleHideDialogue(8000, () => setShowMissionComplete(true));
     }
   };
 
@@ -355,15 +360,12 @@ function LevelApp({ levelId }) {
       setCurrentStep(2);
       setDialogue("Drone deployed! Positioned above the fire zones.");
       setShowDialogue(true);
-      setTimeout(() => setShowDialogue(false), 6000);
+      scheduleHideDialogue(6000);
     } else if (currentStep === 2) {
       setCurrentStep(3);
       setDialogue("REAL WORLD IMPACT: Putting out peat fires stops toxic smog and saves the homes of endangered animals!");
       setShowDialogue(true);
-      setTimeout(() => {
-        setShowDialogue(false);
-        setShowMissionComplete(true);
-      }, 8000);
+      scheduleHideDialogue(8000, () => setShowMissionComplete(true));
     }
   };
 
@@ -372,20 +374,17 @@ function LevelApp({ levelId }) {
       setCurrentStep(2);
       setDialogue("IoT Rover deployed! Starting marine waste clean-up.");
       setShowDialogue(true);
-      setTimeout(() => setShowDialogue(false), 6000);
+      scheduleHideDialogue(6000);
     } else if (currentStep === 2) {
       setCurrentStep(3);
       setDialogue("Waste cleared! Deploying Bio-Coral skeletons for fast growth.");
       setShowDialogue(true);
-      setTimeout(() => setShowDialogue(false), 6000);
+      scheduleHideDialogue(6000);
     } else if (currentStep === 3) {
       setCurrentStep(4);
       setDialogue("REAL WORLD IMPACT: Restoring coral reefs brings back fish, cleans the ocean, and protects our coastlines!");
       setShowDialogue(true);
-      setTimeout(() => {
-        setShowDialogue(false);
-        setShowMissionComplete(true);
-      }, 8000);
+      scheduleHideDialogue(8000, () => setShowMissionComplete(true));
     }
   };
 
@@ -394,20 +393,17 @@ function LevelApp({ levelId }) {
       setCurrentStep(2);
       setDialogue("Dry area scanned! Connecting AI irrigation pipes.");
       setShowDialogue(true);
-      setTimeout(() => setShowDialogue(false), 6000);
+      scheduleHideDialogue(6000);
     } else if (currentStep === 2) {
       setCurrentStep(3);
       setDialogue("Pipes connected! Distributing water evenly across the fields.");
       setShowDialogue(true);
-      setTimeout(() => setShowDialogue(false), 6000);
+      scheduleHideDialogue(6000);
     } else if (currentStep === 3) {
       setCurrentStep(4);
       setDialogue("WONDERFUL! The crops are growing and the land is thriving again. You saved Nusa!");
       setShowDialogue(true);
-      setTimeout(() => {
-        setShowDialogue(false);
-        setShowMissionComplete(true);
-      }, 8000);
+      scheduleHideDialogue(8000, () => setShowMissionComplete(true));
     }
   };
 
@@ -416,21 +412,20 @@ function LevelApp({ levelId }) {
       setCurrentStep(2);
       setDialogue("Microgrid constructed! Now, align the solar panels to the sun.");
       setShowDialogue(true);
-      setTimeout(() => setShowDialogue(false), 6000);
+      scheduleHideDialogue(6000);
     } else if (currentStep === 2) {
       setCurrentStep(3);
       setDialogue("Panels aligned! Absorbing solar energy... Powering up the village!");
       setShowDialogue(true);
-      setTimeout(() => setShowDialogue(false), 6000);
+      scheduleHideDialogue(6000);
     } else if (currentStep === 3) {
       setCurrentStep(4);
       setDialogue("INCREDIBLE! The village is glowing with clean energy. You have saved Nusantara!");
       setShowDialogue(true);
-      setTimeout(() => {
-        setShowDialogue(false);
+      scheduleHideDialogue(8000, () => {
         setShowCertificate(true);
         playMusic('congrats');
-      }, 8000);
+      });
     }
   };
 
@@ -947,14 +942,24 @@ function LevelApp({ levelId }) {
                           className="ml-3 text-cyan-400 hover:text-white transition-colors flex items-center gap-1 text-sm bg-cyan-900/30 px-2 py-1 rounded border border-cyan-400/50" 
                           title="Turn on Narrator"
                           onClick={() => {
+                            // 1. KILL THE AUTO-HIDE TIMER
+                            if (dialogTimerRef.current) {
+                              clearTimeout(dialogTimerRef.current);
+                              dialogTimerRef.current = null;
+                            }
+                            
                             window.speechSynthesis.cancel();
                             setShowDialogue(true);
                             const utterance = new SpeechSynthesisUtterance(dialogue);
                             utterance.lang = 'en-US';
                             utterance.rate = 0.9;
+                            
+                            // 2. HIDE DIALOG ONLY WHEN SPEECH ENDS
                             utterance.onend = function() {
                               console.log("Speech finished.");
-                              setShowDialogue(false);
+                              setTimeout(() => {
+                                setShowDialogue(false);
+                              }, 1000);
                             };
                             window.speechSynthesis.speak(utterance);
                           }}
