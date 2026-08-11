@@ -124,7 +124,11 @@ function LevelApp({ levelId }) {
     const doc = new window.jspdf.jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
 
     const bgImg = new Image();
-    bgImg.src = '/template_sertif.png'; // Your blank frame template
+    bgImg.src = '/template_certificate.png'; // Your blank frame template
+
+    bgImg.onerror = function() {
+        console.error("Failed to load template_certificate.png");
+    };
 
     bgImg.onload = function() {
         // 1. Draw Blank Background Template
