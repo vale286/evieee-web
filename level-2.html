@@ -98,7 +98,7 @@
     <button id="btn-fullscreen" class="fixed bottom-4 left-4 z-[999] w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-slate-800/80 border border-cyan-400 rounded text-cyan-400 hover:bg-cyan-900 transition-colors pointer-events-auto">⛶</button>
 
     <!-- Top-Right: EvIEEE Dialog (Moved slightly down to avoid audio button) -->
-    <div class="fixed top-4 left-1/2 transform -translate-x-1/2 z-40 px-3 py-1 md:px-6 md:py-2 text-[10px] md:text-sm whitespace-nowrap pointer-events-auto">
+    <div class="fixed top-4 left-1/2 transform -translate-x-1/2 z-40 px-3 py-1 md:px-6 md:py-2 text-[10px] md:text-sm pointer-events-auto">
       <div class="glass-cyan p-4 rounded-xl max-w-sm flex items-start space-x-3">
         <div class="w-12 h-12 rounded-full bg-cyan-900 border-2 border-cyan-400 flex items-center justify-center flex-shrink-0 shadow-[0_0_10px_rgba(0,240,255,0.5)]">
           <span class="text-xl font-bold text-cyan-400">Ev</span>
@@ -106,9 +106,14 @@
         <div>
           <div class="flex items-center mb-1">
             <h3 class="text-cyan-400 font-bold">EvIEEE</h3>
-            <button id="btn-read-aloud" class="ml-2 text-cyan-400 hover:text-white transition-colors" title="Read Text Aloud"><span class="text-lg md:text-xl">📢</span></button>
+            <button id="btn-read-aloud" class="ml-3 text-cyan-400 hover:text-white transition-colors flex items-center gap-1 text-sm bg-cyan-900/30 px-2 py-1 rounded border border-cyan-400/50" title="Turn on Narrator">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5 10v4a2 2 0 002 2h2.586l3.707 3.707A1 1 0 0015 19V5a1 1 0 00-1.707-.707L9.586 8H7a2 2 0 00-2 2z" />
+                </svg>
+                Narrator
+            </button>
           </div>
-          <p id="evieee-dialog-text" class="text-sm text-gray-200 leading-relaxed">Oh no! This river area in Andalas is blocked by fallen logs. We need to clear them up!</p>
+          <p id="evieee-dialog-text" class="text-sm text-gray-200 leading-relaxed h-auto break-words whitespace-normal">Oh no! This river area in Andalas is blocked by fallen logs. We need to clear them up!</p>
         </div>
       </div>
     </div>
@@ -270,14 +275,23 @@
       });
 
       // --- TEXT-TO-SPEECH ---
-      document.getElementById('btn-read-aloud')?.addEventListener('click', () => {
-          const textToRead = document.getElementById('evieee-dialog-text').innerText;
-          window.speechSynthesis.cancel();
-          const utterance = new SpeechSynthesisUtterance(textToRead);
-          utterance.lang = 'en-US';
-          utterance.rate = 0.9;
-          window.speechSynthesis.speak(utterance);
-      });
+      const btnRead = document.getElementById('btn-read-aloud');
+      if (btnRead) {
+          btnRead.addEventListener('click', () => {
+              const textToRead = document.getElementById('evieee-dialog-text').innerText;
+              window.speechSynthesis.cancel();
+              const utterance = new SpeechSynthesisUtterance(textToRead);
+              utterance.lang = 'en-US';
+              utterance.rate = 0.9;
+              
+              // Ensure dialog STAYS OPEN while speaking
+              utterance.onend = function() {
+                  console.log("Speech finished.");
+              };
+              
+              window.speechSynthesis.speak(utterance);
+          });
+      }
 
       // --- D-PAD LOGIC ---
       const moveState = { forward: false, backward: false, left: false, right: false };

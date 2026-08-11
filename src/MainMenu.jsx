@@ -56,7 +56,7 @@ function MainMenu() {
   };
 
   return (
-    <main className="relative w-screen h-screen overflow-hidden bg-navy-900 text-white font-sans pointer-events-none">
+    <main className="relative min-h-screen w-full flex items-center justify-center bg-navy-900 text-white font-sans pointer-events-none">
       
       <button 
         onClick={handleToggleMute}

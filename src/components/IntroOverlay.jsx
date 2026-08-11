@@ -56,7 +56,7 @@ export default function IntroOverlay({ onComplete, initialName = '', onLevelSele
       </div>
 
       <motion.div
-        className={`pointer-events-auto w-full mx-4 glass-cyan p-6 rounded-2xl relative overflow-hidden flex flex-col min-h-[300px] ${step === 2 ? 'max-w-2xl' : 'max-w-lg'}`}
+        className={`pointer-events-auto w-full mx-4 glass-cyan p-6 rounded-2xl relative overflow-hidden flex flex-col min-h-[300px] max-h-[85vh] overflow-y-auto m-auto ${step === 2 ? 'max-w-2xl' : 'max-w-lg'}`}
         initial={{ opacity: 0, y: 50, scale: 0.9 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}

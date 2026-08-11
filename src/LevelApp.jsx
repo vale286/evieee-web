@@ -944,18 +944,28 @@ function LevelApp({ levelId }) {
                         <h3 className="text-sm font-bold text-cyan uppercase tracking-widest">EvIEEE</h3>
                         <button 
                           id="btn-read-aloud" 
-                          className="ml-2 text-cyan hover:text-white transition-colors" 
-                          title="Read Text Aloud"
+                          className="ml-3 text-cyan-400 hover:text-white transition-colors flex items-center gap-1 text-sm bg-cyan-900/30 px-2 py-1 rounded border border-cyan-400/50" 
+                          title="Turn on Narrator"
                           onClick={() => {
                             window.speechSynthesis.cancel();
+                            setShowDialogue(true);
                             const utterance = new SpeechSynthesisUtterance(dialogue);
                             utterance.lang = 'en-US';
                             utterance.rate = 0.9;
+                            utterance.onend = function() {
+                              console.log("Speech finished.");
+                              setShowDialogue(false);
+                            };
                             window.speechSynthesis.speak(utterance);
                           }}
-                        ><span className="text-lg md:text-xl">📢</span></button>
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5 10v4a2 2 0 002 2h2.586l3.707 3.707A1 1 0 0015 19V5a1 1 0 00-1.707-.707L9.586 8H7a2 2 0 00-2 2z" />
+                          </svg>
+                          Narrator
+                        </button>
                       </div>
-                      <p id="evieee-dialog-text" className="text-sm leading-relaxed">{dialogue}</p>
+                      <p id="evieee-dialog-text" className="text-sm leading-relaxed h-auto break-words whitespace-normal">{dialogue}</p>
                     </div>
                   </div>
                 </div>
