@@ -124,7 +124,6 @@ function LevelApp({ levelId }) {
     const doc = new window.jspdf.jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
 
     const bgImg = new Image();
-    bgImg.src = '/template_certificate.png'; // Your blank frame template
 
     bgImg.onerror = function() {
         console.error("Failed to load template_certificate.png");
@@ -183,7 +182,6 @@ function LevelApp({ levelId }) {
 
         // 9. Add Enlarged Medal
         const sealImg = new Image();
-        sealImg.src = '/icon_sertif.png'; 
         
         sealImg.onload = function() {
             // Positioned neatly above the footer text on the right
@@ -194,7 +192,11 @@ function LevelApp({ levelId }) {
         sealImg.onerror = function() {
             doc.save(userName.replace(/\s+/g, '_') + "_Eco_Hero_Certificate.pdf");
         }; 
+
+        sealImg.src = '/icon_sertif.png'; 
     }; 
+    
+    bgImg.src = '/template_certificate.png'; // Your blank frame template
   };
 
   // Intro Dialogue Setup
