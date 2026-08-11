@@ -121,72 +121,76 @@ function LevelApp({ levelId }) {
 
   const handleDownloadCertificate = (name, location) => {
     if (!window.jspdf) return;
-    const doc = new window.jspdf.jsPDF({ orientation: 'landscape' });
-    doc.setFillColor(10, 25, 47);
-    doc.rect(0, 0, 297, 210, 'F');
-    doc.setDrawColor(0, 240, 255);
-    doc.setLineWidth(5);
-    doc.rect(10, 10, 277, 190);
-    
-    doc.setDrawColor(255, 215, 0);
-    doc.setLineWidth(2);
-    doc.rect(15, 15, 267, 180);
-    
-    doc.setTextColor(255, 255, 255);
-    doc.setFontSize(22);
-    doc.text("EvIEEE SMART CITY SIMULATION", 148, 50, { align: "center" });
-    
-    doc.setTextColor(0, 240, 255);
-    doc.setFontSize(40);
-    doc.text("CERTIFICATE OF COMPLETION", 148, 80, { align: "center" });
-    
-    doc.setTextColor(255, 255, 255);
-    doc.setFontSize(18);
-    doc.text("Proudly Presented To:", 148, 110, { align: "center" });
-    
-    doc.setTextColor(74, 222, 128);
-    doc.setFontSize(50);
-    doc.text(name, 148, 140, { align: "center" });
-    
-    doc.setFont("helvetica", "italic");
-    doc.setFontSize(14);
-    const closingMessage = "Hopefully, you can become a true local hero in " + location + "!";
-    doc.text(closingMessage, 148, 160, { align: "center" });
-    
-    doc.setFont("helvetica", "normal");
-    const today = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
-    doc.setTextColor(255, 255, 255);
-    doc.setFontSize(12);
-    doc.text("Date of Completion: " + today, 20, 190);
-    
-    doc.setFontSize(12);
-    doc.text("EvIEEE Smart City System", 250, 190, { align: "center" });
-    
-    // Sustainability Impact Report
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(12);
-    doc.setTextColor(34, 211, 238); // Cyan color
-    doc.text("SIMULATED SUSTAINABILITY IMPACT:", 148, 172, { align: "center" });
+    const doc = new window.jspdf.jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
 
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(10);
-    doc.setTextColor(255, 255, 255); // White color
-    doc.text("• 150kg Carbon Reduced   • 5,000 Trees Planted   • 200kg Marine Waste Cleared", 148, 178, { align: "center" });
-    
-    const sealImg = new Image();
-    sealImg.src = '/icon_sertif.png';
-    sealImg.onload = function() {
-        // Moved Y up (from 160 to 145) and slightly reduced size (to 28x28 or 30x30)
-        // Adjust the X coordinate (e.g., 245) if it needs to be perfectly centered above the text
-        doc.addImage(sealImg, 'PNG', 245, 145, 30, 30); 
+    const bgImg = new Image();
+    bgImg.src = '/template_sertif.png'; // Your blank frame template
+
+    bgImg.onload = function() {
+        // 1. Draw Blank Background Template
+        doc.addImage(bgImg, 'PNG', 0, 0, 297, 210);
         
-        // ONLY save the document AFTER the image is added
-        doc.save(name.replace(/\s+/g, '_') + "_Eco_Hero_Certificate.pdf");
-    };
-    sealImg.onerror = function() {
-        console.error("Failed to load medal icon. Saving PDF without it.");
-        doc.save(name.replace(/\s+/g, '_') + "_Eco_Hero_Certificate.pdf");
-    };
+        // 2. Top Header (IEEE Program Name)
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(12);
+        doc.setTextColor(255, 255, 255); // White
+        doc.text("2026 IEEE Metaverse Grand Challenge for Simulation-based Learning", 148, 40, { align: "center" });
+        
+        // 3. Main Title
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(32);
+        doc.setTextColor(34, 211, 238); // Cyan
+        doc.text("CERTIFICATE OF COMPLETION", 148, 65, { align: "center" });
+        
+        // 4. Subtitle
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(14);
+        doc.setTextColor(255, 255, 255); // White
+        doc.text("Proudly Presented To:", 148, 90, { align: "center" });
+        
+        // 5. Dynamic Name
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(40);
+        doc.setTextColor(74, 222, 128); // Green color for the name
+        const userName = name || document.getElementById('user-name-input')?.value || "Vallen"; 
+        doc.text(userName, 148, 115, { align: "center" });
+        
+        // 6. Encouragement Message
+        doc.setFont("helvetica", "italic");
+        doc.setFontSize(12);
+        const closingMessage = "Hopefully, you can become a true local hero in " + location + "!";
+        doc.text(closingMessage, 148, 135, { align: "center" });
+        
+        // 7. Sustainability Impact Section
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(10);
+        doc.setTextColor(34, 211, 238); // Cyan
+        doc.text("SIMULATED SUSTAINABILITY IMPACT:", 148, 160, { align: "center" });
+        
+        doc.setFont("helvetica", "normal");
+        doc.setTextColor(255, 255, 255); // White
+        doc.text("• 150kg Carbon Reduced   • 5,000 Trees Planted   • 200kg Marine Waste Cleared", 148, 168, { align: "center" });
+        
+        // 8. Footer (Auto-Date and System Name)
+        const today = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+        doc.setFontSize(10);
+        doc.text(`Date of Completion: ${today}`, 20, 190, { align: "left" });
+        doc.text("EvIEEE Smart City System", 277, 190, { align: "right" });
+
+        // 9. Add Enlarged Medal
+        const sealImg = new Image();
+        sealImg.src = '/icon_sertif.png'; 
+        
+        sealImg.onload = function() {
+            // Positioned neatly above the footer text on the right
+            doc.addImage(sealImg, 'PNG', 230, 140, 45, 45); 
+            doc.save(userName.replace(/\s+/g, '_') + "_Eco_Hero_Certificate.pdf");
+        };
+        
+        sealImg.onerror = function() {
+            doc.save(userName.replace(/\s+/g, '_') + "_Eco_Hero_Certificate.pdf");
+        }; 
+    }; 
   };
 
   // Intro Dialogue Setup
