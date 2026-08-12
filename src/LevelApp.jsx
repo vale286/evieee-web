@@ -568,7 +568,9 @@ function LevelApp({ levelId }) {
               </div>
             </motion.div>
 
-            <DPadOverlay setMovement={handleSetMovement} />
+            {(!showMissionComplete && !showCertificate) && (
+              <DPadOverlay setMovement={handleSetMovement} />
+            )}
             
             {/* Scan Button */}
             {!isModalOpen && !currentTrashId && trashCollected < 3 && (
@@ -705,7 +707,9 @@ function LevelApp({ levelId }) {
               </ul>
             </motion.div>
 
-            <DPadOverlay setMovement={handleSetMovement} />
+            {(!showMissionComplete && !showCertificate) && (
+              <DPadOverlay setMovement={handleSetMovement} />
+            )}
 
             {/* Action Button */}
             {currentStep < 4 && (
@@ -768,7 +772,9 @@ function LevelApp({ levelId }) {
               </ul>
             </motion.div>
 
-            <DPadOverlay setMovement={handleSetMovement} />
+            {(!showMissionComplete && !showCertificate) && (
+              <DPadOverlay setMovement={handleSetMovement} />
+            )}
 
             {/* Action Button */}
             {currentStep < 3 && (
@@ -837,7 +843,9 @@ function LevelApp({ levelId }) {
               </ul>
             </motion.div>
 
-            <DPadOverlay setMovement={handleSetMovement} />
+            {(!showMissionComplete && !showCertificate) && (
+              <DPadOverlay setMovement={handleSetMovement} />
+            )}
 
             {/* Action Button */}
             {currentStep < 4 && (
@@ -906,7 +914,9 @@ function LevelApp({ levelId }) {
               </ul>
             </motion.div>
 
-            <DPadOverlay setMovement={handleSetMovement} />
+            {(!showMissionComplete && !showCertificate) && (
+              <DPadOverlay setMovement={handleSetMovement} />
+            )}
 
             {/* Action Button */}
             {currentStep < 4 && (
@@ -975,7 +985,9 @@ function LevelApp({ levelId }) {
               </ul>
             </motion.div>
 
-            <DPadOverlay setMovement={handleSetMovement} />
+            {(!showMissionComplete && !showCertificate) && (
+              <DPadOverlay setMovement={handleSetMovement} />
+            )}
 
             {/* Action Button */}
             {currentStep < 4 && (
