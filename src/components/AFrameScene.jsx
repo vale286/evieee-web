@@ -213,8 +213,9 @@ export default function AFrameScene({ movementState, level = 1, currentStep = 1 
             <a-entity position="-10 0 -14">
               {currentStep < 3 && (
                 <>
-                  <a-sphere radius="1.2" color="#ff4500" position="0 0.5 0" material="emissive: #ff4500; emissiveIntensity: 0.8" animation="property: scale; to: 1.2 1.2 1.2; dir: alternate; loop: true; dur: 500"></a-sphere>
-                  <a-text value="Peatland Fire" color="#ff4500" align="center" position="0 2.5 0" scale="2 2 2" animation="property: position; to: 0 2.8 0; dir: alternate; loop: true; dur: 800"></a-text>
+                  <a-sphere radius="1.2" color="#ff4500" position="0 0.5 0" material="emissive: #ff4500; emissiveIntensity: 1" animation="property: scale; to: 1.3 1.3 1.3; dir: alternate; loop: true; dur: 500"></a-sphere>
+                  <a-sphere radius="2.2" color="#ff0000" position="0 0.5 0" material="blending: additive; opacity: 0.6; transparent: true" animation="property: opacity; to: 0.2; dir: alternate; loop: true; dur: 400"></a-sphere>
+                  <a-text value="Peatland Fire" color="#ff6600" align="center" position="0 3 0" scale="3 3 3" animation="property: position; to: 0 3.3 0; dir: alternate; loop: true; dur: 800"></a-text>
                 </>
               )}
               {/* Burnt stumps */}
@@ -224,8 +225,9 @@ export default function AFrameScene({ movementState, level = 1, currentStep = 1 
             <a-entity position="9 0 -12">
               {currentStep < 3 && (
                 <>
-                  <a-sphere radius="1" color="#ff4500" position="0 0.5 0" material="emissive: #ff4500; emissiveIntensity: 0.8" animation="property: scale; to: 1.3 1.3 1.3; dir: alternate; loop: true; dur: 600"></a-sphere>
-                  <a-text value="Peatland Fire" color="#ff4500" align="center" position="0 2 0" scale="2 2 2" animation="property: position; to: 0 2.3 0; dir: alternate; loop: true; dur: 800"></a-text>
+                  <a-sphere radius="1" color="#ff4500" position="0 0.5 0" material="emissive: #ff4500; emissiveIntensity: 1" animation="property: scale; to: 1.4 1.4 1.4; dir: alternate; loop: true; dur: 600"></a-sphere>
+                  <a-sphere radius="2.0" color="#ff0000" position="0 0.5 0" material="blending: additive; opacity: 0.6; transparent: true" animation="property: opacity; to: 0.2; dir: alternate; loop: true; dur: 500"></a-sphere>
+                  <a-text value="Peatland Fire" color="#ff6600" align="center" position="0 2.5 0" scale="3 3 3" animation="property: position; to: 0 2.8 0; dir: alternate; loop: true; dur: 800"></a-text>
                 </>
               )}
               <a-cylinder radius="0.3" height="2" color="#1a110b" position="-1 1 0" rotation="30 0 0"></a-cylinder>
@@ -234,8 +236,9 @@ export default function AFrameScene({ movementState, level = 1, currentStep = 1 
             <a-entity position="0 0 -18">
               {currentStep < 3 && (
                 <>
-                  <a-sphere radius="1.5" color="#ff4500" position="0 1 0" material="emissive: #ff4500; emissiveIntensity: 0.8" animation="property: scale; to: 1.1 1.1 1.1; dir: alternate; loop: true; dur: 450"></a-sphere>
-                  <a-text value="Peatland Fire" color="#ff4500" align="center" position="0 3.5 0" scale="2.5 2.5 2.5" animation="property: position; to: 0 3.8 0; dir: alternate; loop: true; dur: 800"></a-text>
+                  <a-sphere radius="1.5" color="#ff4500" position="0 1 0" material="emissive: #ff4500; emissiveIntensity: 1" animation="property: scale; to: 1.2 1.2 1.2; dir: alternate; loop: true; dur: 450"></a-sphere>
+                  <a-sphere radius="2.8" color="#ff0000" position="0 1 0" material="blending: additive; opacity: 0.6; transparent: true" animation="property: opacity; to: 0.2; dir: alternate; loop: true; dur: 450"></a-sphere>
+                  <a-text value="Peatland Fire" color="#ff6600" align="center" position="0 4 0" scale="3.5 3.5 3.5" animation="property: position; to: 0 4.3 0; dir: alternate; loop: true; dur: 800"></a-text>
                 </>
               )}
             </a-entity>
