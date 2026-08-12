@@ -33,14 +33,32 @@ function LevelApp({ levelId }) {
   const [dialogue, setDialogue] = useState('');
   const [showDialogue, setShowDialogue] = useState(false);
   const dialogTimerRef = useRef(null);
+  const dialogCallbackRef = useRef(null);
+
+  const handleSkipDialogue = () => {
+    window.speechSynthesis.cancel();
+    if (dialogTimerRef.current) {
+      clearTimeout(dialogTimerRef.current);
+      dialogTimerRef.current = null;
+    }
+    setShowDialogue(false);
+    if (dialogCallbackRef.current) {
+      dialogCallbackRef.current();
+      dialogCallbackRef.current = null;
+    }
+  };
 
   // Centralized helper: schedule dialog auto-hide with a clearable timer
   const scheduleHideDialogue = (ms, callback) => {
     if (dialogTimerRef.current) clearTimeout(dialogTimerRef.current);
+    dialogCallbackRef.current = callback || null;
     dialogTimerRef.current = setTimeout(() => {
       setShowDialogue(false);
       dialogTimerRef.current = null;
-      if (callback) callback();
+      if (dialogCallbackRef.current) {
+        dialogCallbackRef.current();
+        dialogCallbackRef.current = null;
+      }
     }, ms);
   };
   
@@ -1025,6 +1043,10 @@ function LevelApp({ levelId }) {
                               console.log("Speech finished.");
                               setTimeout(() => {
                                 setShowDialogue(false);
+                                if (dialogCallbackRef.current) {
+                                  dialogCallbackRef.current();
+                                  dialogCallbackRef.current = null;
+                                }
                               }, 1000);
                             };
                             window.speechSynthesis.speak(utterance);
@@ -1034,6 +1056,15 @@ function LevelApp({ levelId }) {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5 10v4a2 2 0 002 2h2.586l3.707 3.707A1 1 0 0015 19V5a1 1 0 00-1.707-.707L9.586 8H7a2 2 0 00-2 2z" />
                           </svg>
                           Narrator
+                        </button>
+                        
+                        <button 
+                          id="btn-skip-dialog" 
+                          className="ml-2 text-cyan-400 hover:text-white transition-colors flex items-center gap-1 text-sm bg-cyan-900/30 px-3 py-1 rounded border border-cyan-400/50" 
+                          title="Skip and Proceed"
+                          onClick={handleSkipDialogue}
+                        >
+                          Next ❯
                         </button>
                       </div>
                       <p id="evieee-dialog-text" className="text-sm leading-relaxed h-auto break-words whitespace-normal">{dialogue}</p>
