@@ -52,25 +52,7 @@
         box-shadow: 0 0 25px rgba(34,211,238,0.6), 0 0 50px rgba(34,211,238,0.2);
         transform: scale(1.05);
       }
-      /* Floating sparkle particles */
-      .btn-sparkle::before,
-      .btn-sparkle::after {
-        content: '✦';
-        position: absolute;
-        font-size: 10px;
-        color: #22d3ee;
-        animation: star-twinkle 2s ease-in-out infinite;
-      }
-      .btn-sparkle::before {
-        top: 4px;
-        right: 12px;
-        animation-delay: 0s;
-      }
-      .btn-sparkle::after {
-        bottom: 4px;
-        left: 12px;
-        animation-delay: 1s;
-      }
+
 
       /* Smart City highlight */
       .smart-city-highlight {
@@ -192,10 +174,10 @@
                         Narrator
                     </button>
                 </h2>
-                <p id="evieee-intro-text">"Halo, Penjelajah Muda! 🌍 Kota-kota di Nusantara butuh bantuanmu! Alam sedang dalam bahaya — hutan terbakar, laut tercemar, dan udara tidak bersih. Kamu akan menjadi pahlawan <span class='smart-city-highlight'>Smart City</span> yang membangun kota pintar dan ramah lingkungan. Yuk, selamatkan Nusantara bersama EvIEEE!"</p>
+                <p id="evieee-intro-text">"Hello, Young Explorer! The cities across Nusantara need your help! Nature is in danger — forests are burning, oceans are polluted, and the air isn't clean. You'll become a <span class='smart-city-highlight'>Smart City</span> hero, building clever and eco-friendly cities. Let's save Nusantara together with EvIEEE!"</p>
             </div>
             <button id="btn-enter-map" class="btn-sparkle">
-                ✨ Start Adventure ✨
+                Start Adventure
             </button>
         </div>
     </div>
@@ -271,14 +253,15 @@
                 const textToRead = document.getElementById('evieee-intro-text').innerText;
                 window.speechSynthesis.cancel();
                 const utterance = new SpeechSynthesisUtterance(textToRead);
-                utterance.lang = 'id-ID';
+                utterance.lang = 'en-US';
                 utterance.rate = 0.9;
                 
                 // Try to find a suitable voice
                 const voices = window.speechSynthesis.getVoices();
                 const idVoice = voices.find(v => 
-                    v.lang.startsWith('id') || 
-                    v.name.toLowerCase().includes('indonesian')
+                    v.name.toLowerCase().includes('female') || 
+                    v.name.toLowerCase().includes('zira') || 
+                    v.name.toLowerCase().includes('samantha')
                 );
                 if (idVoice) {
                     utterance.voice = idVoice;
