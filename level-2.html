@@ -97,6 +97,13 @@
       <a-sphere radius="0.08" color="#3b82f6" position="2.8 1.8 -4.8"></a-sphere>
     </a-entity>
 
+    <!-- Sunlight FX (Hidden initially) -->
+    <a-entity id="sunlight-fx" visible="false">
+      <a-cylinder position="-3 3 -4" radius="0.5" height="6" color="#fde047" opacity="0.3" material="shader: flat; transparent: true" animation="property: opacity; from: 0.2; to: 0.5; dir: alternate; loop: true; dur: 1500"></a-cylinder>
+      <a-cylinder position="3 3 -5" radius="0.5" height="6" color="#fde047" opacity="0.3" material="shader: flat; transparent: true" animation="property: opacity; from: 0.2; to: 0.5; dir: alternate; loop: true; dur: 1500"></a-cylinder>
+      <a-light type="directional" color="#fef08a" intensity="1.5" position="-1 4 2"></a-light>
+    </a-entity>
+
     <a-entity position="0 1.6 5">
       <a-camera look-controls="pointerLockEnabled: false" wasd-controls></a-camera>
     </a-entity>
@@ -181,7 +188,7 @@
       <div class="glass-cyan p-10 rounded-2xl flex flex-col items-center max-w-md w-full mx-4 text-center">
         <h2 class="text-3xl font-bold text-green-400 mb-4 drop-shadow-[0_0_10px_rgba(74,222,128,0.5)]">Mission Complete!</h2>
         <p class="text-lg text-gray-200 mb-8">You successfully restored the forest and river ecosystem in Andalas.</p>
-        <button onclick="window.location.href = 'index.html'" class="w-full py-3 bg-transparent border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-navy-900 font-bold rounded-lg transition-colors flex justify-center items-center gap-2">
+        <button onclick="localStorage.setItem('evieee_unlocked_level3', 'true'); localStorage.setItem('evieee_skip_intro', 'true'); window.location.href = '/';" class="w-full py-3 bg-transparent border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-navy-900 font-bold rounded-lg transition-colors flex justify-center items-center gap-2">
           <span>🗺️</span> Return to Nusantara Map
         </button>
       </div>
@@ -199,6 +206,7 @@
       const logs = document.getElementById('logs');
       const trees = document.getElementById('trees');
       const waterFx = document.getElementById('water-fx');
+      const sunlightFx = document.getElementById('sunlight-fx');
       const missionComplete = document.getElementById('mission-complete');
       
       const check1 = document.getElementById('check-1');
@@ -250,6 +258,8 @@
           waterFx.setAttribute('visible', 'true');
           waterFx.setAttribute('animation', 'property: position; to: 0 -1 0; dur: 2000; loop: true');
           
+          if (sunlightFx) sunlightFx.setAttribute('visible', 'true');
+          
           // Animate trees growing to full size
           trees.setAttribute('animation', 'property: scale; from: 0.4 0.4 0.4; to: 1.5 1.5 1.5; dur: 4000; easing: easeOutElastic');
           
@@ -265,6 +275,7 @@
           // Show modal after 8 seconds
           missionTimerId = setTimeout(() => {
             waterFx.setAttribute('visible', 'false'); // Hide water after growing
+            if (sunlightFx) sunlightFx.setAttribute('visible', 'false'); // Hide sunlight
             missionComplete.classList.remove('hidden');
             // Trigger reflow
             void missionComplete.offsetWidth;
@@ -344,6 +355,7 @@
             clearTimeout(missionTimerId);
             missionTimerId = null;
             waterFx.setAttribute('visible', 'false'); // Hide water
+            if (sunlightFx) sunlightFx.setAttribute('visible', 'false'); // Hide sunlight
             missionComplete.classList.remove('hidden');
             void missionComplete.offsetWidth;
             missionComplete.classList.remove('opacity-0');
