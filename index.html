@@ -2,39 +2,200 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>evieee-web</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+    <style>
+      /* Shimmer / sparkle effect for the Start Adventure button */
+      @keyframes shimmer {
+        0% { background-position: -200% center; }
+        100% { background-position: 200% center; }
+      }
+      @keyframes sparkle-pulse {
+        0%, 100% { box-shadow: 0 0 8px rgba(34,211,238,0.4), 0 0 20px rgba(34,211,238,0.1); }
+        50% { box-shadow: 0 0 16px rgba(34,211,238,0.8), 0 0 40px rgba(34,211,238,0.3), 0 0 60px rgba(34,211,238,0.1); }
+      }
+      @keyframes star-twinkle {
+        0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+        50% { opacity: 1; transform: scale(1) rotate(180deg); }
+      }
+      .btn-sparkle {
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          transparent 30%,
+          rgba(34,211,238,0.15) 45%,
+          rgba(34,211,238,0.35) 50%,
+          rgba(34,211,238,0.15) 55%,
+          transparent 70%,
+          transparent 100%
+        );
+        background-size: 200% 100%;
+        animation: shimmer 3s ease-in-out infinite, sparkle-pulse 2s ease-in-out infinite;
+        border: 2px solid #22d3ee;
+        color: #22d3ee;
+        font-weight: bold;
+        border-radius: 0.5rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        padding: 0.85rem 2.5rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 1rem;
+      }
+      .btn-sparkle:hover {
+        background-color: rgba(34,211,238,0.15);
+        box-shadow: 0 0 25px rgba(34,211,238,0.6), 0 0 50px rgba(34,211,238,0.2);
+        transform: scale(1.05);
+      }
+      /* Floating sparkle particles */
+      .btn-sparkle::before,
+      .btn-sparkle::after {
+        content: '✦';
+        position: absolute;
+        font-size: 10px;
+        color: #22d3ee;
+        animation: star-twinkle 2s ease-in-out infinite;
+      }
+      .btn-sparkle::before {
+        top: 4px;
+        right: 12px;
+        animation-delay: 0s;
+      }
+      .btn-sparkle::after {
+        bottom: 4px;
+        left: 12px;
+        animation-delay: 1s;
+      }
+
+      /* Smart City highlight */
+      .smart-city-highlight {
+        color: #22d3ee;
+        font-weight: bold;
+        text-shadow: 0 0 8px rgba(34,211,238,0.5);
+      }
+
+      /* Story intro layout fixes */
+      #story-intro {
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        background: #0a192f;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 1.5rem;
+        transition: opacity 1s ease;
+        overflow-y: auto;
+      }
+      #terminal-text {
+        width: 100%;
+        max-width: 42rem;
+        color: #22d3ee;
+        font-family: monospace;
+        font-size: 0.85rem;
+        line-height: 1.7;
+        margin-bottom: 1.5rem;
+        min-height: 6rem;
+        flex-shrink: 0;
+      }
+      @media (min-width: 768px) {
+        #terminal-text {
+          font-size: 1rem;
+        }
+      }
+      #evieee-welcome {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 1s ease;
+        flex-shrink: 0;
+        width: 100%;
+        max-width: 36rem;
+      }
+      #evieee-welcome.show {
+        display: flex;
+      }
+      .evieee-card {
+        background: rgba(30, 41, 59, 0.8);
+        backdrop-filter: blur(12px);
+        border: 1px solid #22d3ee;
+        padding: 1.5rem;
+        border-radius: 0.75rem;
+        color: white;
+        text-align: center;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 0 15px rgba(34,211,238,0.2);
+        width: 100%;
+      }
+      .evieee-header {
+        color: #22d3ee;
+        font-weight: bold;
+        margin-bottom: 0.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        font-size: 1.1rem;
+      }
+      .narrator-btn {
+        margin-left: 0.5rem;
+        color: #22d3ee;
+        transition: color 0.2s;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        font-size: 0.75rem;
+        background: rgba(8, 145, 178, 0.2);
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.25rem;
+        border: 1px solid rgba(34,211,238,0.4);
+        cursor: pointer;
+      }
+      .narrator-btn:hover {
+        color: white;
+      }
+      #evieee-intro-text {
+        font-size: 0.9rem;
+        line-height: 1.6;
+      }
+      @media (min-width: 768px) {
+        #evieee-intro-text {
+          font-size: 1rem;
+        }
+      }
+    </style>
   </head>
   <body>
     <!-- Cinematic Story Intro -->
-    <div id="story-intro" class="fixed inset-0 z-[99999] bg-[#0a192f] flex flex-col justify-center items-center p-8 transition-opacity duration-1000">
-        <div class="w-full max-w-2xl text-cyan-400 font-mono text-sm md:text-base leading-relaxed mb-8 h-32" id="terminal-text">
+    <div id="story-intro">
+        <div id="terminal-text">
             <!-- Typing effect will go here -->
         </div>
         
-        <div id="evieee-welcome" class="hidden flex-col items-center opacity-0 transition-opacity duration-1000">
-            <div class="bg-slate-800/80 backdrop-blur-md border border-cyan-400 p-6 rounded-lg text-white max-w-xl text-center mb-6 shadow-[0_0_15px_rgba(34,211,238,0.2)]">
-                <h2 class="text-cyan-400 font-bold mb-3 flex items-center justify-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+        <div id="evieee-welcome">
+            <div class="evieee-card">
+                <h2 class="evieee-header">
+                    <svg xmlns="http://www.w3.org/2000/svg" style="width:1.5rem;height:1.5rem;" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
                     EvIEEE AI Online
-                    <button id="btn-read-intro" class="ml-3 text-cyan-400 hover:text-white transition-colors flex items-center gap-1 text-xs bg-cyan-900/30 px-2 py-1 rounded border border-cyan-400/50" title="Turn on Narrator">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <button id="btn-read-intro" class="narrator-btn" title="Turn on Narrator">
+                        <svg xmlns="http://www.w3.org/2000/svg" style="width:1rem;height:1rem;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5 10v4a2 2 0 002 2h2.586l3.707 3.707A1 1 0 0015 19V5a1 1 0 00-1.707-.707L9.586 8H7a2 2 0 00-2 2z" />
                         </svg>
                         Narrator
                     </button>
                 </h2>
-                <p id="evieee-intro-text" class="text-sm md:text-base">"Welcome, Commander. Our telemetry shows severe ecosystem degradation across the archipelago. We need your strategic guidance to mitigate these disasters. The digital twin of Nusantara is now online."</p>
+                <p id="evieee-intro-text">"Halo, Penjelajah Muda! 🌍 Kota-kota di Nusantara butuh bantuanmu! Alam sedang dalam bahaya — hutan terbakar, laut tercemar, dan udara tidak bersih. Kamu akan menjadi pahlawan <span class='smart-city-highlight'>Smart City</span> yang membangun kota pintar dan ramah lingkungan. Yuk, selamatkan Nusantara bersama EvIEEE!"</p>
             </div>
-            <button id="btn-enter-map" class="px-8 py-3 bg-transparent border-2 border-cyan-400 text-cyan-400 font-bold rounded hover:bg-cyan-400 hover:text-[#0a192f] transition-all tracking-widest uppercase">
-                Initialize Map
+            <button id="btn-enter-map" class="btn-sparkle">
+                ✨ Start Adventure ✨
             </button>
         </div>
     </div>
@@ -81,10 +242,11 @@
             } else {
                 // Finished typing, show EvIEEE
                 setTimeout(() => {
-                    evieeeWelcome.classList.remove('hidden');
-                    evieeeWelcome.classList.add('flex');
+                    evieeeWelcome.classList.add('show');
                     // Trigger fade in
-                    setTimeout(() => evieeeWelcome.classList.remove('opacity-0'), 50);
+                    setTimeout(() => {
+                        evieeeWelcome.style.opacity = '1';
+                    }, 50);
                 }, 500);
             }
         }
@@ -95,7 +257,7 @@
         // Enter Map Button
         if (btnEnterMap) {
             btnEnterMap.addEventListener('click', () => {
-                storyIntro.classList.add('opacity-0');
+                storyIntro.style.opacity = '0';
                 setTimeout(() => {
                     storyIntro.style.display = 'none';
                 }, 1000); // Wait for fade out
@@ -109,19 +271,17 @@
                 const textToRead = document.getElementById('evieee-intro-text').innerText;
                 window.speechSynthesis.cancel();
                 const utterance = new SpeechSynthesisUtterance(textToRead);
-                utterance.lang = 'en-US';
+                utterance.lang = 'id-ID';
                 utterance.rate = 0.9;
                 
-                // Try to find a female voice
+                // Try to find a suitable voice
                 const voices = window.speechSynthesis.getVoices();
-                const femaleVoice = voices.find(v => 
-                    v.name.toLowerCase().includes('female') || 
-                    v.name.toLowerCase().includes('zira') || 
-                    v.name.toLowerCase().includes('samantha') || 
-                    v.name.toLowerCase().includes('victoria')
+                const idVoice = voices.find(v => 
+                    v.lang.startsWith('id') || 
+                    v.name.toLowerCase().includes('indonesian')
                 );
-                if (femaleVoice) {
-                    utterance.voice = femaleVoice;
+                if (idVoice) {
+                    utterance.voice = idVoice;
                 }
                 
                 window.speechSynthesis.speak(utterance);
