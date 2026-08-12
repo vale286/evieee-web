@@ -83,13 +83,13 @@ function MainMenu() {
             <motion.button 
               id="btn-enter-system"
               onClick={handleEnterSystem}
-              className="glass-cyan px-10 py-5 rounded-full text-white font-bold tracking-widest text-lg uppercase shadow-[0_0_30px_rgba(0,240,255,0.4)] hover:shadow-[0_0_50px_rgba(0,240,255,0.6)] hover:bg-cyan hover:text-navy-900 transition-all relative z-10 border-cyan/50"
+              className="glass-cyan btn-sparkle-menu px-10 py-5 rounded-full text-white font-bold tracking-widest text-sm md:text-lg uppercase shadow-[0_0_30px_rgba(0,240,255,0.4)] hover:shadow-[0_0_50px_rgba(0,240,255,0.6)] hover:bg-cyan hover:text-navy-900 transition-all relative z-10 border-cyan/50"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              ▶️ START ADVENTURE
+              I'M READY TO SOLVE THE CHALLENGE
             </motion.button>
             <div className="absolute bottom-4 w-full text-center text-xs text-cyan-400/60 tracking-widest uppercase">
               Copyright created by Vallen for IEEE Metaverse Grand Challenge for Simulation Based Learning 2026

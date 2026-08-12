@@ -334,8 +334,8 @@ function LevelApp({ levelId }) {
           label.setAttribute('value', found.dataset.name || 'Trash');
           label.setAttribute('color', '#00f0ff');
           label.setAttribute('align', 'center');
-          label.setAttribute('position', '0 2.5 0');
-          label.setAttribute('scale', '4 4 4');
+          label.setAttribute('position', '0 1.0 0');
+          label.setAttribute('scale', '1.5 1.5 1.5');
           found.appendChild(label);
         }
       } else {
