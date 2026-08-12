@@ -120,10 +120,32 @@ function LevelApp({ levelId }) {
   };
 
   const handleDownloadCertificate = async (name, location) => {
-    if (!window.jspdf) return;
+    // Dynamically load jsPDF if not already available
+    if (!window.jspdf) {
+      try {
+        await new Promise((resolve, reject) => {
+          const script = document.createElement('script');
+          script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+          script.onload = resolve;
+          script.onerror = () => reject(new Error('Failed to load jsPDF library'));
+          document.head.appendChild(script);
+        });
+      } catch (e) {
+        console.error("jsPDF load error:", e);
+        alert("Failed to load PDF library. Please check your internet connection and try again.");
+        return;
+      }
+    }
+
+    const { jsPDF } = window.jspdf;
+    if (!jsPDF) {
+      alert("PDF library not available. Please refresh the page and try again.");
+      return;
+    }
 
     const loadImage = (src) => new Promise((resolve, reject) => {
         const img = new Image();
+        img.crossOrigin = 'anonymous';
         img.onload = () => resolve(img);
         img.onerror = () => reject(new Error(`Failed to load image: ${src}`));
         img.src = src;
@@ -136,7 +158,7 @@ function LevelApp({ levelId }) {
             loadImage('/icon_sertif.png')
         ]);
 
-        const doc = new window.jspdf.jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+        const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
 
         // 1. Draw Blank Background Template
         doc.addImage(bgImg, 'PNG', 0, 0, 297, 210);
@@ -163,8 +185,8 @@ function LevelApp({ levelId }) {
         doc.setFont("helvetica", "bold");
         doc.setFontSize(40);
         doc.setTextColor(74, 222, 128); // Green color for the name
-        const userName = name || document.getElementById('user-name-input')?.value || "Vallen"; 
-        doc.text(userName, 148, 115, { align: "center" });
+        const certName = name || document.getElementById('user-name-input')?.value || "Eco-Hero"; 
+        doc.text(certName, 148, 115, { align: "center" });
         
         // 6. Encouragement Message
         doc.setFont("helvetica", "italic");
@@ -192,7 +214,7 @@ function LevelApp({ levelId }) {
         doc.addImage(sealImg, 'PNG', 230, 140, 45, 45); 
 
         // 10. Save PDF
-        doc.save(userName.replace(/\s+/g, '_') + "_Eco_Hero_Certificate.pdf");
+        doc.save(certName.replace(/\s+/g, '_') + "_Eco_Hero_Certificate.pdf");
 
     } catch (error) {
         console.error("PDF Generation Error:", error);
