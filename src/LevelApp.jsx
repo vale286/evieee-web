@@ -291,7 +291,7 @@ function LevelApp({ levelId }) {
       }, 1000);
     } else if (phase === 8) {
       setTimeout(() => {
-        setDialogue(`Welcome to Celebes! The coral reefs are sick. Deploy the IoT (Internet of Things) Rover—a Smart Remote-Controlled Submarine—to clean the waste and plant Bio-Corals!`);
+        setDialogue(`Welcome to Celebes! The coral reefs are sick. Deploy the IoT (Internet of Things) Rover, a Smart Remote-Controlled Submarine, to clean the waste and plant Bio-Corals!`);
         setShowDialogue(true);
         scheduleHideDialogue(12000);
       }, 1000);
@@ -843,7 +843,7 @@ function LevelApp({ levelId }) {
             {currentStep < 4 && (
               <motion.button 
                 onClick={handleCelebesAction}
-                className={`fixed bottom-24 md:bottom-8 left-1/2 transform -translate-x-1/2 z-50 pointer-events-auto glass px-4 py-2 md:px-8 md:py-4 rounded-full shadow-[0_0_20px_rgba(0,240,255,0.4)] hover:bg-cyan/20 active:scale-95 transition-all font-bold tracking-widest text-xs md:text-sm uppercase flex items-center space-x-2 w-[90%] md:w-auto justify-center whitespace-nowrap ${currentStep === 1 ? 'text-cyan border-cyan/30' : currentStep === 2 ? 'text-yellow-400 border-yellow-400/30 shadow-[0_0_20px_rgba(250,204,21,0.4)]' : 'text-pink-400 border-pink-400/30 shadow-[0_0_20px_rgba(244,114,182,0.4)]'}`}
+                className={`fixed bottom-24 md:bottom-8 left-1/2 transform -translate-x-1/2 z-50 pointer-events-auto glass px-4 py-2 md:px-8 md:py-4 rounded-full shadow-[0_0_20px_rgba(0,240,255,0.4)] hover:bg-cyan/20 active:scale-95 transition-all font-bold tracking-widest text-xs md:text-sm uppercase flex items-center space-x-2 w-[90%] md:w-auto justify-center whitespace-nowrap ${currentStep === 1 ? 'text-[#202664] border-cyan/30' : currentStep === 2 ? 'text-yellow-400 border-yellow-400/30 shadow-[0_0_20px_rgba(250,204,21,0.4)]' : 'text-pink-400 border-pink-400/30 shadow-[0_0_20px_rgba(244,114,182,0.4)]'}`}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 20 }}
