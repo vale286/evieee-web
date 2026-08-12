@@ -95,8 +95,10 @@
   <div class="fixed inset-0 z-50 pointer-events-none bg-transparent h-screen w-screen text-white font-sans">
     
     <!-- Audio Toggle -->
-    <button id="btn-audio-toggle" class="fixed top-4 right-4 z-[9999] w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-[#0a192f]/80 backdrop-blur-md border border-cyan-400 text-cyan-400 hover:bg-cyan-900 transition-colors pointer-events-auto text-xl md:text-2xl">🔊</button>
-
+    <button id="btn-audio-toggle" class="fixed top-4 right-4 z-[9999] p-2 md:p-3 text-xs md:text-base rounded-full glass-cyan shadow-[0_0_15px_rgba(0,240,255,0.3)] hover:bg-cyan/20 active:scale-95 transition-all pointer-events-auto flex items-center justify-center border-cyan/50 text-red-400">
+      <svg id="icon-volume-on" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden text-cyan"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+      <svg id="icon-volume-off" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-400"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" x2="17" y1="9" y2="15"/><line x1="17" x2="23" y1="9" y2="15"/></svg>
+    </button>
     <!-- Fullscreen Toggle -->
     <!-- PLACE THIS AT THE BOTTOM LEFT, FAR AWAY FROM THE D-PAD -->
     <button id="btn-fullscreen" class="fixed bottom-4 left-4 z-[9999] w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-[#0a192f]/80 backdrop-blur-md border border-cyan-400 rounded text-cyan-400 hover:bg-cyan-900 transition-colors pointer-events-auto text-xl">⛶</button>
@@ -115,6 +117,9 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5 10v4a2 2 0 002 2h2.586l3.707 3.707A1 1 0 0015 19V5a1 1 0 00-1.707-.707L9.586 8H7a2 2 0 00-2 2z" />
                 </svg>
                 Narrator
+            </button>
+            <button id="btn-skip-dialog" class="ml-2 text-cyan-400 hover:text-white transition-colors flex items-center gap-1 text-sm bg-cyan-900/30 px-3 py-1 rounded border border-cyan-400/50" title="Skip and Proceed">
+                Next ❯
             </button>
           </div>
           <p id="evieee-dialog-text" class="text-sm text-gray-200 leading-relaxed h-auto break-words whitespace-normal">Oh no! This river area in Andalas is blocked by fallen logs. We need to clear them up!</p>
@@ -176,6 +181,7 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       let currentStep = 1;
+      let missionTimerId = null;
       
       const btnAction = document.getElementById('btn-action');
       const evieeeText = document.getElementById('evieee-dialog-text');
@@ -246,7 +252,7 @@
           currentStep = 4;
           
           // Show modal after 8 seconds
-          setTimeout(() => {
+          missionTimerId = setTimeout(() => {
             waterFx.setAttribute('visible', 'false'); // Hide water after growing
             missionComplete.classList.remove('hidden');
             // Trigger reflow
@@ -265,20 +271,20 @@
 
       // 2. Audio Toggle Button Logic
       const audioBtn = document.getElementById('btn-audio-toggle');
+      const iconVolOn = document.getElementById('icon-volume-on');
+      const iconVolOff = document.getElementById('icon-volume-off');
       if (audioBtn) {
           audioBtn.addEventListener('click', () => {
               if (isMusicPlaying) {
                   bgMusic.pause();
-                  audioBtn.innerText = '🔇';
-                  audioBtn.classList.replace('text-cyan-400', 'text-gray-400');
-                  audioBtn.classList.replace('border-cyan-400', 'border-gray-400');
+                  iconVolOn.classList.add('hidden');
+                  iconVolOff.classList.remove('hidden');
                   isMusicPlaying = false;
               } else {
                   // Play returns a promise, handle browser autoplay policies
                   bgMusic.play().then(() => {
-                      audioBtn.innerText = '🔊';
-                      audioBtn.classList.replace('text-gray-400', 'text-cyan-400');
-                      audioBtn.classList.replace('border-gray-400', 'border-cyan-400');
+                      iconVolOff.classList.add('hidden');
+                      iconVolOn.classList.remove('hidden');
                       isMusicPlaying = true;
                   }).catch((error) => {
                       console.error("Audio play failed:", error);
@@ -316,6 +322,22 @@
               
               window.speechSynthesis.speak(utterance);
           });
+      }
+
+      // --- SKIP DIALOG / TIMEOUT LOGIC ---
+      const btnSkip = document.getElementById('btn-skip-dialog');
+      if (btnSkip) {
+        btnSkip.addEventListener('click', () => {
+          window.speechSynthesis.cancel();
+          if (currentStep === 4 && missionTimerId) {
+            clearTimeout(missionTimerId);
+            missionTimerId = null;
+            waterFx.setAttribute('visible', 'false'); // Hide water
+            missionComplete.classList.remove('hidden');
+            void missionComplete.offsetWidth;
+            missionComplete.classList.remove('opacity-0');
+          }
+        });
       }
 
       // --- D-PAD LOGIC ---
