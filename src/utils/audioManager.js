@@ -39,7 +39,12 @@ export const toggleMuteGlobal = (muted) => {
   localStorage.setItem('evieee_audio_muted', muted ? 'true' : 'false');
   if (muted) {
     allTracks.forEach(t => t.pause());
-  } else if (currentTrack) {
+  } else {
+    // If no track is currently set, default to overall music
+    if (!currentTrack) {
+      currentTrack = bgmOverall;
+    }
+    currentTrack.currentTime = currentTrack.currentTime || 0;
     currentTrack.play().catch(e => console.log("Audio play blocked:", e));
   }
 };
