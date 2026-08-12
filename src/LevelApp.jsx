@@ -189,13 +189,13 @@ function LevelApp({ levelId }) {
         doc.setFont("Poppins", "bold");
         doc.setFontSize(22);
         doc.setTextColor(32, 38, 100); // #202664
-        doc.text("EvIEEE SMART CITY METAVERSE ADVENTURE", 148, 38, { align: "center" });
+        doc.text("EvIEEE SMART CITY METAVERSE ADVENTURE", 148, 48, { align: "center" });
         
         // 3. Subtitle - IEEE Program
         doc.setFont("Poppins", "normal");
         doc.setFontSize(10);
         doc.setTextColor(0, 0, 0); // Black
-        doc.text("Part of IEEE Metaverse Grand Challenge for Simulation Based Learning 2026", 148, 48, { align: "center" });
+        doc.text("Part of IEEE Metaverse Grand Challenge for Simulation Based Learning 2026", 148, 56, { align: "center" });
         
         // 4. Certificate Title
         doc.setFont("Poppins", "bold");
@@ -238,7 +238,6 @@ function LevelApp({ levelId }) {
         doc.setFontSize(10);
         doc.setTextColor(0, 0, 0); // Black
         doc.text(`Date of Completion: ${today}`, 20, 192, { align: "left" });
-        doc.text("EvIEEE Smart City System", 277, 192, { align: "right" });
 
         // 10. Add Medal
         doc.addImage(sealImg, 'PNG', 230, 140, 45, 45); 
