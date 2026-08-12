@@ -152,68 +152,98 @@ function LevelApp({ levelId }) {
     });
 
     try {
-        // Load both images concurrently for faster generation
-        const [bgImg, sealImg] = await Promise.all([
+        // Load images and Poppins font concurrently
+        const loadFont = async (url) => {
+          const res = await fetch(url);
+          const buf = await res.arrayBuffer();
+          let binary = '';
+          const bytes = new Uint8Array(buf);
+          for (let i = 0; i < bytes.byteLength; i++) {
+            binary += String.fromCharCode(bytes[i]);
+          }
+          return btoa(binary);
+        };
+
+        const [bgImg, sealImg, poppinsRegularB64, poppinsBoldB64, poppinsItalicB64] = await Promise.all([
             loadImage('/template_certificate.png'),
-            loadImage('/icon_sertif.png')
+            loadImage('/icon_sertif.png'),
+            loadFont('https://cdn.jsdelivr.net/fontsource/fonts/poppins@latest/latin-400-normal.ttf'),
+            loadFont('https://cdn.jsdelivr.net/fontsource/fonts/poppins@latest/latin-700-normal.ttf'),
+            loadFont('https://cdn.jsdelivr.net/fontsource/fonts/poppins@latest/latin-400-italic.ttf'),
         ]);
 
         const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
 
-        // 1. Draw Blank Background Template
+        // Register Poppins fonts
+        doc.addFileToVFS('Poppins-Regular.ttf', poppinsRegularB64);
+        doc.addFont('Poppins-Regular.ttf', 'Poppins', 'normal');
+        doc.addFileToVFS('Poppins-Bold.ttf', poppinsBoldB64);
+        doc.addFont('Poppins-Bold.ttf', 'Poppins', 'bold');
+        doc.addFileToVFS('Poppins-Italic.ttf', poppinsItalicB64);
+        doc.addFont('Poppins-Italic.ttf', 'Poppins', 'italic');
+
+        // 1. Draw Background Template
         doc.addImage(bgImg, 'PNG', 0, 0, 297, 210);
         
-        // 2. Top Header (IEEE Program Name)
-        doc.setFont("helvetica", "normal");
-        doc.setFontSize(12);
-        doc.setTextColor(255, 255, 255); // White
-        doc.text("2026 IEEE Metaverse Grand Challenge for Simulation-based Learning", 148, 40, { align: "center" });
+        // 2. Main Title - "EvIEEE SMART CITY METAVERSE ADVENTURE"
+        doc.setFont("Poppins", "bold");
+        doc.setFontSize(22);
+        doc.setTextColor(32, 38, 100); // #202664
+        doc.text("EvIEEE SMART CITY METAVERSE ADVENTURE", 148, 38, { align: "center" });
         
-        // 3. Main Title
-        doc.setFont("helvetica", "bold");
+        // 3. Subtitle - IEEE Program
+        doc.setFont("Poppins", "normal");
+        doc.setFontSize(10);
+        doc.setTextColor(0, 0, 0); // Black
+        doc.text("Part of IEEE Metaverse Grand Challenge for Simulation Based Learning 2026", 148, 48, { align: "center" });
+        
+        // 4. Certificate Title
+        doc.setFont("Poppins", "bold");
         doc.setFontSize(32);
-        doc.setTextColor(34, 211, 238); // Cyan
-        doc.text("CERTIFICATE OF COMPLETION", 148, 65, { align: "center" });
+        doc.setTextColor(32, 38, 100); // #202664
+        doc.text("CERTIFICATE OF COMPLETION", 148, 72, { align: "center" });
         
-        // 4. Subtitle
-        doc.setFont("helvetica", "normal");
+        // 5. "Proudly Presented To:"
+        doc.setFont("Poppins", "normal");
         doc.setFontSize(14);
-        doc.setTextColor(255, 255, 255); // White
-        doc.text("Proudly Presented To:", 148, 90, { align: "center" });
+        doc.setTextColor(0, 0, 0); // Black
+        doc.text("Proudly Presented To:", 148, 92, { align: "center" });
         
-        // 5. Dynamic Name
-        doc.setFont("helvetica", "bold");
+        // 6. Dynamic Name
+        doc.setFont("Poppins", "bold");
         doc.setFontSize(40);
-        doc.setTextColor(74, 222, 128); // Green color for the name
+        doc.setTextColor(139, 7, 20); // #8b0714
         const certName = name || document.getElementById('user-name-input')?.value || "Eco-Hero"; 
         doc.text(certName, 148, 115, { align: "center" });
         
-        // 6. Encouragement Message
-        doc.setFont("helvetica", "italic");
+        // 7. Encouragement Message
+        doc.setFont("Poppins", "italic");
         doc.setFontSize(12);
+        doc.setTextColor(0, 0, 0); // Black
         const closingMessage = "Hopefully, you can become a true local hero in " + location + "!";
         doc.text(closingMessage, 148, 135, { align: "center" });
         
-        // 7. Sustainability Impact Section
-        doc.setFont("helvetica", "bold");
+        // 8. Sustainability Impact Section
+        doc.setFont("Poppins", "bold");
         doc.setFontSize(10);
-        doc.setTextColor(34, 211, 238); // Cyan
-        doc.text("SIMULATED SUSTAINABILITY IMPACT:", 148, 160, { align: "center" });
+        doc.setTextColor(32, 38, 100); // #202664
+        doc.text("SIMULATED SUSTAINABILITY IMPACT:", 148, 155, { align: "center" });
         
-        doc.setFont("helvetica", "normal");
-        doc.setTextColor(255, 255, 255); // White
-        doc.text("• 150kg Carbon Reduced   • 5,000 Trees Planted   • 200kg Marine Waste Cleared", 148, 168, { align: "center" });
+        doc.setFont("Poppins", "normal");
+        doc.setTextColor(0, 0, 0); // Black
+        doc.text("• 150kg Carbon Reduced   • 5,000 Trees Planted   • 200kg Marine Waste Cleared", 148, 163, { align: "center" });
         
-        // 8. Footer (Auto-Date and System Name)
+        // 9. Footer (Auto-Date and System Name)
         const today = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
         doc.setFontSize(10);
-        doc.text(`Date of Completion: ${today}`, 20, 190, { align: "left" });
-        doc.text("EvIEEE Smart City System", 277, 190, { align: "right" });
+        doc.setTextColor(0, 0, 0); // Black
+        doc.text(`Date of Completion: ${today}`, 20, 192, { align: "left" });
+        doc.text("EvIEEE Smart City System", 277, 192, { align: "right" });
 
-        // 9. Add Enlarged Medal
+        // 10. Add Medal
         doc.addImage(sealImg, 'PNG', 230, 140, 45, 45); 
 
-        // 10. Save PDF
+        // 11. Save PDF
         doc.save(certName.replace(/\s+/g, '_') + "_Eco_Hero_Certificate.pdf");
 
     } catch (error) {
